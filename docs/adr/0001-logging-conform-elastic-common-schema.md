@@ -6,24 +6,24 @@ voorstel
 
 ## Context
 
-Om te kunnen monitoren of een BRP API goed functioneert en goed blijft functioneren, is het noodzakelijk dat de verschillende sub-systemen waaruit een BRP API bestaat op een zodanige manier gaan loggen zodat het makkelijk wordt om dit uit de logs te halen. De best practice om dit te realiseren, is de log berichten niet als platte tekst te formatteren, maar als gestructureerd data in json formaat.
+Om te kunnen monitoren of een BRP API goed functioneert en goed blijft functioneren, is het noodzakelijk dat de verschillende sub-systemen waaruit de BRP API bestaat loggen op een manier dat het gemakkelijk wordt om de benodigde informatie uit de logs te halen. De best practice om dit te realiseren, is de logberichten niet als platte tekst te formatteren, maar als gestructureerde data in json formaat.
 
-De logs van de BRP APIs zullen worden verwerkt met behulp van producten uit de ELK-suite. Om de log gegevens makkelijker te kunnen verwerken en beter te kunnen analyseren, visualiseren en te correleren is het noodzakelijk dat de logs van de verschillende sub-systemen van een BRP API zich conformeren aan één formaat. De [Elastic Common Schema](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html) is hiervoor ontwikkeld en wordt beschouw als de standaard formaat voor het verwerken van logs met behulp van de ELK-suite.
+De logs van de BRP APIs zullen worden verwerkt met behulp van producten uit de ELK-suite. Om de log gegevens makkelijker te kunnen verwerken en beter te kunnen analyseren, visualiseren en te correleren is het noodzakelijk dat de logs van de verschillende sub-systemen van de BRP API zich conformeren aan één formaat. De [Elastic Common Schema](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html) is hiervoor ontwikkeld en wordt beschouwd als het standaard formaat voor het verwerken van logs met behulp van de ELK-suite.
 
 ## Beslissing
 
-Om log regels gestructureerd conform de Elastic Common Schema te formatteren, moet elk sub-systeem van een BRP API die wordt geïmplementeerd met behulp van .NET gebruik maken van de volgende libraries:
+Om log regels gestructureerd conform het Elastic Common Schema te formatteren, moet elk in .NET geïmplementeerd sub-systeem van de BRP API gebruik maken van de volgende libraries:
 
-- [Serilog](https://serilog.net/), een .NET logging library dat met als hoofddoel is geïmplementeerd om log gegevens gestructureerd te kunnen loggen.
+- [Serilog](https://serilog.net/), een .NET logging library met als hoofddoel log gegevens gestructureerd te loggen.
 - [Elastic Common Schema Serilog Text Formatter](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog), een .NET library van Elasticsearch waarmee Serilog wordt geïnstrueerd om log regels te formatteren conform de Elastic Common Schema specificatie.
 
-Het gebruiken van deze libraries maakt het mogelijk om met beperkte hoeveelheid custom code (voornamelijk code om Serilog en de ECS Text Formatter te configureren) gestructureerd te kunnen loggen conform de Elastic Common Schema specificatie. Voorbeelden van log regels gegenereerd volgens de Elastic Common Schema zijn te vinden in de [Voorbeeld log regels](#voorbeeld-log-regels) paragraaf. De log regels (elke request = 1 log regel) en de velden in de log regels zijn met uitzondering van de request.body.content, response.body.content en metadata velden automatisch gegenereerd en gevuld door Serilog de Elastic Common Schema Text Formatter. 
+Het gebruik van deze libraries maakt het mogelijk om met een beperkte hoeveelheid custom code (voornamelijk code om Serilog en de ECS Text Formatter te configureren) gestructureerd te kunnen loggen conform de Elastic Common Schema specificatie. Voorbeelden van log regels die zijn gegenereerd door Serilog volgens de Elastic Common Schema zijn te vinden in de [Voorbeeld log regels](#voorbeeld-log-regels) paragraaf. De log regels (elke request = 1 log regel) en de velden in de log regels zijn met uitzondering van de request.body.content, response.body.content en metadata velden automatisch gegenereerd en gevuld door Serilog met de Elastic Common Schema Serilog Text Formatter. 
 
-Met behulp van Serilog is het ook mogelijk om custom objecten als een data structuur toe te laten voegen aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar en in log regels kan worden gezocht op basis van veld namen en waarden binnen zo'n data structuur in plaats van door log regels te parsen. Een voorbeeld van een destructured object is de metadata.request.body veld van de [Voorbeeld log regel voor een succesvol afgehandeld request](#voorbeeld-log-regel-voor-een-succesvol-afgehandeld-request) 
+Met behulp van Serilog is het ook mogelijk om custom objecten als een data structuur toe te laten voegen aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar en in log regels kan worden gezocht op basis van veld namen en waarden binnen zo'n custom data structuur in plaats van door log regels te parsen. Een voorbeeld van een destructured object is de metadata.request.body veld van de [Voorbeeld log regel voor een succesvol afgehandeld request](#voorbeeld-log-regel-voor-een-succesvol-afgehandeld-request) 
 
 ## Voorbeeld log regels
 
-Deze paragraaf bevat ter illustratie van de werking van Serilog met de Elastic Common Schema Text Formatter, voorbeeld log regels van de Reisdocumenten proxy voor de volgende gebeurtenissen:
+Deze paragraaf bevat voorbeeld log regels van de Reisdocumenten proxy, gegenereerd door Serilog met de Elastic Common Schema Serilog Text Formatter, voor de volgende gebeurtenissen:
 
 - een succesvol afgehandeld request
 - een request met ongeldig input data
@@ -34,13 +34,14 @@ De volgende tabel is een overzicht van de velden die qua naamgeving en/of inhoud
 | Serilog + ECS | ECS volgens logging document | opmerkingen |
 |---------------|------------------------------|-------------|
 | http.request.id | request.id | |
-| service.version | version | |
+| log.logger | log.logger | Standaard wordt dit veld gevuld met de naam van logger binnen de applicatie, conform de [Elastic Common Schema specificatie](https://www.elastic.co/guide/en/ecs/8.11/ecs-log.html#field-log-logger) |
+| service.version | version | Standaard worden de service.name en service.version velden gevuld met de waarden uit de AssemblyName en AssemblyVersion metagegevens van een in .NET geïmplementeerd (sub-)systeem |
 | agent.type & agent.version | agent.name | |
 | host.hostname | hostname | |
 | | token | TODO |
 | http.request.body.content | request.body.stringified | gewenste type en fields velden staan in de destructured metadata.request.body veld |
 | http.response.body.content |http.response.body| |
-| error | TODO?| in ECS is voor excepties het error object gedefinieerd met stack_trace veld voor de stack trace. Dit wordt automatisch door Serilog + ECS gevuld | 
+| error | TODO?| in de Elastic Common Schema specificatie is voor excepties [error velden](https://www.elastic.co/guide/en/ecs/8.11/ecs-error.html) gedefinieerd met stack_trace veld voor de stack trace. Wanneer de exceptie door de applicatie wordt toegevoegd aan de log context van Serilog, dan worden de error velden automatisch gevuld | 
 
 ### Voorbeeld log regel voor een succesvol afgehandeld request
 
