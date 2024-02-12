@@ -5,13 +5,13 @@ flowchart LR
 
 User
 Proxy
-CAGW[Consumer
-API Gateway]
-PAGW[RvIG
-API Gateway]
+CAGW["Consumer
+API Gateway"]
+PAGW["RvIG
+API Gateway"]
 API
-IDP[Identity
-Provider]
+IDP["Identity
+Provider"]
 DB[(Database)]
 
 subgraph Consumer
@@ -39,15 +39,15 @@ flowchart LR
 
 User
 Proxy
-CAGW[Consumer
-API Gateway]
-PAGW[RvIG
-API Gateway]
+CAGW["Consumer
+API Gateway"]
+PAGW["RvIG
+API Gateway"]
 API
-IDP[Identity
-Provider]
-AP[Autorisatie &
-Protocollering]
+IDP["Identity
+Provider"]
+AP["Autorisatie &
+Protocollering"]
 DB[(Database)]
 
 subgraph Consumer
@@ -67,8 +67,8 @@ subgraph P[RvIG]
     end
     AP ----> IDP
     API -- R --> DB
-    AP -- [R autorisatie &
-    W protocollering] --> DB
+    AP -- ["R autorisatie &
+W protocollering"] --> DB
 end
 ```
 
