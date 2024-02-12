@@ -19,7 +19,7 @@ subgraph Consumer
     Proxy --> CAGW
 end
 
-CAGW -- [mTLS] --> PAGW
+CAGW -- mTLS --> PAGW
 
 subgraph RvIG
     direction TB
@@ -55,7 +55,7 @@ subgraph Consumer
     User ----> CAGW
 end
 
-CAGW ----> PAGW
+CAGW -- mTLS --> PAGW
 
 subgraph P[RvIG]
     direction LR
@@ -67,8 +67,8 @@ subgraph P[RvIG]
     end
     AP ----> IDP
     API -- R --> DB
-    AP -- ["R autorisatie &
-W protocollering"] --> DB
+    AP -- "R autorisatie &
+W protocollering" --> DB
 end
 ```
 
