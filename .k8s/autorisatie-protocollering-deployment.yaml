@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brp-autorisatie-protocollering
+  labels:
+    app: brp-autorisatie-protocollering
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: brp-autorisatie-protocollering
+  template:
+    metadata:
+      labels:
+        name: brp-autorisatie-protocollering
+    spec:
+      containers:
+        - name: autorisatie-protocollering
+          image: haalcentraal.azurecr.io/brp-autorisatie-protocollering:1.0.0-2024022807
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8080"
+            - name: Ecs__Path
+              value: /var/log/brp-autorisatie-protocollering.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1024"
+            - name: Db__Host
+              value: postgres
+            - name: Db__Database
+              value: rvig_haalcentraal_testdata
+            - name: Db__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Db__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+            - name: HealthEndpointBase
+              value: /health
+          ports:
+            - name: http
+              containerPort: 8080
