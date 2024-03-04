@@ -22,8 +22,8 @@ spec:
               value: Release
             - name: ASPNETCORE_URLS
               value: http://+:8080
-            - name: Serilog__MinimumLevel__Override__Serilog
-              value: Debug
+            # - name: Serilog__MinimumLevel__Override__Serilog
+            #   value: Debug
             - name: Ecs__Path
               value: /var/log/brp-autorisatie-protocollering.json
             - name: Ecs__FileSizeLimitBytes
