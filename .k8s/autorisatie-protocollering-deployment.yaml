@@ -16,16 +16,18 @@ spec:
     spec:
       containers:
         - name: autorisatie-protocollering
-          image: haalcentraal.azurecr.io/brp-autorisatie-protocollering:1.0.0-2024022807
+          image: haalcentraal.azurecr.io/brp-autorisatie-protocollering:1.0.0-2024030407
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Release
-            - name: ASPNETCORE_HTTP_PORTS
-              value: "8080"
+            - name: ASPNETCORE_URLS
+              value: http://+:8080
+            - name: Serilog__MinimumLevel__Override__Serilog
+              value: Debug
             - name: Ecs__Path
               value: /var/log/brp-autorisatie-protocollering.json
             - name: Ecs__FileSizeLimitBytes
-              value: "1024"
+              value: "1048576"
             - name: Db__Host
               value: postgres
             - name: Db__Database
@@ -42,6 +44,14 @@ spec:
                   key: db-password
             - name: HealthEndpointBase
               value: /health
+              # de volgende health endpoints worden gecreeerd:
+              # - <HealthEndpointBase>/startup
+              # - <HealthEndpointBase>/ready
+              # - <HealthEndpointBase>/live
+            - name: OAuth__Authority
+              value: https://login.dev.idsecure.nl/nidp/oauth/nam
+            - name: OAuth__Audience
+              value: 5ddfe678-928b-4270-a20a-0d6cd5979f31
           ports:
             - name: http
               containerPort: 8080
