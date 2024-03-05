@@ -24,10 +24,16 @@ spec:
               value: http://+:8080
             # - name: Serilog__MinimumLevel__Override__Serilog
             #   value: Debug
+
             - name: Ecs__Path
               value: /var/log/brp-autorisatie-protocollering.json
             - name: Ecs__FileSizeLimitBytes
               value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
             - name: Db__Host
               value: postgres
             - name: Db__Database
@@ -42,16 +48,27 @@ spec:
                 secretKeyRef:
                   name: db-user
                   key: db-password
+
             - name: HealthEndpointBase
-              value: /health
+              value: /personen-autorisatie/health
               # de volgende health endpoints worden gecreeerd:
               # - <HealthEndpointBase>/startup
               # - <HealthEndpointBase>/ready
               # - <HealthEndpointBase>/live
+
             - name: OAuth__Authority
               value: https://login.dev.idsecure.nl/nidp/oauth/nam
             - name: OAuth__Audience
               value: 5ddfe678-928b-4270-a20a-0d6cd5979f31
+
+            - name: Routes__0__DownstreamPathTemplate
+              value: /haalcentraal/api/brp/personen
+            - name: Routes__0__DownstreamScheme
+              value: http
+            - name: Routes__0__DownstreamHostAndPorts__0__Host
+              value: localhost
+            - name: Routes__0__DownstreamHostAndPorts__0__Port
+              value: "8000"
           ports:
             - name: http
               containerPort: 8080
