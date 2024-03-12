@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brp-personen-api
+  labels:
+    app: brp-personen-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: brp-personen-api
+  template:
+    metadata:
+      labels:
+        name: brp-personen-api
+    spec:
+      containers:
+        - name: personen-api
+          image: haalcentraal.azurecr.io/gba-api:2.1.2-2024031208
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+
+            - name: ProtocolleringAuthorization__UseProtocollering
+              value: "false"
+            - name: ProtocolleringAuthorization__UseAuthorizationChecks
+              value: "false"
+
+            - name: Database__Host
+              value: postgres
+            - name: Database__Database
+              value: rvig_haalcentraal_testdata
+            - name: Database__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Database__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+
+            - name: WebApi__Url
+              value: https://gezagmodule
+
+          ports:
+            - name: http
+              containerPort: 8000
