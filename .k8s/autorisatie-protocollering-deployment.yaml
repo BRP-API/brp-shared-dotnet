@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: autorisatie-protocollering
-          image: haalcentraal.azurecr.io/brp-autorisatie-protocollering:1.0.0-2024030407
+          image: haalcentraal.azurecr.io/brp-autorisatie-protocollering:v1.0.0-2024032010
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Release
@@ -58,8 +58,6 @@ spec:
 
             - name: OAuth__Authority
               value: https://login.dev.idsecure.nl/nidp/oauth/nam
-            - name: OAuth__Audience
-              value: 5ddfe678-928b-4270-a20a-0d6cd5979f31
 
             - name: Routes__0__DownstreamPathTemplate
               value: /haalcentraal/api/brp/personen
