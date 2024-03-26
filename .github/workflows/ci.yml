@@ -29,4 +29,5 @@ jobs:
         run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
       - name: Run unit tests
         run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-  
+      - name: Build container images
+        run: docker compose -f src/docker-compose.yml build
