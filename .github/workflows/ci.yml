@@ -46,6 +46,9 @@ jobs:
       - name: Add identityserver host name to /etc/hosts
         run: |
           sudo echo '127.0.0.1 identityserver' | sudo tee -a /etc/hosts
+      - name: Set read/write permissions on test-data/IdentityServer folder
+        run: |
+          sudo chmod ugo+rw ./test-data/IdentityServer
       - name: Start containers
         run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} up -d
       - name: Wait for DB restart
