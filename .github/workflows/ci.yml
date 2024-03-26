@@ -50,7 +50,7 @@ jobs:
         shell: bash
       - name: Add identityserver host name to /etc/hosts
         run: |
-          sudo echo '127.0.0.1 identityserver' | sudo tee -a /etch/hosts
+          sudo echo '127.0.0.1 identityserver' | sudo tee -a /etc/hosts
       - name: Validate validatie functional specs
         run: |
           npx cucumber-js features/validatie --tags @fout-case
