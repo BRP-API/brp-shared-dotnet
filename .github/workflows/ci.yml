@@ -53,7 +53,7 @@ jobs:
         shell: bash
       - name: Validate validatie functional specs
         run: |
-          npx cucumber-js features/validatie/personen/fout-cases:10 --tags @fout-case
+          npx cucumber-js features/validatie/personen/fout-cases.feature:10 --tags @fout-case
       - name: Stop containers
         if: always()
         run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
