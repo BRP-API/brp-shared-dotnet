@@ -190,7 +190,7 @@ public class AuthorisationService : IAuthorisation
                 ? FieldElementNrDictionary[key]
                 : FieldElementNrDictionary[gevraagdField];
 
-            retval.Add(new(gevraagdField, fieldElementNrs.Split(' ')));
+            retval.Add(new(gevraagdField, !string.IsNullOrWhiteSpace(fieldElementNrs) ? fieldElementNrs.Split(' ') : Array.Empty<string>()));
         }
         return retval;
     }
