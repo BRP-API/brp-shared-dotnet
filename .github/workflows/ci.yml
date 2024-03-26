@@ -10,7 +10,7 @@ on:
 
 env:
   DOTNET_VERSION: 6.0.x
-  DOTNET_SOLUTION: brp-shared.sln
+  DOTNET_SOLUTION: src/brp-shared.sln
   NODE_VERSION: '18'
 
 jobs:
