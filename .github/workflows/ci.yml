@@ -12,6 +12,7 @@ env:
   DOTNET_VERSION: 6.0.x
   DOTNET_SOLUTION: src/brp-shared.sln
   NODE_VERSION: '18'
+  COMPOSE_FILE_ARGUMENT: -f .docker/db-ci.yml -f .docker/identityserver.yml -f .docker/autorisatie-protocollering-proxy.yml
 
 jobs:
   build:
@@ -29,5 +30,30 @@ jobs:
         run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
       - name: Run unit tests
         run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci
       - name: Build container images
         run: docker compose -f src/docker-compose.yml build
+      - name: Start containers
+        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} up -d
+      - name: Wait for DB restart
+        run: sleep 5s
+        shell: bash
+      - name: Add identityserver host name to /etc/hosts
+        run: |
+          sudo echo '127.0.0.1 identityserver' | sudo tee -a /etch/hosts
+      - name: Validate validatie functional specs
+        run: |
+          npx cucumber-js features/validatie --tags @fout-case
+      - name: Stop containers
+        if: always()
+        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
