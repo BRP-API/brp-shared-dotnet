@@ -4,7 +4,7 @@ class World {
     constructor(parameters) {
         this.context = parameters;
 
-        this.context.autzUrl = 'http://localhost:8080/haalcentraal/api/brp'
+        this.context.autzUrl = 'http://localhost:8000/haalcentraal/api/brp'
         this.context.apiUrl = 'http://localhost:8000/haalcentraal/api/brp'
         this.context.proxyUrl = 'http://localhost:5002/haalcentraal/api/brp'
 
@@ -15,31 +15,23 @@ class World {
             cleanup: true,
             deleteIndividualRecords: true,
             poolConfig: {
-                user: 'root',
-                host: 'localhost',
+                user: '',
+                host: '',
                 database: 'rvig_haalcentraal_testdata',
-                password: 'root',
+                password: '',
                 port: 5432,
                 allowExitOnIdle: true
             }
         };
 
         this.context.oAuth = {
-            enable: true,
-            accessTokenUrl: 'http://identityserver:6000/connect/token',
+            enable: false,
+            accessTokenUrl: 'https://login.dev.idsecure.nl/nidp/oauth/nam/token',
             clients:[
                 {
                     afnemerID: '000008',
-                    gemeenteCode: '0800',
-                    clientId: 'client met gemeentecode',
-                    clientSecret: 'secret',
-                    scopes: [ '000000099000000080000' ],
-                    resourceServer: 'ResourceServer02'
-                },
-                {
-                    afnemerID: '000008',
-                    clientId: 'client zonder gemeentecode',
-                    clientSecret: 'secret',
+                    clientId: '',
+                    clientSecret: '',
                     scopes: [ '000000099000000080000' ],
                     resourceServer: 'ResourceServer02'
                 }
