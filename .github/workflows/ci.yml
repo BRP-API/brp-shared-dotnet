@@ -54,9 +54,9 @@ jobs:
       - name: Wait for DB restart
         run: sleep 5s
         shell: bash
-      - name: Validate validatie functional specs
+      - name: Validate functional specs
         run: |
-          npx cucumber-js features/validatie/personen --tags @fout-case
+          ./scripts/specs-verify.sh
       - name: Stop containers
         if: always()
         run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
