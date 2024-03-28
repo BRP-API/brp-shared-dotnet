@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brp-bevragen-proxy
+  labels:
+    app: brp-bevragen-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: brp-bevragen-proxy
+  template:
+    metadata:
+      labels:
+        name: brp-bevragen-proxy
+    spec:
+      containers:
+        - name: brp-bevragen-proxy
+          image: haalcentraal.azurecr.io/brpproxy:2.1.3-2024032807
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+            - name: ASPNETCORE_URLS
+              value: http://+:5000
+            # - name: Serilog__MinimumLevel__Override__Serilog
+            #   value: Debug
+
+            - name: Ecs__Path
+              value: /var/log/brp-bevragen-proxy.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: HealthEndpointBase
+              value: /personen-proxy/health
+              # de volgende health endpoints worden gecreeerd:
+              # - <HealthEndpointBase>/startup
+              # - <HealthEndpointBase>/ready
+              # - <HealthEndpointBase>/live
+
+            - name: Routes__0__DownstreamPathTemplate
+              value: /haalcentraal/api/brp/personen
+            - name: Routes__0__DownstreamScheme
+              value: http
+            - name: Routes__0__DownstreamHostAndPorts__0__Host
+              value: localhost
+            - name: Routes__0__DownstreamHostAndPorts__0__Port
+              value: "8000"
+          ports:
+            - name: http
+              containerPort: 5000
