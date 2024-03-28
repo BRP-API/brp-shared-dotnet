@@ -917,6 +917,8 @@ internal static class Constanten
 
         "verblijfplaatsBinnenland.type",
         "verblijfplaatsBinnenland.functieAdres",
+        "verblijfplaatsBinnenland.functieAdres.code",
+        "verblijfplaatsBinnenland.functieAdres.omschrijving",
         "verblijfplaatsBinnenland.datumVan",
         "verblijfplaatsBinnenland.datumVan.type",
         "verblijfplaatsBinnenland.datumVan.datum",

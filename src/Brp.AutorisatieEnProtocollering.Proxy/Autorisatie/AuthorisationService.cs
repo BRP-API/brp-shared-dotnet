@@ -594,6 +594,8 @@ public class AuthorisationService : IAuthorisation
         { "verblijfplaatsBinnenland.type", "081110 081210" },
         { "verblijfplaatsBinnenland.type-protocollering", "PAVP02" },
         { "verblijfplaatsBinnenland.functieAdres", "081010" },
+        { "verblijfplaatsBinnenland.functieAdres.code", "081010" },
+        { "verblijfplaatsBinnenland.functieAdres.omschrijving", "081010" },
         { "verblijfplaatsBinnenland.datumVan", "PAVP01" },
         { "verblijfplaatsBinnenland.datumVan.type", "PAVP01" },
         { "verblijfplaatsBinnenland.datumVan.datum", "PAVP01" },
