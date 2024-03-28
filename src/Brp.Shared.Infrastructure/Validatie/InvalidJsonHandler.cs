@@ -26,6 +26,8 @@ public static class InvalidJsonHandler
 
                 return false;
             }
+
+            diagnosticContext.Set("vraag type", input.Value<string>("type"));
         }
         catch (JsonReaderException ex)
         {
