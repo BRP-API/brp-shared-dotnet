@@ -7,6 +7,7 @@ using Brp.Shared.Infrastructure.Logging;
 using Brp.Shared.Infrastructure.Utils;
 using Brp.Shared.Infrastructure.Validatie;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
@@ -26,6 +27,8 @@ try
     builder.Configuration.AddJsonFile(Path.Combine("configuration", "ocelot.json"))
                          .AddJsonFile(Path.Combine("configuration", $"ocelot.{builder.Environment.EnvironmentName}.json"), true)
                          .AddEnvironmentVariables();
+
+    builder.Services.AddFeatureManagement();
 
     builder.SetupAuthentication(Log.Logger);
     builder.Services.AddTransient<IAuthorisation, AuthorisationService>();

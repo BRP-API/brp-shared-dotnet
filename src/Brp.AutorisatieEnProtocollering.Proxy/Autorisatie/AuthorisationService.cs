@@ -1,6 +1,8 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Microsoft.FeatureManagement;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using System.Text.RegularExpressions;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
@@ -8,10 +10,12 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 public class AuthorisationService : IAuthorisation
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly IDiagnosticContext _diagnosticContext;
 
-    public AuthorisationService(IServiceProvider serviceProvider)
+    public AuthorisationService(IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
     {
         _serviceProvider = serviceProvider;
+        _diagnosticContext = diagnosticContext;
     }
 
     public bool Protocolleer(int afnemerCode, string geleverdePersoonslijstIds, string requestBody)
@@ -62,8 +66,16 @@ public class AuthorisationService : IAuthorisation
         using var scope = _serviceProvider.CreateScope();
 
         var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var featureManager = scope.ServiceProvider.GetRequiredService<IFeatureManager>();
 
-        var autorisatie = appDbContext.GetActueleAutorisatieFor(afnemerCode);
+        var gebruikMeestRecenteAutorisatie = featureManager.IsEnabledAsync("gebruikMeestRecenteAutorisatie").Result;
+
+        var autorisatie = appDbContext.GetActueleAutorisatieFor(afnemerCode, gebruikMeestRecenteAutorisatie);
+        if(autorisatie != null)
+        {
+            _diagnosticContext.Set("Autorisatie", autorisatie, true);
+        }
+
         if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
         {
             return NotAuthorized(title: "U bent niet geautoriseerd voor het gebruik van deze API.",
@@ -218,7 +230,7 @@ public class AuthorisationService : IAuthorisation
             }
         }
 
-        return retval;
+        return retval.Distinct();
     }
 
     private static bool IsGeautoriseerdVoorOuderAanduidingVraag(IEnumerable<string> geautoriseerdeElementen)
@@ -651,12 +663,18 @@ public class AuthorisationService : IAuthorisation
 
 internal static class AppDbContextExtensions
 {
-    internal static Data.Autorisatie? GetActueleAutorisatieFor(this AppDbContext appDbContext, int afnemerCode)
+    internal static Data.Autorisatie? GetActueleAutorisatieFor(this AppDbContext appDbContext, int afnemerCode, bool gebruikMeestRecenteAutorisatie)
     {
-        return appDbContext.Autorisaties
-                           .FirstOrDefault(a => a.AfnemerCode == afnemerCode &&
-                                                a.TabelRegelStartDatum <= Vandaag() &&
-                                                (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
+
+        return gebruikMeestRecenteAutorisatie
+            ? appDbContext.Autorisaties
+                          .Where(a => a.AfnemerCode == afnemerCode)
+                          .OrderByDescending(a => a.TabelRegelStartDatum)
+                          .FirstOrDefault()
+            : appDbContext.Autorisaties
+                          .FirstOrDefault(a => a.AfnemerCode == afnemerCode &&
+                                               a.TabelRegelStartDatum <= Vandaag() &&
+                                               (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
     }
 
     private static long Vandaag()
