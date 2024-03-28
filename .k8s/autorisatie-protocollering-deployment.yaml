@@ -67,6 +67,10 @@ spec:
               value: localhost
             - name: Routes__0__DownstreamHostAndPorts__0__Port
               value: "8000"
+
+            - name: FeatureManagement__gebruikMeestRecenteAutorisatie
+              value: true
+
           ports:
             - name: http
               containerPort: 8080
