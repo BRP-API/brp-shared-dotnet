@@ -81,8 +81,19 @@ public static class SerilogHelpers
             {
                 { StatusCode: var status } when status >= 500 => LogEventLevel.Error,
                 { StatusCode: var status } when status >= 400 && status < 500 => LogEventLevel.Warning,
-                _ => LogEventLevel.Information
+                _ => httpContext.LogEventLevelIfHealthCheckEndpoint()
             };
+
+    private static LogEventLevel LogEventLevelIfHealthCheckEndpoint(this HttpContext httpContext) =>
+        httpContext.IsHealthCheckEndpoint()
+            ? LogEventLevel.Verbose
+            : LogEventLevel.Information;
+
+    private static bool IsHealthCheckEndpoint(this HttpContext httpContext)
+    {
+        var endpoint = httpContext.GetEndpoint();
+        return endpoint is not null && string.Equals(endpoint.DisplayName, "Health checks", StringComparison.Ordinal);
+    }
 
     private static void EnrichDiagnosticContext(IDiagnosticContext diagnosticContext, HttpContext httpContext)
     {
@@ -97,6 +108,7 @@ public static class SerilogHelpers
                 .ReadFrom.Configuration(context.Configuration)
                 .SetMinimumLevelOverrides()
                 .Destructure.UsingAttributes(x => x.IgnoreNullProperties = true)
+                .Destructure.JsonNetTypes()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
                 ;

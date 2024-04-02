@@ -22,12 +22,12 @@ public static class InvalidJsonHandler
             {
                 var problemDetails = context.Request.CreateProblemDetailsFor(result);
 
-                await context.Response.WriteProblemDetailsAsync(problemDetails, diagnosticContext);
+                await context.Response.WriteProblemDetailsAsync(problemDetails);
 
                 return false;
             }
 
-            diagnosticContext.Set("vraag type", input.Value<string>("type"));
+            diagnosticContext.Set("RequestBody", input, true);
         }
         catch (JsonReaderException ex)
         {
@@ -35,7 +35,7 @@ public static class InvalidJsonHandler
 
             var problemDetails = context.Request.CreateProblemDetails(StatusCodes.Status400BadRequest, "De bevraging bevat een fout.", "Request body is geen geldige JSON.");
 
-            await context.Response.WriteProblemDetailsAsync(problemDetails, diagnosticContext);
+            await context.Response.WriteProblemDetailsAsync(problemDetails);
 
             return false;
         }
