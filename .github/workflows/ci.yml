@@ -49,7 +49,11 @@ jobs:
         run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
       - name: Run unit tests
         run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./test-reports/coverage
+    outputs:
+      app_version: ${{ env.APP_VERSION }}
+      build_run: ${{ env.BUILD_RUN }}
   publish:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -97,6 +101,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Tag & push container images naar registry
         run: |
-          docker tag ${{ env.CONTAINER_IMAGE }}:latest ${{ env.CONTAINER_IMAGE }}:${{ env.APP_VERSION }}-${{ env.BUILD_RUN }}
+          docker tag ${{ env.CONTAINER_IMAGE }}:latest ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
           docker push ${{ env.CONTAINER_IMAGE }}:latest
-          docker push ${{ env.CONTAINER_IMAGE }}:${{ env.APP_VERSION }}-${{ env.BUILD_RUN }}
+          docker push ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
