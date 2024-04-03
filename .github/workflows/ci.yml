@@ -12,7 +12,10 @@ env:
   DOTNET_VERSION: 6.0.x
   DOTNET_SOLUTION: src/brp-shared.sln
   NODE_VERSION: '18'
-  COMPOSE_FILE_ARGUMENT: -f .docker/db-ci.yml -f .docker/identityserver.yml -f .docker/autorisatie-protocollering-proxy.yml
+  COMPOSE_FILE_ARGUMENT: -f .docker/db-ci.yml -f .docker/identityserver.yml -f .docker/referentie-api.yml -f .docker/autorisatie-protocollering-proxy.yml
+  UPDATE_VERSION_CSPROJ: src/Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnProtocollering.Proxy.csproj
+  BUILD_RUN: ''
+  APP_VERSION: ''
 
 jobs:
   build:
@@ -20,16 +23,31 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Set environment variables
+        run: |
+          export TZ="Europe/Amsterdam"
+          echo "BUILD_RUN=$(date +'%Y%m%d%H')" >> $GITHUB_ENV
+
+          echo "APP_VERSION=$(sed -n 's/.*<Version>\([0-9.]*\).*/\1/p' ${{ env.UPDATE_VERSION_CSPROJ}})" >> $GITHUB_ENV
+      - name: Set project version
+        run: |
+          search_string="\(<Version>\([0-9.]*\)\)"
+          replace_string="<Version>${{ env.APP_VERSION }}+${{ env.BUILD_RUN }}"
+          sed -i "s/$search_string/$replace_string/" ${{ env.UPDATE_VERSION_CSPROJ}}
+
+          cat ${{ env.UPDATE_VERSION_CSPROJ}}
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: |
+            6.0.x
+            8.0.x
       - name: Restore dependencies
         run: dotnet restore ${{ env.DOTNET_SOLUTION }}
       - name: Build
         run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
       - name: Run unit tests
-        run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./test-reports/coverage
   verify:
     runs-on: ubuntu-latest
     steps:
@@ -60,3 +78,13 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
+      - name: Genereer test rapportage
+        if: always()
+        run: |
+          node ./scripts/generate-cucumber-reports.js
+      - name: Upload test rapportage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports
+          path: test-reports

@@ -16,8 +16,8 @@ services:
       - Db__Database=rvig_haalcentraal_testdata
       - OAuth__Authority=http://identityserver:6000
       - Routes__0__DownstreamScheme=http
-      - Routes__0__DownstreamHostAndPorts__0__Host=brpproxy
-      - Routes__0__DownstreamHostAndPorts__0__Port=5000
+      - Routes__0__DownstreamHostAndPorts__0__Host=referentie-api
+      - Routes__0__DownstreamHostAndPorts__0__Port=5010
     ports:
       - "8080:8080"
     volumes:
