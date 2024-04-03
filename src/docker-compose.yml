@@ -18,3 +18,10 @@ services:
       platforms:
         - linux/amd64
         # - linux/arm64
+
+  brp.referentie.api:
+    container_name: brp-referentie-api
+    image: ghcr.io/brp-api/brp-referentie-api:latest
+    build:
+      context: .
+      dockerfile: Brp.Referentie.Api/Dockerfile
