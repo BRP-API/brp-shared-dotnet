@@ -30,13 +30,6 @@ jobs:
           echo "BUILD_RUN=$(date +'%Y%m%d%H')" >> $GITHUB_ENV
 
           echo "APP_VERSION=$(sed -n 's/.*<Version>\([0-9.]*\).*/\1/p' ${{ env.UPDATE_VERSION_CSPROJ}})" >> $GITHUB_ENV
-      - name: Set project version
-        run: |
-          search_string="\(<Version>\([0-9.]*\)\)"
-          replace_string="<Version>${{ env.APP_VERSION }}+${{ env.BUILD_RUN }}"
-          sed -i "s/$search_string/$replace_string/" ${{ env.UPDATE_VERSION_CSPROJ}}
-
-          cat ${{ env.UPDATE_VERSION_CSPROJ}}
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -64,6 +57,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies
         run: npm ci
+      - name: Set applicatie version
+        run: |
+          search_string="\(<Version>\([0-9.]*\)\)"
+          replace_string="<Version>${{ needs.build.outputs.app_version }}+${{ needs.build.outputs.build_run }}"
+          sed -i "s/$search_string/$replace_string/" ${{ env.UPDATE_VERSION_CSPROJ}}
+
+          cat ${{ env.UPDATE_VERSION_CSPROJ}}
       - name: Build container images
         run: docker compose -f src/docker-compose.yml build
       - name: Add identityserver host name to /etc/hosts
