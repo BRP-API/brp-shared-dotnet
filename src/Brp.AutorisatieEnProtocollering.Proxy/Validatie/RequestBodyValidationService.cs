@@ -14,6 +14,7 @@ public class RequestBodyValidationService : IRequestBodyValidator
         return input.Value<string>("type") switch
         {
             "RaadpleegMetBurgerservicenummer" => new RaadpleegMetBurgerservicenummerQueryValidator().Validate(input),
+            "ZoekMetAdresseerbaarObjectIdentificatie" => new ZoekMetAdresseerbaarObjectIdentificatieQueryValidator().Validate(input),
             "ZoekMetGeslachtsnaamEnGeboortedatum" => new ZoekMetGeslachtsnaamEnGeboortedatumQueryValidator().Validate(input),
             "ZoekMetNaamEnGemeenteVanInschrijving" => new ZoekMetNaamEnGemeenteVanInschrijvingQueryValidator().Validate(input),
             "ZoekMetNummeraanduidingIdentificatie" => new ZoekMetNummeraanduidingIdentificatieQueryValidator().Validate(input),
@@ -21,6 +22,7 @@ public class RequestBodyValidationService : IRequestBodyValidator
             "ZoekMetStraatHuisnummerEnGemeenteVanInschrijving" => new ZoekMetStraatHuisnummerEnGemeenteVanInschrijvingQueryValidator().Validate(input),
             _ => new RequestBodyValidator(new string[] {
                         "RaadpleegMetBurgerservicenummer",
+                        "ZoekMetAdresseerbaarObjectIdentificatie",
                         "ZoekMetGeslachtsnaamEnGeboortedatum",
                         "ZoekMetNaamEnGemeenteVanInschrijving",
                         "ZoekMetNummeraanduidingIdentificatie",

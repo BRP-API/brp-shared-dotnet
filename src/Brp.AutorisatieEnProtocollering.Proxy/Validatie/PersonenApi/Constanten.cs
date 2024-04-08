@@ -2,7 +2,6 @@
 
 internal static class Constanten
 {
-
     internal static readonly List<string> PersoonBeperktFields = new()
     {
         "burgerservicenummer",
@@ -126,6 +125,11 @@ internal static class Constanten
         "adresseringBinnenland.adresregel1",
         "adresseringBinnenland.adresregel2",
         "adresseringBinnenland.indicatieVastgesteldVerblijftNietOpAdres",
+    };
+
+    internal static readonly List<string> GezagPersoonBeperktFields = new(PersoonBeperktFields)
+    {
+        "gezag"
     };
 
     internal static readonly List<string> NotAllowedPersoonFields = new()
