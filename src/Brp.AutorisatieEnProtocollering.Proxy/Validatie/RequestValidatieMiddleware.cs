@@ -1,10 +1,10 @@
 ﻿using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Http;
 using Brp.Shared.Infrastructure.ProblemDetails;
-using Microsoft.AspNetCore.Http;
+using Brp.Shared.Infrastructure.Validatie;
 using Serilog;
 
-namespace Brp.Shared.Infrastructure.Validatie;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 
 public class RequestValidatieMiddleware
 {
@@ -74,7 +74,10 @@ public class RequestValidatieMiddleware
         if (!string.IsNullOrWhiteSpace(geleverdePls))
         {
             _authorisation.Protocolleer(afnemerId, geleverdePls!, requestBody);
-            _diagnosticContext.Set("Protocollering", $"voor pl ids '{geleverdePls}'");
+
+            _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
+
+            httpContext.Response.Headers.Remove("x-geleverde-pls");
         }
     }
 
