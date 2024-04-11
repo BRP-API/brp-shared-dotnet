@@ -1,6 +1,7 @@
 ﻿using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Http;
 using Brp.Shared.Infrastructure.ProblemDetails;
+using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Validatie;
 using Serilog;
 
@@ -12,12 +13,14 @@ public class RequestValidatieMiddleware
     private readonly IDiagnosticContext _diagnosticContext;
     private readonly IRequestBodyValidator _requestBodyValidator;
     private readonly IAuthorisation _authorisation;
+    private readonly IProtocollering _protocollering;
 
-    public RequestValidatieMiddleware(RequestDelegate next, IDiagnosticContext diagnosticContext, IRequestBodyValidator requestBodyValidator, IAuthorisation authorisation)
+    public RequestValidatieMiddleware(RequestDelegate next, IDiagnosticContext diagnosticContext, IRequestBodyValidator requestBodyValidator, IAuthorisation authorisation, IProtocollering protocollering)
     {
         _next = next;
         _diagnosticContext = diagnosticContext;
         _authorisation = authorisation;
+        _protocollering = protocollering;
         _requestBodyValidator = requestBodyValidator;
     }
 
@@ -73,7 +76,7 @@ public class RequestValidatieMiddleware
         var geleverdePls = httpContext.Response.Headers["x-geleverde-pls"];
         if (!string.IsNullOrWhiteSpace(geleverdePls))
         {
-            _authorisation.Protocolleer(afnemerId, geleverdePls!, requestBody);
+            _protocollering.Protocolleer(afnemerId, geleverdePls!, requestBody);
 
             _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
 
