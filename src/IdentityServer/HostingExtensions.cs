@@ -16,8 +16,9 @@ internal static class HostingExtensions
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients);
+            .AddInMemoryClients(builder.Configuration.GetSection("Clients"));
 
+        //var foo = System.Text.Json.JsonSerializer.Serialize<IEnumerable<Client>>(Config.Clients);
         return builder.Build();
     }
     

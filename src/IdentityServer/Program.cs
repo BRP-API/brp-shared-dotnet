@@ -16,6 +16,8 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
 
+    builder.Configuration.AddJsonFile(Path.Combine("configuration", "clients.json"));
+
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
