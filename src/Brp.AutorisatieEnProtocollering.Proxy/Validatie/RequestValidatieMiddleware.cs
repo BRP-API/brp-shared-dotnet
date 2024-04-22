@@ -73,7 +73,11 @@ public class RequestValidatieMiddleware
 
         await _next(httpContext);
 
-        if(!await httpContext.HandleNotFound())
+        if (!await httpContext.HandleNotFound())
+        {
+            return;
+        }
+        if (!await httpContext.HandleServiceIsAvailable())
         {
             return;
         }
