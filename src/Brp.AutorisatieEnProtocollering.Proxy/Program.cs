@@ -1,9 +1,11 @@
 using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 using Brp.AutorisatieEnProtocollering.Proxy.Data;
+using Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
 using Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.HealthCheck;
 using Brp.Shared.Infrastructure.Logging;
+using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Utils;
 using Brp.Shared.Infrastructure.Validatie;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +34,7 @@ try
 
     builder.SetupAuthentication(Log.Logger);
     builder.Services.AddTransient<IAuthorisation, AuthorisationService>();
+    builder.Services.AddTransient<IProtocollering, ProtocolleringService>();
     builder.Services.AddTransient<IRequestBodyValidator, RequestBodyValidationService>();
 
     var dbSection = builder.Configuration.GetSection("Db");

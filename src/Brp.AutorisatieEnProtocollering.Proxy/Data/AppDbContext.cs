@@ -8,8 +8,8 @@ public class AppDbContext : DbContext
         : base(options)
     {}
 
-    public DbSet<Autorisatie> Autorisaties { get; set; }
-    public DbSet<Protocollering> Protocolleringen { get; set; }
+    public DbSet<Autorisatie> Autorisaties => Set<Autorisatie>();
+    public DbSet<Protocollering> Protocolleringen => Set<Protocollering>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

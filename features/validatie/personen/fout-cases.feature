@@ -246,5 +246,19 @@ Regel: Om privacy en security redenen moet een bevraging van reisdocumenten word
     | DELETE       |
   # | CONNECT      | een CONNECT aanroep wordt niet gebruikt om te bevragen
   # | HEAD         | een HEAD response bevat geen body
-    | OPTIONS      |
-    | TRACE        |
+    | OPTIONS |
+    | TRACE   |
+
+  @fout-case
+  Scenario: niet-bestaand endpoint wordt aangeroepen
+    Als bestaat-niet wordt gezocht met de volgende parameters
+    | naam                | waarde                          |
+    | type                | RaadpleegMetBurgerservicenummer |
+    | burgerservicenummer | 000000024                       |
+    | fields              | burgerservicenummer             |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4 |
+    | title    | Opgevraagde resource bestaat niet.                          |
+    | status   | 404                                                         |
+    | instance | /haalcentraal/api/brp/bestaat-niet                          |
