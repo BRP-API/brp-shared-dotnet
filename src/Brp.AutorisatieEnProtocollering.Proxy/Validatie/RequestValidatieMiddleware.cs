@@ -73,6 +73,11 @@ public class RequestValidatieMiddleware
 
         await _next(httpContext);
 
+        if(!await httpContext.HandleNotFound())
+        {
+            return;
+        }
+
         var geleverdePls = httpContext.Response.Headers["x-geleverde-pls"];
         if (!string.IsNullOrWhiteSpace(geleverdePls))
         {
