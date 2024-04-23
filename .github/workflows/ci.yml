@@ -99,11 +99,11 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
         with:
-          source-directory: test-reports
+          source-directory: test-reports/cucumber-js/reports
           destination-repository-name: brp-api.github.io
           destination-github-username: BRP-API
-          target-branch: test-reports/autorisatie-en-protocollering-${{ needs.build.outputs.build_run }}
-          commit-message: "build: ${{ needs.build.outputs.build_run }}"
+          target-branch: test-reports/autorisatie-en-protocollering
+          commit-message: "test rapporten van build: ${{ needs.build.outputs.build_run }}"
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2.1.0
         with:
