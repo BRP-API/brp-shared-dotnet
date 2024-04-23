@@ -8,9 +8,6 @@ on:
       - .github/workflows/ci.yml
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 env:
   DOTNET_VERSION: 6.0.x
   DOTNET_SOLUTION: src/brp-shared.sln
@@ -100,7 +97,7 @@ jobs:
         if: always()
         uses: tech-thinker/push-to-repo@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
         with:
           source-directory: test-reports
           destination-repository-name: brp-api.github.io
