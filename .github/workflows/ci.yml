@@ -100,7 +100,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
         with:
           source-directory: test-reports
-          destination-repository-name: brp-api/brp-api.github.io
+          destination-repository-name: https://github.com/BRP-API/brp-api.github.io
           destination-github-username: ${{ github.actor }}
           target-branch: autorisatie-protocollering-${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
       - name: Login to GitHub Container Registry
