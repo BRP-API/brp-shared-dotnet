@@ -3,25 +3,9 @@
 @autorisatie
 Functionaliteit: autorisatie adressering adresregels PersoonBeperkt 
 
-    Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | naam                              | waarde          |
-      | gemeentecode (92.10)              | 0599            |
-      | straatnaam (11.10)                | Borgesiusstraat |
-      | huisnummer (11.20)                | 103             |
-      | postcode (11.60)                  | 2497BV          |
-      | woonplaats (11.70)                | Scheveningen    |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | naam                  | waarde   |
-      | geslachtsnaam (02.40) | Maassen  |
-      | geboortedatum (03.10) | 19830526 |
-      En de persoon is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
-
-
   Regel: Vragen met fields om een adres in adressering wanneer de gebruiker niet geautoriseerd is voor (een) betreffend adresgegeven, geeft een foutmelding
 
+    @geen-protocollering
     Abstract Scenario: Afnemer vraagt om <fields> en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)    | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -35,7 +19,7 @@ Functionaliteit: autorisatie adressering adresregels PersoonBeperkt
       | geslachtsnaam | Maassen                             |
       | geboortedatum | 1983-05-26                          |
       | fields        | <fields>                            |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | fields                            | minimale autorisatie      |

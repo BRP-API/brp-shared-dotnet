@@ -48,9 +48,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -80,9 +77,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En adres 'A1' heeft de volgende gegevens
       | gemeentecode (92.10) | identificatiecode nummeraanduiding (11.90) |
       | 0599                 | 0599200000219679                           |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                          | waarde                               |
       | type                          | ZoekMetNummeraanduidingIdentificatie |
@@ -105,9 +99,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam          | waarde                              |
       | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
@@ -136,9 +127,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                                                            |
       | type                | RaadpleegMetBurgerservicenummer                                   |
@@ -160,9 +148,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                                       |
       | type                | RaadpleegMetBurgerservicenummer              |
@@ -184,9 +169,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) | aanduiding naamgebruik (61.10) |
-      | 19830526              | Maassen               | Pieter            | M                           | E                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -209,6 +191,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
 
   Regel: Een veld dat automatisch wordt meegeleverd vereist geen autorisatie voor dat veld
 
+    @geen-protocollering
     Scenario: Afnemer heeft onderzoek, geheimhouding, opschorting, rni en verificatie en heeft dat niet in de autorisatie
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -235,11 +218,12 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | type                | RaadpleegMetBurgerservicenummer        |
       | burgerservicenummer | 000000024                              |
       | fields              | burgerservicenummer,naam.geslachtsnaam |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
 
   Regel: voor het vragen en beoordelen van gegevens is geen autorisatie nodig voor gebruik van indicatie onjuist (84.10)
 
+    @geen-protocollering
     Scenario: kindgegevens zijn gecorrigeerd (zijn onjuist) en afnemer is heeft geen autorisatie voor indicatie onjuist (98410) 
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -270,13 +254,14 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | type                | RaadpleegMetBurgerservicenummer                 |
       | burgerservicenummer | 000000061                                       |
       | fields              | kinderen.naam.voornamen,kinderen.geboorte.datum |
-      Dan heeft de response een persoon zonder kinderen
+      Dan heeft de response 0 personen
 
 
   Regel: Een gemeente als afnemer is geautoriseerd voor alle zoekvragen
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
+    @geen-protocollering
     Abstract Scenario: Gemeente is niet geautoriseerd voor de gebruikte zoekparameter
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -285,18 +270,12 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | naam         | waarde |
       | afnemerID    | 000008 |
       | gemeenteCode | 0800   |
-      En adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10)        | identificatiecode nummeraanduiding (11.90) |
-      | <gemeente van inschrijving> | 0800200000219679                           |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | <gemeente van inschrijving>       |
       Als personen wordt gezocht met de volgende parameters
       | naam                          | waarde                               |
       | type                          | ZoekMetNummeraanduidingIdentificatie |
       | nummeraanduidingIdentificatie | 0800200000219679                     |
       | fields                        | burgerservicenummer                  |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | gemeente van inschrijving | omschrijving                    |
@@ -307,6 +286,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
+    @geen-protocollering
     Abstract Scenario: Gemeente raadpleegt een <omschrijving> en fields vraagt om partners.geslacht (50410) dat niet in de autorisatie zit
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -325,11 +305,11 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | geslachtsnaam (02.40) | geslachtsaanduiding (04.10) |
       | Groenen               | M                           |
       Als personen wordt gezocht met de volgende parameters
-      | naam                    | waarde                          |
-      | type                    | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer     | 000000024                       |
-      | fields                  | partners.geslacht               |
-      Dan heeft de response 1 persoon
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | partners.geslacht               |
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | gemeente van inschrijving | omschrijving                    |
@@ -347,9 +327,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -375,12 +352,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | identificatiecode nummeraanduiding (11.90) |
-      | 0599                 | 0599200000219679                           |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                          | waarde                               |
       | type                          | ZoekMetNummeraanduidingIdentificatie |
@@ -406,12 +377,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | straatnaam (11.10) |
-      | 0599                 | Plein              |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -425,6 +390,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | code     | unauthorizedField                                                       |
       | instance | /haalcentraal/api/brp/personen                                          |
 
+    @geen-protocollering
     Scenario: Autorisatie voor gevraagd veld is toegevoegd
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
@@ -435,20 +401,14 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En adres 'A1' heeft de volgende gegevens
-      | naam                 | waarde          |
-      | gemeentecode (92.10) | 0599            |
-      | straatnaam (11.10)   | Borgesiusstraat |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaats.functieAdres     |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
+    @geen-protocollering
     Scenario: Autorisatie heeft einddatum in de toekomst
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
@@ -456,18 +416,12 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | straatnaam (11.10) |
-      | 0599                 | Plein              |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaats.functieAdres     |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
 
   Regel: Alleen een autorisatie tabelregel waarbij de Datum ingang (35.99.98) gelijk is aan vandaag of in het verleden ligt wordt gebruikt
@@ -480,9 +434,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -497,6 +448,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | code     | unauthorized                                                |
       | instance | /haalcentraal/api/brp/personen                              |
 
+    @geen-protocollering
     Scenario: Autorisatie voor ad hoc gegevensverstrekking is vandaag ingegaan
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -504,12 +456,51 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) | voornamen (02.10) | geslachtsaanduiding (04.10) |
-      | 19830526              | Maassen               | Pieter            | M                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | burgerservicenummer             |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
+
+    @fout-case
+    Scenario: Autorisatie voor gevraagd gegeven wordt in toekomstige regel toegevoegd
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
+      | 010120 010210                   | N                        | 20201128                | morgen                                  |
+      En de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      | 010120 010210 010240            | N                        | morgen                  |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+      Als personen wordt gezocht met de volgende parameters
+      | naam                | waarde                                 |
+      | type                | RaadpleegMetBurgerservicenummer        |
+      | burgerservicenummer | 000000024                              |
+      | fields              | burgerservicenummer,naam.geslachtsnaam |
+      Dan heeft de response de volgende gegevens
+      | naam     | waarde                                                                  |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
+      | status   | 403                                                                     |
+      | code     | unauthorizedField                                                       |
+      | instance | /haalcentraal/api/brp/personen                                          |
+
+    @geen-protocollering
+    Scenario: Autorisatie voor gevraagd gegeven wordt vanaf morgen ingetrokken
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
+      | 010120 010210 010240            | N                        | 20201128                | morgen                                  |
+      En de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      | 010120 010210                   | N                        | morgen                  |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+      Als personen wordt gezocht met de volgende parameters
+      | naam                | waarde                                 |
+      | type                | RaadpleegMetBurgerservicenummer        |
+      | burgerservicenummer | 000000024                              |
+      | fields              | burgerservicenummer,naam.geslachtsnaam |
+      Dan heeft de response 0 personen

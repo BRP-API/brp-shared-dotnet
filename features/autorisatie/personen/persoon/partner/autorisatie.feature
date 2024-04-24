@@ -3,39 +3,9 @@
 @autorisatie
 Functionaliteit: autorisatie partners
 
-    Achtergrond:
-      Gegeven de persoon met burgerservicenummer '000000024' heeft een 'partner' met de volgende gegevens
-      | naam                                                                | waarde    |
-      | burgerservicenummer (01.20)                                         | 000000188 |
-      | voornamen (02.10)                                                   | Pieter    |
-      | adellijke titel of predicaat (02.20)                                | JH        |
-      | voorvoegsel (02.30)                                                 | van den   |
-      | geslachtsnaam (02.40)                                               | Aedel     |
-      | geboortedatum (03.10)                                               | 19580701  |
-      | geboorteplaats (03.20)                                              | Berlijn   |
-      | geboorteland (03.30)                                                | 6029      |
-      | geslachtsaanduiding (04.10)                                         | M         |
-      | datum huwelijkssluiting/aangaan geregistreerd partnerschap (06.10)  | 20010808  |
-      | plaats huwelijkssluiting/aangaan geregistreerd partnerschap (06.20) | Parijs    |
-      | land huwelijkssluiting/aangaan geregistreerd partnerschap (06.30)   | 5002      |
-      | soort verbintenis (15.10)                                           | P         |
-      En de 'partner' is gewijzigd naar de volgende gegevens
-      | naam                                                         | waarde    |
-      | burgerservicenummer (01.20)                                  | 000000188 |
-      | voornamen (02.10)                                            | Pieter    |
-      | adellijke titel of predicaat (02.20)                         | JH        |
-      | voorvoegsel (02.30)                                          | van den   |
-      | geslachtsnaam (02.40)                                        | Aedel     |
-      | geboortedatum (03.10)                                        | 19580701  |
-      | geboorteplaats (03.20)                                       | Berlijn   |
-      | geboorteland (03.30)                                         | 6029      |
-      | geslachtsaanduiding (04.10)                                  | M         |
-      | datum ontbinding huwelijk/geregistreerd partnerschap (07.10) | 20180317  |
-      | soort verbintenis (15.10)                                    | P         |
-
-
   Regel: Wanneer met fields gevraagd wordt om een veld waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
 
+    @geen-protocollering
     Abstract Scenario: Afnemer vraagt om partners.<fields> en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -48,7 +18,7 @@ Functionaliteit: autorisatie partners
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | partners.<fields>               |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | fields                                          | ad hoc rubrieken               |
@@ -79,6 +49,7 @@ Functionaliteit: autorisatie partners
       | ontbindingHuwelijkPartnerschap.datum            | 50710                          |
       | soortVerbintenis                                | 51510                          |
 
+    @geen-protocollering
     Scenario: Afnemer vraagt om partners en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)                                                                  | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -91,7 +62,7 @@ Functionaliteit: autorisatie partners
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | partners                        |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
     @fout-case
     Abstract Scenario: Afnemer vraagt om partners en is niet geautoriseerd voor <missende autorisatie>
@@ -196,6 +167,7 @@ Functionaliteit: autorisatie partners
 
   Regel: voor het vragen en beoordelen van partnergegevens is geen autorisatie nodig voor indicatie onjuist (58410)
 
+    @geen-protocollering
     Scenario: huwelijk is onjuist en afnemer heeft geen autorisatie voor indicatie onjuist (58410)
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)            | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -228,4 +200,4 @@ Functionaliteit: autorisatie partners
       | type                | RaadpleegMetBurgerservicenummer            |
       | burgerservicenummer | 000000061                                  |
       | fields              | partners.naam,partners.burgerservicenummer |
-      Dan heeft de response een persoon zonder partners
+      Dan heeft de response 0 personen

@@ -10,15 +10,12 @@ Functionaliteit: autorisatie gegevens van immigratie van Persoon
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |
       | afnemerID    | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) |
-      | 19830526              | Maassen               |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | <fields>                        |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | fields                                           | ad hoc rubrieken          |
@@ -44,9 +41,6 @@ Functionaliteit: autorisatie gegevens van immigratie van Persoon
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |
       | afnemerID    | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | geboortedatum (03.10) | geslachtsnaam (02.40) |
-      | 19830526              | Maassen               |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |

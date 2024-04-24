@@ -3,24 +3,10 @@
 @autorisatie
 Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
-    Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | naam                         | waarde          |
-      | gemeentecode (92.10)         | 0518            |
-      | straatnaam (11.10)           | Borgesiusstraat |
-      | huisnummer (11.20)           | 103             |
-      | huisletter (11.30)           | b               |
-      | huisnummertoevoeging (11.40) | 2               |
-      | postcode (11.60)             | 2497BV          |
-      | woonplaats (11.70)           | Scheveningen    |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 19860801                           |
-
-
   Regel: Wanneer met fields gevraagd wordt om een veld waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     Om een veld te mogen vragen moet de afnemer geautoriseerd zijn voor alle LO BRP rubrieken waar het veld mee gevuld of van afgeleid wordt
 
+    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <gevraagd veld>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -33,7 +19,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer     |
       | burgerservicenummer | 000000024                           |
       | fields              | burgerservicenummer,<gevraagd veld> |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | gevraagd veld                                                     | ad hoc rubrieken                                                                                             |
@@ -220,7 +206,8 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | datumIngangGeldigheid.onbekend                  | 10120 80910 81010 81030 81110 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 81310 81320 81330 81340 81350 PAVP01 | 88510                |
 
   Regel: Een gemeente als afnemer is geautoriseerd voor alle verblijfplaats gegevens
-     
+
+    @geen-protocollering     
     Abstract Scenario: Gemeente vraagt om velden in verblijfplaats en er zit geen enkel verblijfplaatsgegeven in de autorisatie
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -234,7 +221,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | <fields>                        |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | fields                                       |
@@ -252,6 +239,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     - 81210: locatiebeschrijving
     - 81310: land
 
+    @geen-protocollering
     Scenario: Afnemer heeft de minimale autorisatie voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -264,7 +252,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaats.type             |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
     @fout-case
     Abstract Scenario: Afnemer is niet geautoriseerd voor <missende autorisatie> die nodig is voor verblijfplaats type
@@ -296,6 +284,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
   Regel: de 'verblijfplaatsBinnenland' field alias moet worden gebruikt door een consumer die niet is geautoriseerd voor het bevragen van 'verblijfplaats buitenland' velden
 
+    @geen-protocollering
     Abstract Scenario: Afnemer vraagt om alleen binnengemeentelijke verblijfplaatsgegevens, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -308,7 +297,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | <fields>                        |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | fields                                                                      | ad hoc rubrieken                                                                     |
@@ -450,6 +439,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     - 81110: straatnaam
     - 81210: locatiebeschrijving
 
+    @geen-protocollering
     Scenario: Afnemer heeft de minimale autorisatie voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -462,7 +452,7 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaatsBinnenland.type   |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
     @fout-case
     Abstract Scenario: Afnemer is niet geautoriseerd voor <missende autorisatie> die nodig is voor verblijfplaats type

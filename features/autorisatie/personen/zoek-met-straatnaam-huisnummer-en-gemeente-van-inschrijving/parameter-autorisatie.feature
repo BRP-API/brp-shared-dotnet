@@ -3,30 +3,6 @@
 @autorisatie
 Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeenteVanInschrijving
 
-    Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | naam                         | waarde          |
-      | gemeentecode (92.10)         | 0800            |
-      | straatnaam (11.10)           | Borgesiusstraat |
-      | huisnummer (11.20)           | 123             |
-      | huisletter (11.30)           | b               |
-      | huisnummertoevoeging (11.40) | 2               |
-      | postcode (11.60)             | 2497BV          |
-      En adres 'A2' heeft de volgende gegevens
-      | naam                         | waarde     |
-      | gemeentecode (92.10)         | 0599       |
-      | straatnaam (11.10)           | Koolsingel |
-      | huisnummer (11.20)           | 45         |
-      | huisletter (11.30)           | a          |
-      | huisnummertoevoeging (11.40) | III        |
-      | postcode (11.60)             | 4321XY     |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0800                              |
-      En de persoon met burgerservicenummer '000000048' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0599                              |
-
   Regel: Wanneer een parameter wordt gebruikt van een veld waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     
     @fout-case
@@ -89,6 +65,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeente
       | code     | unauthorizedParameter                                                                          |
       | instance | /haalcentraal/api/brp/personen                                                                 |
 
+    @geen-protocollering
     Scenario: Afnemer zoekt met alleen de verplichte parameters en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -104,8 +81,9 @@ Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeente
       | huisnummer              | 45                                               |
       | gemeenteVanInschrijving | 0599                                             |
       | fields                  | burgerservicenummer                              |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
+    @geen-protocollering
     Abstract Scenario: Afnemer zoekt met de verplichte parameters en <extra parameter> en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)                   | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -121,7 +99,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeente
       | gemeenteVanInschrijving | 0599                                             |
       | <extra parameter>       | <waarde>                                         |
       | fields                  | burgerservicenummer                              |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | extra parameter      | rubriek extra parameter | waarde |
@@ -134,6 +112,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeente
     en die is gelijk aan de waarde van gemeenteCode in de 'claim', 
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
+    @geen-protocollering
     Scenario: Gemeente is niet geautoriseerd voor de zoekparameters maar zoekt alleen eigen inwoners
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -151,5 +130,4 @@ Functionaliteit: autorisatie op parameters bij ZoekMetStraatHuisnummerEnGemeente
       | huisnummertoevoeging    | 2                                                |
       | gemeenteVanInschrijving | 0800                                             |
       | fields                  | burgerservicenummer                              |
-      Dan heeft de response 1 persoon
-      
+      Dan heeft de response 0 personen

@@ -3,19 +3,6 @@
 @autorisatie
 Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
 
-    Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | naam                         | waarde          |
-      | gemeentecode (92.10)         | 0800            |
-      | straatnaam (11.10)           | Borgesiusstraat |
-      | huisnummer (11.20)           | 103             |
-      | huisletter (11.30)           | b               |
-      | huisnummertoevoeging (11.40) | 2               |
-      | postcode (11.60)             | 2497BV          |
-      En de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0800                              |
-
   Regel: Wanneer een parameter wordt gebruikt van een veld waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     
     @fout-case
@@ -77,6 +64,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       | code     | unauthorizedParameter                                                                          |
       | instance | /haalcentraal/api/brp/personen                                                                 |
 
+    @geen-protocollering
     Scenario: Zoeken met parameters postcode en huisnummer waarvoor de afnemer wel geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -90,9 +78,10 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       | postcode                | 2497BV                      |
       | huisnummer              | 103                         |
       | fields                  | burgerservicenummer         |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
 
+    @geen-protocollering
     Abstract Scenario: Zoeken met parameters postcode, huisnummer en <extra parameter> waarvoor de afnemer wel geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)             | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -107,7 +96,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       | huisnummer        | 103                         |
       | <extra parameter> | <waarde>                    |
       | fields            | burgerservicenummer         |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | extra parameter      | rubriek extra parameter | waarde |
@@ -120,6 +109,7 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
     en die is gelijk aan de waarde van gemeenteCode in de 'claim', 
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
+    @geen-protocollering
     Scenario: Gemeente is niet geautoriseerd voor de zoekparameters maar zoekt alleen eigen inwoners
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -137,5 +127,4 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       | huisnummertoevoeging    | 2                           |
       | gemeenteVanInschrijving | 0800                        |
       | fields                  | burgerservicenummer         |
-      Dan heeft de response 1 persoon
-      
+      Dan heeft de response 0 personen

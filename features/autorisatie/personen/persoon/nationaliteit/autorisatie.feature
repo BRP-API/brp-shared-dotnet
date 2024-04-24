@@ -3,11 +3,6 @@
 @autorisatie
 Functionaliteit: autorisatie nationaliteitgegevens Persoon
 
-    Achtergrond:
-      Gegeven de persoon met burgerservicenummer '000000024' heeft een 'nationaliteit' met de volgende gegevens
-      | naam                  | waarde |
-      | nationaliteit (05.10) | 0001   |
-
   Regel: Wanneer met fields gevraagd wordt om een veld waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     Om een veld te mogen vragen moet de afnemer geautoriseerd zijn voor de LO BRP rubriek waar het veld mee gevuld wordt
 
@@ -51,6 +46,7 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | nationaliteiten                                   | 40510 46510 48510 | 46310                |
       | nationaliteiten                                   | 40510 46310 46510 | 48510                |
 
+    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <gevraagd veld>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -63,7 +59,7 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer     |
       | burgerservicenummer | 000000024                           |
       | fields              | burgerservicenummer,<gevraagd veld> |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
 
       Voorbeelden:
       | gevraagd veld                                     | ad hoc rubrieken  |
@@ -105,6 +101,7 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | code     | unauthorizedField                                                       |
       | instance | /haalcentraal/api/brp/personen                                          |
 
+    @geen-protocollering
     Scenario: Afnemer vraagt type, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -117,4 +114,4 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | type                | RaadpleegMetBurgerservicenummer          |
       | burgerservicenummer | 000000024                                |
       | fields              | burgerservicenummer,nationaliteiten.type |
-      Dan heeft de response 1 persoon
+      Dan heeft de response 0 personen
