@@ -9,6 +9,7 @@ class World {
         this.context.proxyUrl = 'http://localhost:5002/haalcentraal/api/brp'
 
         this.context.gezagDataPath = '';
+        this.context.downstreamApiDataPath = './test-data/DownstreamApi';
 
         this.context.sql = {
             useDb: true,

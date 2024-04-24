@@ -14,6 +14,7 @@ services:
       - "5010:5010"
     volumes:
       - ../test-data/logs:/var/log
+      - ../test-data/DownstreamApi:/app/Data
     networks:
       - brp-api-network
 

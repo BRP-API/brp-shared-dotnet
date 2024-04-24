@@ -4,7 +4,7 @@ services:
 
   identityserver:
     container_name: identityserver
-    image: ghcr.io/brp-api/identityserver
+    image: ghcr.io/brp-api/identityserver:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
       - ASPNETCORE_URLS=http://+:6000
