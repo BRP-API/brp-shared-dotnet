@@ -65,6 +65,7 @@ Regel: Wanneer een parameter wordt gebruikt van een veld waarvoor de gebruiker n
     | fields                           | burgerservicenummer                     |
     Dan heeft de response 0 personen
 
+  @geen-protocollering
   Scenario: Afnemer zoekt met adresseerbaarObjectIdentificatie en gemeenteVanInschrijving en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
     Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
     | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -84,6 +85,7 @@ Regel: Een gemeente als afnemer is geautoriseerd voor alle zoekvragen
   Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
   dan wordt niet gekeken naar de autorisatie van de afnemer
 
+  @geen-protocollering
   Scenario: Gemeente is niet geautoriseerd voor de zoekparameters
     Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
     | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
