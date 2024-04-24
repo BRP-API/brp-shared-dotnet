@@ -1,5 +1,15 @@
 const report = require('multiple-cucumber-html-reporter');
 
+const customData = {
+    title: 'BRP API',
+    data: [
+        { label: 'Applicatie', value: 'Autorisatie & Protocollering' },
+        { label: 'Versie', value: `${process.argv[2]}` },
+        { label: 'Build', value: `${process.argv[3]}`},
+        { label: 'Branch', value: `${process.argv[4]}`}
+    ]
+};
+
 report.generate({
     jsonDir: 'test-reports/cucumber-js/step-definitions',
     reportPath: 'test-reports/cucumber-js/reports/step-definitions',
@@ -12,14 +22,7 @@ report.generate({
     reportPath: 'test-reports/cucumber-js/reports/personen/input-validatie',
     reportName: 'Personen input validatie features',
     hideMetadata: true,
-    customData: {
-        title: 'BRP API',
-        data: [
-            { label: 'Applicatie', value: 'Autorisatie & Protocollering' },
-            { label: 'Versie', value: `${process.argv[2]}` },
-            { label: 'Build', value: `${process.argv[3]}`}
-        ]
-    }
+    customData: customData
 });
 
 report.generate({
@@ -27,14 +30,7 @@ report.generate({
     reportPath: 'test-reports/cucumber-js/reports/personen/autorisatie',
     reportName: 'Personen autorisatie features',
     hideMetadata: true,
-    customData: {
-        title: 'BRP API',
-        data: [
-            { label: 'Applicatie', value: 'Autorisatie & Protocollering' },
-            { label: 'Versie', value: `${process.argv[2]}` },
-            { label: 'Build', value: `${process.argv[3]}`}
-        ]
-    }
+    customData: customData
 });
 
 report.generate({
@@ -42,12 +38,5 @@ report.generate({
     reportPath: 'test-reports/cucumber-js/reports/personen/protocollering',
     reportName: 'Personen protocollering features',
     hideMetadata: true,
-    customData: {
-        title: 'BRP API',
-        data: [
-            { label: 'Applicatie', value: 'Autorisatie & Protocollering' },
-            { label: 'Versie', value: `${process.argv[2]}` },
-            { label: 'Build', value: `${process.argv[3]}`}
-        ]
-    }
+    customData: customData
 });
