@@ -14,8 +14,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/input-validatie/test
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/autorisatie/test-result.json \
                 -f summary:./test-reports/cucumber-js/personen/autorisatie/test-result-summary.txt \
                 -f summary \
-                features/autorisatie/personen \
-                --tags @fout-case
+                features/autorisatie/personen
 
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-result.json \
                 -f summary:./test-reports/cucumber-js/personen/protocollering/test-result-summary.txt \
