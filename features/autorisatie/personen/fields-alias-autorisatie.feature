@@ -90,8 +90,8 @@ Regel: de 'verblijfplaatsBinnenland' field alias moet worden gebruikt door een c
     | instance | /haalcentraal/api/brp/personen                                          |
 
     Voorbeelden:
-    | field                             |
-    | verblijfplaats                    |
-    | verblijfplaats.datumVan           |
-    | verblijfplaats.verblijfadres      |
-    | verblijfplaats.verblijfadres.land |
+    | field                               |
+    | verblijfplaats                      |
+    | verblijfplaats.verblijfadres        |
+    | verblijfplaats.verblijfadres.regel3 |
+    | verblijfplaats.verblijfadres.land   |
