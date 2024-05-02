@@ -1,5 +1,6 @@
 #language: nl
 
+@input-validatie
 Functionaliteit: Fout cases bij zoeken en raadplegen van reisdocumenten
 
 Regel: Er moet een valide zoek type worden opgegeven
@@ -8,7 +9,7 @@ Regel: Er moet een valide zoek type worden opgegeven
   Scenario: er zijn geen parameters opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam | waarde |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -16,7 +17,7 @@ Regel: Er moet een valide zoek type worden opgegeven
     | detail   | De foutieve parameter(s) zijn: type.                        |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name | reason                  |
     | required | type | Parameter is verplicht. |
 
@@ -25,7 +26,7 @@ Regel: Er moet een valide zoek type worden opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam               | waarde    |
     | reisdocumentnummer | NE3663258 |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -33,7 +34,7 @@ Regel: Er moet een valide zoek type worden opgegeven
     | detail   | De foutieve parameter(s) zijn: type.                        |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name | reason                  |
     | required | type | Parameter is verplicht. |
 
@@ -42,7 +43,7 @@ Regel: Er moet een valide zoek type worden opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam | waarde      |
     | type | <zoek type> |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -50,7 +51,7 @@ Regel: Er moet een valide zoek type worden opgegeven
     | detail   | De foutieve parameter(s) zijn: type.                        |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code  | name | reason                           |
     | value | type | Waarde is geen geldig zoek type. |
 
@@ -70,7 +71,7 @@ Regel: Voor de response body wordt als content type en charset respectievelijk a
     | <naam parameter> | <waarde parameter> |
     | fields           | reisdocumentnummer |
     | header: Accept   | application/xml    |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.6 |
     | title    | Gevraagde content type wordt niet ondersteund.              |
@@ -84,6 +85,7 @@ Regel: Voor de response body wordt als content type en charset respectievelijk a
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
 
+  @geen-protocollering
   Abstract Scenario: '<accept media type>' wordt opgegeven als Accept content type
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                | waarde                     |
@@ -107,6 +109,7 @@ Regel: Voor de response body wordt als content type en charset respectievelijk a
 
 Regel: Voor de response body is application/json de default Accept waarde en is utf-8 de default charset waarde
 
+  @geen-protocollering
   Abstract Scenario: Er is geen Accept header met waarde opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -120,6 +123,7 @@ Regel: Voor de response body is application/json de default Accept waarde en is 
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
 
+  @geen-protocollering
   Abstract Scenario: Er is een lege waarde opgegeven voor de Accept header
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -144,7 +148,7 @@ Regel: Voor de request body wordt als content type en charset respectievelijk al
     | <naam parameter>     | <waarde parameter> |
     | fields               | reisdocumentnummer |
     | header: Content-Type | <media type>       |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                       |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.13 |
     | title    | Media Type wordt niet ondersteund.                           |
@@ -162,6 +166,7 @@ Regel: Voor de request body wordt als content type en charset respectievelijk al
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        | */*; charset=utf-8               |
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        | */*;charset=utf-8                |
 
+  @geen-protocollering
   Abstract Scenario: '<media type>' is opgegeven als Content-Type waarde
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                    | waarde                     |
@@ -181,6 +186,7 @@ Regel: Voor de request body wordt als content type en charset respectievelijk al
 
 Regel: Voor de request body is application/json de default Content-Type waarde en is utf-8 de default charset waarde
 
+  @geen-protocollering
   Abstract Scenario: Er is geen Content-Type header met waarde opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -194,6 +200,7 @@ Regel: Voor de request body is application/json de default Content-Type waarde e
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
 
+  @geen-protocollering
   Abstract Scenario: Er is een lege waarde opgegeven voor de Content-Type header
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                 | waarde                     |
@@ -213,7 +220,7 @@ Regel: Om privacy en security redenen moet een bevraging van reisdocumenten word
   @fout-case
   Abstract Scenario: reisdocumenten wordt gezocht met een '<aanroep type>' aanroep
     Als reisdocumenten wordt gezocht met een '<aanroep type>' aanroep
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.5 |
     | title    | Gebruikte bevragingsmethode is niet toegestaan.             |

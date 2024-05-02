@@ -1,5 +1,6 @@
 #language: nl
 
+@input-validatie
 Functionaliteit: Fout cases bij vragen van reisdocument velden met fields
 
 Regel: De fields parameter is een verplichte parameter
@@ -10,7 +11,7 @@ Regel: De fields parameter is een verplichte parameter
     | naam             | waarde             |
     | type             | <zoek type>        |
     | <parameter naam> | <parameter waarde> |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -18,7 +19,7 @@ Regel: De fields parameter is een verplichte parameter
     | detail   | De foutieve parameter(s) zijn: fields.                      |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name   | reason                  |
     | required | fields | Parameter is verplicht. |
 
@@ -36,7 +37,7 @@ Regel: De fields parameter bevat een lijst met minimaal één veld pad
     | type             | <zoek type>        |
     | <parameter naam> | <parameter waarde> |
     | fields           |                    |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -44,7 +45,7 @@ Regel: De fields parameter bevat een lijst met minimaal één veld pad
     | detail   | De foutieve parameter(s) zijn: fields.                      |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name   | reason                          |
     | minItems | fields | Array bevat minder dan 1 items. |
 
@@ -62,7 +63,7 @@ Regel: De fields parameter bevat een lijst met maximaal 25 veld paden
     | type             | <zoek type>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
     | <parameter naam> | <parameter waarde>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
     | fields           | reisdocumentnummer,soort,soort.code,soort.omschrijving,datumEindeGeldigheid,datumEindeGeldigheid.type,datumEindeGeldigheid.datum,houder,houder.burgerservicenummer,inhoudingOfVermissing,inhoudingOfVermissing.aanduiding,inhoudingOfVermissing.datum,reisdocumentnummer,soort,soort.code,soort.omschrijving,datumEindeGeldigheid,datumEindeGeldigheid.type,datumEindeGeldigheid.datum,houder,houder.burgerservicenummer,inhoudingOfVermissing,inhoudingOfVermissing.aanduiding,inhoudingOfVermissing.datum,reisdocumentnummer,reisdocumentnummer |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -70,7 +71,7 @@ Regel: De fields parameter bevat een lijst met maximaal 25 veld paden
     | detail   | De foutieve parameter(s) zijn: fields.                      |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name   | reason                         |
     | maxItems | fields | Array bevat meer dan 25 items. |
 
@@ -92,7 +93,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | type             | <zoek type>        |
     | <parameter naam> | <parameter waarde> |
     | fields           | <fields>           |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -100,7 +101,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | detail   | De foutieve parameter(s) zijn: <index veld pad>.            |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code    | name             | reason                                                   |
     | pattern | <index veld pad> | Waarde voldoet niet aan patroon ^[a-zA-Z0-9\._]{1,200}$. |
 
@@ -120,7 +121,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | type             | <zoek type>        |
     | <parameter naam> | <parameter waarde> |
     | fields           | <fields>           |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -128,7 +129,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | detail   | De foutieve parameter(s) zijn: <index veld pad>.            |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code   | name             | reason                                       |
     | fields | <index veld pad> | Parameter bevat een niet bestaande veldnaam. |
 
@@ -148,7 +149,7 @@ Regel: Automatisch geleverde velden mogen niet worden gevraagd
     | type             | <zoek type>        |
     | <parameter naam> | <parameter waarde> |
     | fields           | <fields>           |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -156,7 +157,7 @@ Regel: Automatisch geleverde velden mogen niet worden gevraagd
     | detail   | De foutieve parameter(s) zijn: fields[0].                   |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code   | name      | reason                                        |
     | fields | fields[0] | Parameter bevat een niet toegestane veldnaam. |
 

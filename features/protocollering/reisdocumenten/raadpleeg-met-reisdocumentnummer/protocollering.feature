@@ -1,6 +1,6 @@
 #language: nl
 
-@gba @protocollering
+@protocollering
 Functionaliteit: Protocolleren van RaadpleegMetReisdocumentnummer
   Zoeken en raadplegen van gegevens van burgers worden "geprotocolleerd" (formeel gelogd).
 
@@ -24,15 +24,13 @@ Functionaliteit: Protocolleren van RaadpleegMetReisdocumentnummer
   Regel: Zoekrubrieken worden vertaald naar rubrieknummers, oplopend gesorteerd op rubrieknummer en gescheiden door komma en spatie
 
     Scenario: Raadpleeg een reisdocument op reisdocumentnummer
-      Gegeven de persoon met burgerservicenummer '000000012' heeft een 'reisdocument' met de volgende gegevens
-      | naam                                        | waarde    |
-      | soort reisdocument (35.10)                  | PN        |
-      | nummer reisdocument (35.20)                 | NE3663258 |
-      | datum einde geldigheid reisdocument (35.50) | 20240506  |
-      En de persoon heeft de volgende 'verblijfplaats' gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0800                              |
-      Als gba reisdocumenten wordt gezocht met de volgende parameters
+      Gegeven de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
+      | pl_id |
+      | 1001  |
+      En de response van de downstream api heeft de volgende headers
+      | x-geleverde-pls |
+      | 1001            |
+      Als reisdocumenten wordt gezocht met de volgende parameters
       | naam               | waarde                         |
       | type               | RaadpleegMetReisdocumentnummer |
       | reisdocumentnummer | NE3663258                      |
@@ -44,15 +42,13 @@ Functionaliteit: Protocolleren van RaadpleegMetReisdocumentnummer
   Regel: Gevraagde velden in fields worden vertaald naar rubrieknummers, oplopend gesorteerd en gescheiden door komma en spatie
 
     Abstract Scenario: Gevraagde veld <fields veld> wordt vastgelegd in 'request_gevraagde_rubrieken' als <rubrieknummer>
-      Gegeven de persoon met burgerservicenummer '000000012' heeft een 'reisdocument' met de volgende gegevens
-      | naam                                        | waarde    |
-      | soort reisdocument (35.10)                  | PN        |
-      | nummer reisdocument (35.20)                 | NE3663258 |
-      | datum einde geldigheid reisdocument (35.50) | 20240506  |
-      En de persoon heeft de volgende 'verblijfplaats' gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0800                              |
-      Als gba reisdocumenten wordt gezocht met de volgende parameters
+      Gegeven de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
+      | pl_id |
+      | 1001  |
+      En de response van de downstream api heeft de volgende headers
+      | x-geleverde-pls |
+      | 1001            |
+      Als reisdocumenten wordt gezocht met de volgende parameters
       | naam               | waarde                         |
       | type               | RaadpleegMetReisdocumentnummer |
       | reisdocumentnummer | NE3663258                      |

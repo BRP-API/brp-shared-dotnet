@@ -1,5 +1,6 @@
 #language: nl
 
+@input-validatie
 Functionaliteit: Raadpleeg met reisdocumentnummer - fout cases
 
 Regel: De reisdocumentnummer parameter is een verplichte parameter
@@ -10,7 +11,7 @@ Regel: De reisdocumentnummer parameter is een verplichte parameter
     | naam   | waarde                         |
     | type   | RaadpleegMetReisdocumentnummer |
     | fields | reisdocumentnummer             |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -18,7 +19,7 @@ Regel: De reisdocumentnummer parameter is een verplichte parameter
     | detail   | De foutieve parameter(s) zijn: reisdocumentnummer.          |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name               | reason                  |
     | required | reisdocumentnummer | Parameter is verplicht. |
 
@@ -31,7 +32,7 @@ Regel: De reisdocumentnummer parameter bevat een lijst met minimaal één reisdo
     | type               | RaadpleegMetReisdocumentnummer |
     | reisdocumentnummer |                                |
     | fields             | reisdocumentnummer             |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -39,7 +40,7 @@ Regel: De reisdocumentnummer parameter bevat een lijst met minimaal één reisdo
     | detail   | De foutieve parameter(s) zijn: reisdocumentnummer.          |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name               | reason                          |
     | minItems | reisdocumentnummer | Array bevat minder dan 1 items. |
 
@@ -52,7 +53,7 @@ Regel: Een reisdocumentnummer is een string bestaande uit exact 9 cijfers en hoo
     | type               | RaadpleegMetReisdocumentnummer |
     | reisdocumentnummer | <reisdocumentnummers>          |
     | fields             | reisdocumentnummer             |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -60,7 +61,7 @@ Regel: Een reisdocumentnummer is een string bestaande uit exact 9 cijfers en hoo
     | detail   | De foutieve parameter(s) zijn: reisdocumentnummer[0].       |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code    | name                  | reason                                         |
     | pattern | reisdocumentnummer[0] | Waarde voldoet niet aan patroon ^[A-Z0-9]{9}$. |
 
@@ -80,7 +81,7 @@ Regel: De reisdocumentnummer parameter bevat een lijst van maximaal 1 reisdocume
     | type               | RaadpleegMetReisdocumentnummer |
     | reisdocumentnummer | AB1234567,BC8901234            |
     | fields             | reisdocumentnummer             |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -88,7 +89,7 @@ Regel: De reisdocumentnummer parameter bevat een lijst van maximaal 1 reisdocume
     | detail   | De foutieve parameter(s) zijn: reisdocumentnummer.          |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name               | reason                        |
     | maxItems | reisdocumentnummer | Array bevat meer dan 1 items. |
 
@@ -102,7 +103,7 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
     | reisdocumentnummer      | AB1234567                      |
     | <parameter>             | <waarde>                       |
     | fields                  | reisdocumentnummer             |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -110,7 +111,7 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
     | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code         | name        | reason                      |
     | unknownParam | <parameter> | Parameter is niet verwacht. |
 

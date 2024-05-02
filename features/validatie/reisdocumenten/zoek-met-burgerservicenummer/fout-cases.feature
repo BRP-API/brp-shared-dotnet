@@ -1,5 +1,6 @@
 #language: nl
 
+@input-validatie
 Functionaliteit: Zoek met burgerservicenummer - fout cases
 
 Regel: De burgerservicenummer parameter is een verplichte parameter
@@ -10,7 +11,7 @@ Regel: De burgerservicenummer parameter is een verplichte parameter
     | naam   | waarde                     |
     | type   | ZoekMetBurgerservicenummer |
     | fields | reisdocumentnummer         |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -18,7 +19,7 @@ Regel: De burgerservicenummer parameter is een verplichte parameter
     | detail   | De foutieve parameter(s) zijn: burgerservicenummer.         |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code     | name                | reason                  |
     | required | burgerservicenummer | Parameter is verplicht. |
 
@@ -32,7 +33,7 @@ Regel: Een burgerservicenummer is een string bestaande uit exact 9 cijfers
     | type                | ZoekMetBurgerservicenummer |
     | burgerservicenummer | <burgerservicenummer>      |
     | fields              | reisdocumentnummer         |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -40,7 +41,7 @@ Regel: Een burgerservicenummer is een string bestaande uit exact 9 cijfers
     | detail   | De foutieve parameter(s) zijn: burgerservicenummer.         |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code    | name                | reason                                      |
     | pattern | burgerservicenummer | Waarde voldoet niet aan patroon ^[0-9]{9}$. |
 
@@ -60,7 +61,7 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
     | burgerservicenummer | 123456789                  |
     | <parameter>         | <waarde>                   |
     | fields              | reisdocumentnummer         |
-    Dan heeft de response een object met de volgende gegevens
+    Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
@@ -68,7 +69,7 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
     | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
-    En heeft het object de volgende 'invalidParams' gegevens
+    En heeft de response invalidParams met de volgende gegevens
     | code         | name        | reason                      |
     | unknownParam | <parameter> | Parameter is niet verwacht. |
 
