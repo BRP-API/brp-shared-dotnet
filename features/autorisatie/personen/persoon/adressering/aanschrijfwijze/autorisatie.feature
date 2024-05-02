@@ -37,9 +37,6 @@ Functionaliteit: autorisatie voor aanschrijfwijze
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |
       | afnemerID    | 000008 |
-      En de persoon met burgerservicenummer '000000024' heeft de volgende gegevens
-      | voornamen (02.10) | geslachtsnaam (02.40) | geslachtsaanduiding (04.10) | aanduiding naamgebruik (61.10) |
-      | Pieter            | Maassen               | M                           | E                              |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |

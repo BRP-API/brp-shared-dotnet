@@ -96,30 +96,30 @@ Regel: inclusiefOverledenPersonen is een boolean (true of false waarde)
     |                              |
     | geen boolean                 |
 
-  Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden gebruikt
+Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden gebruikt
 
-    @fout-case
-    Abstract Scenario: <titel>
-      Als personen wordt gezocht met de volgende parameters
-      | naam                             | waarde                                  |
-      | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
-      | adresseerbaarObjectIdentificatie | 0599200051001501                        |
-      | <parameter>                      | <waarde>                                |
-      | fields                           | burgerservicenummer                     |
-      Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                      |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
-      | title    | Een of meerdere parameters zijn niet correct.               |
-      | status   | 400                                                         |
-      | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
-      | code     | paramsValidation                                            |
-      | instance | /haalcentraal/api/brp/personen                              |
-      En heeft de response invalidParams met de volgende gegevens
-      | code         | name        | reason                      |
-      | unknownParam | <parameter> | Parameter is niet verwacht. |
+  @fout-case
+  Abstract Scenario: <titel>
+    Als personen wordt gezocht met de volgende parameters
+    | naam                             | waarde                                  |
+    | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
+    | adresseerbaarObjectIdentificatie | 0599200051001501                        |
+    | <parameter>                      | <waarde>                                |
+    | fields                           | burgerservicenummer                     |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+    | title    | Een of meerdere parameters zijn niet correct.               |
+    | status   | 400                                                         |
+    | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
+    | code     | paramsValidation                                            |
+    | instance | /haalcentraal/api/brp/personen                              |
+    En heeft de response invalidParams met de volgende gegevens
+    | code         | name        | reason                      |
+    | unknownParam | <parameter> | Parameter is niet verwacht. |
 
-      Voorbeelden:
-      | titel                                     | parameter              | waarde     |
-      | zoeken met parameter uit ander zoektype   | voornamen              | Pietje     |
-      | typfout in naam optionele parameter       | gemeenteVanInschijving | 0363       |
-      | zoeken met niet gespecificeerde parameter | bestaatNiet            | een waarde |
+    Voorbeelden:
+    | titel                                     | parameter              | waarde     |
+    | zoeken met parameter uit ander zoektype   | voornamen              | Pietje     |
+    | typfout in naam optionele parameter       | gemeenteVanInschijving | 0363       |
+    | zoeken met niet gespecificeerde parameter | bestaatNiet            | een waarde |

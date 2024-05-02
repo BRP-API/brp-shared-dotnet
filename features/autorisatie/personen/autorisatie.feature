@@ -74,9 +74,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam      | waarde |
       | afnemerID | 000008 |
-      En adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | identificatiecode nummeraanduiding (11.90) |
-      | 0599                 | 0599200000219679                           |
       Als personen wordt gezocht met de volgende parameters
       | naam                          | waarde                               |
       | type                          | ZoekMetNummeraanduidingIdentificatie |
@@ -281,7 +278,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | gemeente van inschrijving | omschrijving                    |
       | 0800                      | eigen inwoner                   |
       | 0530                      | inwoner van een andere gemeente |
-  
+
   Regel: Een gemeente als afnemer is geautoriseerd voor alle gegevens
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
@@ -422,7 +419,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaats.functieAdres     |
       Dan heeft de response 0 personen
-
 
   Regel: Alleen een autorisatie tabelregel waarbij de Datum ingang (35.99.98) gelijk is aan vandaag of in het verleden ligt wordt gebruikt
 

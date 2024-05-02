@@ -308,7 +308,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | verblijfplaats.indicatieVastgesteldVerblijftNietOpAdres        |
 
   @fout-case
-  Scenario: Automatisch geleverd veld <fields> mag niet worden gevraagd bij zoeken
+  Abstract Scenario: Automatisch geleverd veld <fields> mag niet worden gevraagd bij zoeken
     Als personen wordt gezocht met de volgende parameters
     | naam          | waarde                              |
     | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
