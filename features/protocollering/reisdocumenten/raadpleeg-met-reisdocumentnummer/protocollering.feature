@@ -21,15 +21,34 @@ Functionaliteit: Protocolleren van RaadpleegMetReisdocumentnummer
 
   Zowel request_zoek_rubrieken als request_gevraagde_rubrieken bevatten de LO-BRP elementnummers als 6 cijferig rubrieknummer (incl. voorloopnul), gescheiden door komma spatie, en oplopend gesorteerd.
 
-  Regel: Zoekrubrieken worden vertaald naar rubrieknummers, oplopend gesorteerd op rubrieknummer en gescheiden door komma en spatie
-
-    Scenario: Raadpleeg een reisdocument op reisdocumentnummer
-      Gegeven de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
+    Achtergrond:
+      Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | afnemerID | gemeenteCode |
+      | 000008    | 0800         |
+      En de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
       | pl_id |
       | 1001  |
       En de response van de downstream api heeft de volgende headers
       | x-geleverde-pls |
       | 1001            |
+      En de response van de downstream api heeft de volgende body
+      """
+      {
+        "reisdocumenten": [
+          {
+            "houder": {
+              "gemeenteVanInschrijving": {
+                "code": "0800"
+              }
+            }
+          }
+        ]
+      }
+      """
+
+  Regel: Zoekrubrieken worden vertaald naar rubrieknummers, oplopend gesorteerd op rubrieknummer en gescheiden door komma en spatie
+
+    Scenario: Raadpleeg een reisdocument op reisdocumentnummer
       Als reisdocumenten wordt gezocht met de volgende parameters
       | naam               | waarde                         |
       | type               | RaadpleegMetReisdocumentnummer |
@@ -42,12 +61,6 @@ Functionaliteit: Protocolleren van RaadpleegMetReisdocumentnummer
   Regel: Gevraagde velden in fields worden vertaald naar rubrieknummers, oplopend gesorteerd en gescheiden door komma en spatie
 
     Abstract Scenario: Gevraagde veld <fields veld> wordt vastgelegd in 'request_gevraagde_rubrieken' als <rubrieknummer>
-      Gegeven de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
-      | pl_id |
-      | 1001  |
-      En de response van de downstream api heeft de volgende headers
-      | x-geleverde-pls |
-      | 1001            |
       Als reisdocumenten wordt gezocht met de volgende parameters
       | naam               | waarde                         |
       | type               | RaadpleegMetReisdocumentnummer |

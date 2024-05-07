@@ -3,6 +3,11 @@
 @input-validatie
 Functionaliteit: Fout cases bij zoeken en raadplegen van reisdocumenten
 
+  Achtergrond:
+    Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+    | afnemerID | gemeenteCode |
+    | 000008    | 0800         |
+
 Regel: Er moet een valide zoek type worden opgegeven
 
   @fout-case

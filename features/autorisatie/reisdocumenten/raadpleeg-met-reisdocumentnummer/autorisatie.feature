@@ -21,28 +21,44 @@ Functionaliteit: autorisatie voor het gebruik van de API RaadpleegMetReisdocumen
   # To Do (t.z.t.): regels voor leveren persoonsgegevens met geheimhouding aan derde (35.95.12)
   # To Do (t.z.t.): regels voor voorwaarderegel ad hoc (35.95.61)
 
-
-
-    Achtergrond:
-      Gegeven de persoon met burgerservicenummer '000000152' heeft een 'reisdocument' met de volgende gegevens
-      | naam                                                                    | waarde    |
-      | soort reisdocument (35.10)                                              | PN        |
-      | nummer reisdocument (35.20)                                             | NE3663258 |
-      | datum einde geldigheid reisdocument (35.50)                             | 20240506  |
-      | datum inhouding dan wel vermissing Nederlands reisdocument (35.60)      | 20230405  |
-      | aanduiding inhouding dan wel vermissing Nederlands reisdocument (35.70) | I         |
-      En de persoon heeft de volgende 'verblijfplaats' gegevens
-      | gemeente van inschrijving (09.10) |
-      | 0800                              |
-
-
   Regel: Een gemeente als afnemer is geautoriseerd voor alle zoekvragen en alle gegevens voor haar eigen inwoners
+         'gemeentecode' claim komt overeen met 'gemeente van inschrijving' van houder
+
+    @fout-case
+    Scenario: afnemer is geen gemeente
+      Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | afnemerID |
+      | 000008    |
+      Als reisdocumenten wordt gezocht met de volgende parameters
+      | naam               | waarde                         |
+      | type               | RaadpleegMetReisdocumentnummer |
+      | reisdocumentnummer | NE3663258                      |
+      | fields             | reisdocumentnummer             |
+      Dan heeft de response de volgende gegevens
+      | naam     | waarde                                                                      |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                 |
+      | title    | U bent niet geautoriseerd voor deze vraag.                                  |
+      | status   | 403                                                                         |
+      | detail   | Je mag alleen reisdocumenten van inwoners uit de eigen gemeente raadplegen. |
+      | code     | unauthorized                                                                |
+      | instance | /haalcentraal/api/reisdocumenten/reisdocumenten                             |
 
     @geen-protocollering
-    Scenario: Gemeente raadpleegt een reisdocument van een eigen inwoner. 'gemeentecode' claim komt overeen met 'gemeente van inschrijving' van houder
-      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120                           | N                        | 20201128                |
+    Scenario: afnemer is een gemeente en raadpleegt een reisdocument van een eigen inwoner
+      Gegeven de response van de downstream api heeft de volgende body
+      """
+      {
+        "reisdocumenten": [
+          {
+            "houder": {
+              "gemeenteVanInschrijving": {
+                "code": "0800"
+              }
+            }
+          }
+        ]
+      }
+      """
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | afnemerID | gemeenteCode |
       | 000008    | 0800         |
@@ -51,13 +67,24 @@ Functionaliteit: autorisatie voor het gebruik van de API RaadpleegMetReisdocumen
       | type               | RaadpleegMetReisdocumentnummer                                             |
       | reisdocumentnummer | NE3663258                                                                  |
       | fields             | reisdocumentnummer,soort,datumEindeGeldigheid,inhoudingOfVermissing,houder |
-      Dan heeft de response 0 reisdocumenten
+      Dan heeft de response 1 reisdocument
 
     @fout-case
     Scenario: Gemeente raadpleegt een reisdocument van een inwoner van een andere gemeente
-      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120                           | N                        | 20201128                |
+      Gegeven de response van de downstream api heeft de volgende body
+      """
+      {
+        "reisdocumenten": [
+          {
+            "houder": {
+              "gemeenteVanInschrijving": {
+                "code": "0800"
+              }
+            }
+          }
+        ]
+      }
+      """
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |
       | afnemerID    | 000008 |
