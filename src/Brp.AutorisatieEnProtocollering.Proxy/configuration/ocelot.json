@@ -10,6 +10,17 @@
           "Port": "8080"
         }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "DownstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "brp-referentie-api",
+          "Port": "8080"
+        }
+      ]
     }
   ]
 }

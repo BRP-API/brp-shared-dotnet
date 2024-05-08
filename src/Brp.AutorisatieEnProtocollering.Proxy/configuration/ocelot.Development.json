@@ -10,6 +10,17 @@
           "Port": "5010"
         }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "DownstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ]
     }
   ]
 }

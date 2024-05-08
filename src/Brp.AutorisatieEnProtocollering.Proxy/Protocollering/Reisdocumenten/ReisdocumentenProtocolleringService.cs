@@ -1,15 +1,15 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
+﻿using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Reisdocumenten;
 using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Protocollering;
 using Newtonsoft.Json.Linq;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering
+namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Reisdocumenten
 {
-    public class ProtocolleringService : IProtocollering
+    public class ReisdocumentenProtocolleringService : IProtocollering
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ProtocolleringService(IServiceProvider serviceProvider)
+        public ReisdocumentenProtocolleringService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -22,7 +22,7 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering
 
             var input = JObject.Parse(requestBody);
 
-            var zoekElementNrs = input.BepaalElementNrVanZoekParameters();
+            var zoekElementNrs = input.BepaalElementNrVanZoekParameters(Constanten.FieldElementNrDictionary);
             var fieldElementNrs = BepaalElementNrVanFieldsVoorProtocollering(input);
 
             var zoekRubrieken = new List<string>();
