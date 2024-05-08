@@ -2,7 +2,9 @@
 using Brp.Shared.Infrastructure.Http;
 using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
+using Brp.Shared.Infrastructure.Stream;
 using Brp.Shared.Infrastructure.Validatie;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
@@ -10,18 +12,14 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 public class RequestValidatieMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly IServiceProvider _serviceProvider;
     private readonly IDiagnosticContext _diagnosticContext;
-    private readonly IRequestBodyValidator _requestBodyValidator;
-    private readonly IAuthorisation _authorisation;
-    private readonly IProtocollering _protocollering;
 
-    public RequestValidatieMiddleware(RequestDelegate next, IDiagnosticContext diagnosticContext, IRequestBodyValidator requestBodyValidator, IAuthorisation authorisation, IProtocollering protocollering)
+    public RequestValidatieMiddleware(RequestDelegate next, IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
     {
         _next = next;
+        _serviceProvider = serviceProvider;
         _diagnosticContext = diagnosticContext;
-        _authorisation = authorisation;
-        _protocollering = protocollering;
-        _requestBodyValidator = requestBodyValidator;
     }
 
     public async Task Invoke(HttpContext httpContext)
@@ -31,66 +29,175 @@ public class RequestValidatieMiddleware
             return;
         }
 
-        if (!await httpContext.HandleRequestMethodIsAllowed())
+        var requestBody = await httpContext.Request.ReadBodyAsync();
+
+        if (!await ValidateRequest(httpContext, requestBody))
         {
             return;
+        }
+
+        if (!await AuthoriseRequest(httpContext, requestBody))
+        {
+            return;
+        }
+
+        var orgBodyStream = httpContext.Response.Body;
+
+        using MemoryStream newBodyStream = new();
+        httpContext.Response.Body = newBodyStream;
+
+        await _next(httpContext);
+
+        var responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
+
+        if (!await ValidateAndAuthoriseResponse(httpContext, responseBody))
+        {
+            responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
+        }
+        else
+        {
+            responseBody = RewriteResponse(httpContext, requestBody, responseBody);
+
+            if(!Protocolleer(httpContext, requestBody))
+            {
+                responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
+            }
+        }
+
+        using var bodyStream = responseBody.ToMemoryStream(httpContext.Response.UseGzip());
+
+        httpContext.Response.ContentLength = bodyStream.Length;
+        await bodyStream.CopyToAsync(orgBodyStream);
+    }
+
+    private async Task<bool> ValidateRequest(HttpContext httpContext, string requestBody)
+    {
+        if (!await httpContext.HandleRequestMethodIsAllowed())
+        {
+            return false;
         }
 
         if (!await httpContext.HandleRequestAcceptIsSupported())
         {
-            return;
+            return false;
         }
 
         if (!await httpContext.HandleMediaTypeIsSupported())
         {
-            return;
+            return false;
         }
 
-        var requestBody = await httpContext.Request.ReadBodyAsync();
-
-        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, _requestBodyValidator, _diagnosticContext))
+        IRequestBodyValidator? requestBodyValidator = GetService<IRequestBodyValidator>(_serviceProvider, httpContext);
+        if (requestBodyValidator == null)
         {
-            return;
+            await httpContext.Response.WriteProblemDetailsAsync(httpContext.Request.CreateProblemDetailsFor(StatusCodes.Status404NotFound));
+
+            return false;
+        }
+        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, requestBodyValidator!, _diagnosticContext))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private async Task<bool> AuthoriseRequest(HttpContext httpContext, string requestBody)
+    {
+        (int afnemerId, int? gemeenteCode) = GetClaimValues(httpContext);
+
+        IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
+
+        return await httpContext.HandleNotAuthorized(
+            authorisation!.Authorize(afnemerId, gemeenteCode, requestBody),
+            _diagnosticContext);
+    }
+
+    private async Task<bool> ValidateAndAuthoriseResponse(HttpContext httpContext, string responseBody)
+    {
+        if (!await httpContext.HandleNotFound())
+        {
+            return false;
+        }
+        if (!await httpContext.HandleServiceIsAvailable())
+        {
+            return false;
         }
 
         (int afnemerId, int? gemeenteCode) = GetClaimValues(httpContext);
 
-        var result = _authorisation.Authorize(afnemerId, gemeenteCode, requestBody);
-        if (!result.IsValid)
+        IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
+
+        return await httpContext.HandleNotAuthorized(
+            authorisation!.AuthorizeResponse(afnemerId, gemeenteCode, responseBody),
+            _diagnosticContext);
+    }
+
+    private static string RewriteResponse(HttpContext httpContext, string requestBody, string responseBody)
+    {
+        var requestedResource = GetRequestedResource(httpContext);
+
+        return requestedResource switch
         {
-            var reason = result.Errors[0]?.Reason;
-            if (!string.IsNullOrWhiteSpace(reason))
+            "reisdocumenten" => RewriteReisdocumentenResponse(requestBody, responseBody),
+            _ => responseBody
+        };
+    }
+
+    private static string RewriteReisdocumentenResponse(string requestBody, string responseBody)
+    {
+        var input = JObject.Parse(requestBody);
+        var fields = input.Value<JArray>("fields");
+
+        var houderIsGevraagd = false;
+        foreach (var field in fields)
+        {
+            if (field.Value<string>()!.StartsWith("houder"))
             {
-                _diagnosticContext.Set("NotAuthorized", reason);
+                houderIsGevraagd = true;
+                break;
             }
-
-            var problemDetails = httpContext.Request.CreateProblemDetailsFor(result);
-
-            await httpContext.Response.WriteProblemDetailsAsync(problemDetails);
-
-            return;
         }
 
-        await _next(httpContext);
-
-        if (!await httpContext.HandleNotFound())
+        var output = JObject.Parse(responseBody);
+        var reisdocumenten = output["reisdocumenten"]?.Children<JObject>();
+        foreach (var reisdocument in reisdocumenten)
         {
-            return;
-        }
-        if (!await httpContext.HandleServiceIsAvailable())
-        {
-            return;
+            if (houderIsGevraagd)
+            {
+                var houder = reisdocument["houder"] as JObject;
+                houder.Remove("gemeenteVanInschrijving");
+            }
+            else
+            {
+                reisdocument.Remove("houder");
+            }
         }
 
+        return output.ToString();
+    }
+
+    private bool Protocolleer(HttpContext httpContext, string requestBody)
+    {
         var geleverdePls = httpContext.Response.Headers["x-geleverde-pls"];
-        if (!string.IsNullOrWhiteSpace(geleverdePls))
+        if (string.IsNullOrWhiteSpace(geleverdePls))
         {
-            _protocollering.Protocolleer(afnemerId, geleverdePls!, requestBody);
-
-            _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
-
-            httpContext.Response.Headers.Remove("x-geleverde-pls");
+            return true;
         }
+
+        httpContext.Response.Headers.Remove("x-geleverde-pls");
+
+        (int afnemerId, int? _) = GetClaimValues(httpContext);
+
+        IProtocollering? protocollering = GetService<IProtocollering>(_serviceProvider, httpContext);
+        if(!protocollering!.Protocolleer(afnemerId, geleverdePls!, requestBody))
+        {
+            return false;
+        }
+
+        _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
+
+        return true;
     }
 
     private static (int afnemerId, int? gemeenteCode) GetClaimValues(HttpContext httpContext)
@@ -101,5 +208,24 @@ public class RequestValidatieMiddleware
 
         return (isValidAfnemerId ? afnemerId : 0,
                 isValidGemeenteCode ? gemeenteCode : null);
+    }
+
+    private static string GetRequestedResource(HttpContext httpContext)
+    {
+        var endpoint = httpContext.Request.Path.ToString();
+        var index = endpoint.LastIndexOf('/') + 1;
+        return endpoint[index..];
+    }
+
+    private static T? GetService<T>(IServiceProvider serviceProvider, HttpContext httpContext)
+    {
+        var requestedResource = GetRequestedResource(httpContext);
+
+        return requestedResource switch
+        {
+            "personen" or
+            "reisdocumenten" => serviceProvider.GetKeyedService<T>(requestedResource),
+            _ => default
+        };
     }
 }

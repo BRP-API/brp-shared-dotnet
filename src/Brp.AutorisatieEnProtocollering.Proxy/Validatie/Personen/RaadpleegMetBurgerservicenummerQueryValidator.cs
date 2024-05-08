@@ -2,7 +2,7 @@
 using FluentValidation;
 using Newtonsoft.Json.Linq;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.PersonenApi;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
 
 public class RaadpleegMetBurgerservicenummerQueryValidator : AbstractValidator<JObject>
 {
@@ -12,7 +12,7 @@ public class RaadpleegMetBurgerservicenummerQueryValidator : AbstractValidator<J
         Include(new NietGespecificeerdeParametersValidator(GespecificeerdeParameterNamen));
         Include(new BurgerservicenummerVerplichtCollectieValidator());
         Include(new GemeenteVanInschrijvingValidator());
-        Include(new FieldsValidator(Constanten.PersoonFields, Constanten.NotAllowedPersoonFields));
+        Include(new FieldsValidator(Constanten.PersoonFields, Constanten.NotAllowedPersoonFields, 130));
     }
 
     private readonly List<string> GespecificeerdeParameterNamen = new()

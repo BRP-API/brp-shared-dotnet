@@ -2,7 +2,7 @@
 using FluentValidation;
 using Newtonsoft.Json.Linq;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.PersonenApi;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
 
 public class ZoekMetPostcodeEnHuisnummerQueryValidator : AbstractValidator<JObject>
 {
@@ -14,7 +14,7 @@ public class ZoekMetPostcodeEnHuisnummerQueryValidator : AbstractValidator<JObje
         Include(new HuisnummertoevoegingValidator());
         Include(new InclusiefOverledenPersonenOptioneelValidator());
         Include(new NietGespecificeerdeParametersValidator(GespecificeerdeParameterNamen));
-        Include(new FieldsValidator(Constanten.PersoonBeperktFields, Constanten.NotAllowedPersoonFields));
+        Include(new FieldsValidator(Constanten.PersoonBeperktFields, Constanten.NotAllowedPersoonFields, 130));
     }
 
     private readonly List<string> GespecificeerdeParameterNamen = new()
