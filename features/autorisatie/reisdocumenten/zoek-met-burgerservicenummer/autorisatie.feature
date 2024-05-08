@@ -27,8 +27,8 @@ Functionaliteit: autorisatie voor het gebruik van de API ZoekMetBurgerservicenum
     @fout-case
     Scenario: afnemer is geen gemeente
       Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       Als reisdocumenten wordt gezocht met de volgende parameters
       | naam                | waarde                                                                     |
       | type                | ZoekMetBurgerservicenummer                                                 |
@@ -64,11 +64,11 @@ Functionaliteit: autorisatie voor het gebruik van de API ZoekMetBurgerservicenum
       | afnemerID    | 000008 |
       | gemeenteCode | 0800   |
       Als reisdocumenten wordt gezocht met de volgende parameters
-      | naam                | waarde                                                                     |
-      | type                | ZoekMetBurgerservicenummer                                                 |
-      | burgerservicenummer | 000000152                                                                  |
-      | fields              | reisdocumentnummer,soort,datumEindeGeldigheid,inhoudingOfVermissing,houder |
-      Dan heeft de response 1 reisdocument
+      | naam                | waarde                     |
+      | type                | ZoekMetBurgerservicenummer |
+      | burgerservicenummer | 000000152                  |
+      | fields              | reisdocumentnummer         |
+      Dan heeft de response een reisdocument zonder gegevens
 
     @fout-case
     Scenario: Gemeente zoekt een reisdocument voor een inwoner van een andere gemeente

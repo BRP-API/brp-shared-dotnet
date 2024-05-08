@@ -63,11 +63,11 @@ Functionaliteit: autorisatie voor het gebruik van de API RaadpleegMetReisdocumen
       | afnemerID | gemeenteCode |
       | 000008    | 0800         |
       Als reisdocumenten wordt gezocht met de volgende parameters
-      | naam               | waarde                                                                     |
-      | type               | RaadpleegMetReisdocumentnummer                                             |
-      | reisdocumentnummer | NE3663258                                                                  |
-      | fields             | reisdocumentnummer,soort,datumEindeGeldigheid,inhoudingOfVermissing,houder |
-      Dan heeft de response 1 reisdocument
+      | naam               | waarde                         |
+      | type               | RaadpleegMetReisdocumentnummer |
+      | reisdocumentnummer | NE3663258                      |
+      | fields             | reisdocumentnummer             |
+      Dan heeft de response een reisdocument zonder gegevens
 
     @fout-case
     Scenario: Gemeente raadpleegt een reisdocument van een inwoner van een andere gemeente
