@@ -143,7 +143,7 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
 Regel: Automatisch geleverde velden mogen niet worden gevraagd
 
   @fout-case
-  Abstract Scenario: De fields parameter bevat één of meerdere paden van automatisch geleverde velden
+  Abstract Scenario: De fields parameter bevat de pad van een automatisch geleverde veld
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde             |
     | type             | <zoek type>        |
@@ -205,3 +205,29 @@ Regel: Automatisch geleverde velden mogen niet worden gevraagd
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        | inOnderzoek.datumIngangOnderzoek.onbekend                          |
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 999999321        | inOnderzoek.datumIngangOnderzoek.jaar                              |
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        | inOnderzoek.datumIngangOnderzoek.maand                             |
+
+  @fout-case
+  Abstract Scenario: De fields parameter bevat meerdere paden van automatisch geleverde velden
+    Als reisdocumenten wordt gezocht met de volgende parameters
+    | naam             | waarde                                           |
+    | type             | <zoek type>                                      |
+    | <parameter naam> | <parameter waarde>                               |
+    | fields           | houder.geheimhoudingPersoonsgegevens,inOnderzoek |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+    | title    | Een of meerdere parameters zijn niet correct.               |
+    | status   | 400                                                         |
+    | detail   | De foutieve parameter(s) zijn: fields[0], fields[1].        |
+    | code     | paramsValidation                                            |
+    | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
+    En heeft de response invalidParams met de volgende gegevens
+    | code   | name      | reason                                        |
+    | fields | fields[0] | Parameter bevat een niet toegestane veldnaam. |
+    | fields | fields[1] | Parameter bevat een niet toegestane veldnaam. |
+
+    Voorbeelden:
+    | zoek type                      | parameter naam      | parameter waarde |
+    | ZoekMetBurgerservicenummer     | burgerservicenummer | 999999321        |
+    | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
+ 
