@@ -3,5 +3,5 @@
 public interface IAuthorisation
 {
     AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody);
-    AuthorisationResult AuthorizeResponse(int afnemerCode, int? gemeenteCode, string responseBody);
+    AuthorisationResult AuthorizeResponse(int afnemerCode, int? gemeenteCode, string? geleverdeGemeenteCodes);
 }

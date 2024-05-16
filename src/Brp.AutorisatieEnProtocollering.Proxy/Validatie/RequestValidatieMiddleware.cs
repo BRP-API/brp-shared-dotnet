@@ -50,14 +50,12 @@ public class RequestValidatieMiddleware
 
         var responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
 
-        if (!await ValidateAndAuthoriseResponse(httpContext, responseBody))
+        if (!await ValidateAndAuthoriseResponse(httpContext))
         {
             responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
         }
         else
         {
-            responseBody = RewriteResponse(httpContext, requestBody, responseBody);
-
             if(!Protocolleer(httpContext, requestBody))
             {
                 responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
@@ -113,7 +111,7 @@ public class RequestValidatieMiddleware
             _diagnosticContext);
     }
 
-    private async Task<bool> ValidateAndAuthoriseResponse(HttpContext httpContext, string responseBody)
+    private async Task<bool> ValidateAndAuthoriseResponse(HttpContext httpContext)
     {
         if (!await httpContext.HandleNotFound())
         {
@@ -128,53 +126,13 @@ public class RequestValidatieMiddleware
 
         IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
 
+        var geleverdeGemeentecodes = httpContext.Response.Headers["x-geleverde-gemeentecodes"];
+
+        httpContext.Response.Headers.Remove("x-geleverde-gemeentecodes");
+
         return await httpContext.HandleNotAuthorized(
-            authorisation!.AuthorizeResponse(afnemerId, gemeenteCode, responseBody),
+            authorisation!.AuthorizeResponse(afnemerId, gemeenteCode, geleverdeGemeentecodes!),
             _diagnosticContext);
-    }
-
-    private static string RewriteResponse(HttpContext httpContext, string requestBody, string responseBody)
-    {
-        var requestedResource = GetRequestedResource(httpContext);
-
-        return requestedResource switch
-        {
-            "reisdocumenten" => RewriteReisdocumentenResponse(requestBody, responseBody),
-            _ => responseBody
-        };
-    }
-
-    private static string RewriteReisdocumentenResponse(string requestBody, string responseBody)
-    {
-        var input = JObject.Parse(requestBody);
-        var fields = input.Value<JArray>("fields");
-
-        var houderIsGevraagd = false;
-        foreach (var field in fields)
-        {
-            if (field.Value<string>()!.StartsWith("houder"))
-            {
-                houderIsGevraagd = true;
-                break;
-            }
-        }
-
-        var output = JObject.Parse(responseBody);
-        var reisdocumenten = output["reisdocumenten"]?.Children<JObject>();
-        foreach (var reisdocument in reisdocumenten)
-        {
-            if (houderIsGevraagd)
-            {
-                var houder = reisdocument["houder"] as JObject;
-                houder.Remove("gemeenteVanInschrijving");
-            }
-            else
-            {
-                reisdocument.Remove("houder");
-            }
-        }
-
-        return output.ToString();
     }
 
     private bool Protocolleer(HttpContext httpContext, string requestBody)
