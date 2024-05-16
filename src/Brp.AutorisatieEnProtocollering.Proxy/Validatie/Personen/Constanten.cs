@@ -1,4 +1,4 @@
-﻿namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.PersonenApi;
+﻿namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
 
 internal static class Constanten
 {

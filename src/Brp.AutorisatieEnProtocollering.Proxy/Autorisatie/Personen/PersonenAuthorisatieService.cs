@@ -1,50 +1,33 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Data;
-using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
+﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
-using Microsoft.FeatureManagement;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Text.RegularExpressions;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
 
-public class AuthorisationService : IAuthorisation
+public class PersonenAuthorisatieService : AbstractAutorisatieService
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly IDiagnosticContext _diagnosticContext;
 
-    public AuthorisationService(IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+    public PersonenAuthorisatieService(IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+        : base(serviceProvider)
     {
-        _serviceProvider = serviceProvider;
         _diagnosticContext = diagnosticContext;
     }
 
-    public AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
+    public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
-        using var scope = _serviceProvider.CreateScope();
-
-        var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var featureManager = scope.ServiceProvider.GetRequiredService<IFeatureManager>();
-
-        var gebruikMeestRecenteAutorisatie = featureManager.IsEnabledAsync("gebruikMeestRecenteAutorisatie").Result;
-
-        var autorisatie = appDbContext.GetActueleAutorisatieFor(afnemerCode, gebruikMeestRecenteAutorisatie);
-        if(autorisatie != null)
+        var autorisatie = GetActueleAutorisatieFor(afnemerCode);
+        if (autorisatie != null)
         {
             _diagnosticContext.Set("Autorisatie", autorisatie, true);
         }
 
         if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
         {
-            return NotAuthorized(title: "U bent niet geautoriseerd voor het gebruik van deze API.",
-                                 detail: "Niet geautoriseerd voor ad hoc bevragingen.",
-                                 code: "unauthorized",
-                                 reason: autorisatie != null
-                                    ? $"Vereiste ad_hoc_medium: A of N. Werkelijk: {autorisatie.AdHocMedium}. Afnemer code: {autorisatie.AfnemerCode}"
-                                    : $"Geen\\Verlopen autorisatie gevonden voor Afnemer code {afnemerCode}");
+            return NietGeautoriseerdVoorAdhocGegevensverstrekking(autorisatie, afnemerCode);
         }
-
-        var input = JObject.Parse(requestBody);
 
         if (gemeenteCode.HasValue)
         {
@@ -52,16 +35,16 @@ public class AuthorisationService : IAuthorisation
             return Authorized();
         }
 
-        var zoekElementNrs = input.BepaalElementNrVanZoekParameters();
+        var input = JObject.Parse(requestBody);
+
+        var zoekElementNrs = input.BepaalElementNrVanZoekParameters(Constanten.FieldElementNrDictionary);
 
         var geautoriseerdeElementNrs = autorisatie!.RubrieknummerAdHoc!.Split(' ');
 
         var nietGeautoriseerdQueryElementNrs = BepaalNietGeautoriseerdeElementNamen(geautoriseerdeElementNrs, zoekElementNrs);
         if (nietGeautoriseerdQueryElementNrs.Any())
         {
-            return NotAuthorized(title: "U bent niet geautoriseerd voor de gebruikte parameter(s).",
-                                 detail: $"U bent niet geautoriseerd voor het gebruik van parameter(s): {string.Join(", ", nietGeautoriseerdQueryElementNrs.OrderBy(x => x))}.",
-                                 code: "unauthorizedParameter");
+            return NietGeautoriseerdVoorParameters(nietGeautoriseerdQueryElementNrs);
         }
 
         var fieldElementNrs = BepaalElementNrVanFields(input);
@@ -69,38 +52,30 @@ public class AuthorisationService : IAuthorisation
         var nietGeautoriseerdFieldNames = BepaalNietGeautoriseerdeElementNamen(geautoriseerdeElementNrs, fieldElementNrs);
         if (nietGeautoriseerdFieldNames.Any())
         {
-            return NotAuthorized(title: "U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.",
-                                 code: "unauthorizedField",
-                                 reason: $"afnemer '{afnemerCode}' is niet geautoriseerd voor fields {string.Join(", ", nietGeautoriseerdFieldNames.OrderBy(x => x))}");
+            return NietGeautoriseerdVoorFields(nietGeautoriseerdFieldNames, afnemerCode);
         }
 
         return Authorized();
     }
 
-    private static AuthorisationResult NotAuthorized(string? title = null, string? detail = null, string? code = null, string? reason = null)
-    {
-        return new AuthorisationResult(
-            false,
-            new List<AuthorisationFailure>
-            {
-                new()
-                {
-                    Title = title,
-                    Detail = detail,
-                    Code = code,
-                    Reason = reason
-                }
-            }
-        );
-    }
+    private static AuthorisationResult NietGeautoriseerdVoorAdhocGegevensverstrekking(Data.Autorisatie? autorisatie, int afnemerCode) =>
+        NotAuthorized(
+            title: "U bent niet geautoriseerd voor het gebruik van deze API.",
+            detail: "Niet geautoriseerd voor ad hoc bevragingen.",
+            code: "unauthorized",
+            reason: autorisatie != null
+                ? $"Vereiste ad_hoc_medium: A of N. Werkelijk: {autorisatie.AdHocMedium}. Afnemer code: {autorisatie.AfnemerCode}"
+                : $"Geen\\Verlopen autorisatie gevonden voor Afnemer code {afnemerCode}");
 
-    private static AuthorisationResult Authorized()
-    {
-        return new AuthorisationResult(
-            true,
-            new List<AuthorisationFailure>()
-        );
-    }
+    private static AuthorisationResult NietGeautoriseerdVoorParameters(IEnumerable<string> nietGeautoriseerdQueryElementNrs) =>
+        NotAuthorized(title: "U bent niet geautoriseerd voor de gebruikte parameter(s).",
+                      detail: $"U bent niet geautoriseerd voor het gebruik van parameter(s): {string.Join(", ", nietGeautoriseerdQueryElementNrs.OrderBy(x => x))}.",
+                      code: "unauthorizedParameter");
+
+    private static AuthorisationResult NietGeautoriseerdVoorFields(IEnumerable<string> nietGeautoriseerdFieldNames, int afnemerCode) =>
+        NotAuthorized(title: "U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.",
+                      code: "unauthorizedField",
+                      reason: $"afnemer '{afnemerCode}' is niet geautoriseerd voor fields {string.Join(", ", nietGeautoriseerdFieldNames.OrderBy(x => x))}");
 
     private static bool GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(Data.Autorisatie? autorisatie)
     {
@@ -182,27 +157,9 @@ public class AuthorisationService : IAuthorisation
         return isGeautoriseerdVoorOuder1 && isGeautoriseerdVoorOuder2;
     }
 
-}
-
-internal static class AppDbContextExtensions
-{
-    internal static Data.Autorisatie? GetActueleAutorisatieFor(this AppDbContext appDbContext, int afnemerCode, bool gebruikMeestRecenteAutorisatie)
+    public override AuthorisationResult AuthorizeResponse(int afnemerCode, int? gemeenteCode, string responseBody)
     {
-
-        return gebruikMeestRecenteAutorisatie
-            ? appDbContext.Autorisaties
-                          .Where(a => a.AfnemerCode == afnemerCode)
-                          .OrderByDescending(a => a.TabelRegelStartDatum)
-                          .FirstOrDefault()
-            : appDbContext.Autorisaties
-                          .FirstOrDefault(a => a.AfnemerCode == afnemerCode &&
-                                               a.TabelRegelStartDatum <= Vandaag() &&
-                                               (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
-    }
-
-    private static long Vandaag()
-    {
-        return int.Parse(DateTime.Today.ToString("yyyyMMdd"));
+        return Authorized();
     }
 }
 

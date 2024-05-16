@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
 
 public static class Constanten
 {

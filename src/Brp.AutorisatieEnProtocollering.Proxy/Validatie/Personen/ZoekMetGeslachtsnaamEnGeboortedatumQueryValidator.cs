@@ -2,7 +2,7 @@
 using FluentValidation;
 using Newtonsoft.Json.Linq;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.PersonenApi;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
 
 public class ZoekMetGeslachtsnaamEnGeboortedatumQueryValidator : AbstractValidator<JObject>
 {
@@ -16,7 +16,7 @@ public class ZoekMetGeslachtsnaamEnGeboortedatumQueryValidator : AbstractValidat
         Include(new GeslachtOptioneelValidator());
         Include(new InclusiefOverledenPersonenOptioneelValidator());
         Include(new GemeenteVanInschrijvingValidator());
-        Include(new FieldsValidator(Constanten.PersoonBeperktFields, Constanten.NotAllowedPersoonFields));
+        Include(new FieldsValidator(Constanten.PersoonBeperktFields, Constanten.NotAllowedPersoonFields, 130));
     }
 
     private readonly List<string> GespecificeerdeParameterNamen = new()

@@ -5,9 +5,7 @@ using Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.HealthCheck;
 using Brp.Shared.Infrastructure.Logging;
-using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Utils;
-using Brp.Shared.Infrastructure.Validatie;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement;
 using Ocelot.DependencyInjection;
@@ -33,9 +31,9 @@ try
     builder.Services.AddFeatureManagement();
 
     builder.SetupAuthentication(Log.Logger);
-    builder.Services.AddTransient<IAuthorisation, AuthorisationService>();
-    builder.Services.AddTransient<IProtocollering, ProtocolleringService>();
-    builder.Services.AddTransient<IRequestBodyValidator, RequestBodyValidationService>();
+    builder.SetupAuthorisation();
+    builder.SetupProtocollering();
+    builder.SetupRequestValidation();
 
     var dbSection = builder.Configuration.GetSection("Db");
     var connectionString = $"Host={dbSection["Host"]};Username={dbSection["Username"]};Password={dbSection["Password"]};Database={dbSection["Database"]}";

@@ -8,7 +8,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Release
       - ASPNETCORE_URLS=http://+:5010
       - Ecs__Path=/var/log/brp-referentie-api.json
-      - Ecs__FileSizeLimitBytes=1048576
+      - Ecs__FileSizeLimitBytes=1073741824
       - Ecs__RetainedFileCountLimit=10
     ports:
       - "5010:5010"

@@ -1,12 +1,11 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Validatie.PersonenApi;
-using Brp.Shared.Infrastructure.Validatie;
+﻿using Brp.Shared.Infrastructure.Validatie;
 using Brp.Shared.Infrastructure.Validatie.Validators;
 using FluentValidation.Results;
 using Newtonsoft.Json.Linq;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
 
-public class RequestBodyValidationService : IRequestBodyValidator
+public class PersonenRequestBodyValidatieService : IRequestBodyValidator
 {
     public ValidationResult ValidateRequestBody(string requestBody)
     {
