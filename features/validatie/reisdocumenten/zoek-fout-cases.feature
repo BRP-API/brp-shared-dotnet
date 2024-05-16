@@ -7,6 +7,9 @@ Functionaliteit: Fout cases bij zoeken en raadplegen van reisdocumenten
     Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
     | afnemerID | gemeenteCode |
     | 000008    | 0800         |
+    En de response van de downstream api heeft de volgende headers
+    | x-geleverde-gemeentecodes |
+    | 0800                      |
 
 Regel: Er moet een valide zoek type worden opgegeven
 
