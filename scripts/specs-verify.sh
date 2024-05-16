@@ -6,6 +6,8 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 --tags "not @integratie"
 
+# personen endpoint
+
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/input-validatie/test-result.json \
                 -f summary:./test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt \
                 -f summary \
@@ -20,3 +22,20 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-
                 -f summary:./test-reports/cucumber-js/personen/protocollering/test-result-summary.txt \
                 -f summary \
                 features/protocollering/personen
+
+# reisdocumenten endpoint
+
+npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result.json \
+                -f summary:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt \
+                -f summary \
+                features/validatie/reisdocumenten
+
+npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result.json \
+                -f summary:./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result-summary.txt \
+                -f summary \
+                features/autorisatie/reisdocumenten
+
+npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/protocollering/test-result.json \
+                -f summary:./test-reports/cucumber-js/reisdocumenten/protocollering/test-result-summary.txt \
+                -f summary \
+                features/protocollering/reisdocumenten
