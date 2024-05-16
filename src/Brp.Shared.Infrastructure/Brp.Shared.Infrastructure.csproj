@@ -13,7 +13,7 @@
     <PackageReference Include="Destructurama.JsonNet" Version="3.0.0" />
     <PackageReference Include="Elastic.CommonSchema.Serilog" Version="8.11.0" />
     <PackageReference Include="FluentValidation" Version="11.9.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.30" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
