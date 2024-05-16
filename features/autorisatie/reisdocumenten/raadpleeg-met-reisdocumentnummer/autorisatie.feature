@@ -45,17 +45,14 @@ Functionaliteit: autorisatie voor het gebruik van de API RaadpleegMetReisdocumen
 
     @geen-protocollering
     Scenario: afnemer is een gemeente en raadpleegt een reisdocument van een eigen inwoner
-      Gegeven de response van de downstream api heeft de volgende body
+      Gegeven de response van de downstream api heeft de volgende headers
+      | x-geleverde-gemeentecodes |
+      | 0800                      |
+      En de response van de downstream api heeft de volgende body
       """
       {
         "reisdocumenten": [
-          {
-            "houder": {
-              "gemeenteVanInschrijving": {
-                "code": "0800"
-              }
-            }
-          }
+          {}
         ]
       }
       """
@@ -71,17 +68,14 @@ Functionaliteit: autorisatie voor het gebruik van de API RaadpleegMetReisdocumen
 
     @fout-case
     Scenario: Gemeente raadpleegt een reisdocument van een inwoner van een andere gemeente
-      Gegeven de response van de downstream api heeft de volgende body
+      Gegeven de response van de downstream api heeft de volgende headers
+      | x-geleverde-gemeentecodes |
+      | 0800                      |
+      En de response van de downstream api heeft de volgende body
       """
       {
         "reisdocumenten": [
-          {
-            "houder": {
-              "gemeenteVanInschrijving": {
-                "code": "0800"
-              }
-            }
-          }
+          {}
         ]
       }
       """

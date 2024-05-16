@@ -29,19 +29,13 @@ Functionaliteit: Protocolleren van ZoekMetBurgerservicenummer
       | pl_id |
       | 1001  |
       En de response van de downstream api heeft de volgende headers
-      | x-geleverde-pls |
-      | 1001            |
+      | x-geleverde-pls | x-geleverde-gemeentecodes |
+      | 1001            | 0800                      |
       En de response van de downstream api heeft de volgende body
       """
       {
         "reisdocumenten": [
-          {
-            "houder": {
-              "gemeenteVanInschrijving": {
-                "code": "0800"
-              }
-            }
-          }
+          {}
         ]
       }
       """

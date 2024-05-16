@@ -45,17 +45,14 @@ Functionaliteit: autorisatie voor het gebruik van de API ZoekMetBurgerservicenum
 
     @geen-protocollering
     Scenario: afnemer is gemeente zoekt reisdocumenten van een eigen inwoner
-      Gegeven de response van de downstream api heeft de volgende body
+      Gegeven de response van de downstream api heeft de volgende headers
+      | x-geleverde-gemeentecodes |
+      | 0800                      |
+      En de response van de downstream api heeft de volgende body
       """
       {
         "reisdocumenten": [
-          {
-            "houder": {
-              "gemeenteVanInschrijving": {
-                "code": "0800"
-              }
-            }
-          }
+          {}
         ]
       }
       """
@@ -72,17 +69,14 @@ Functionaliteit: autorisatie voor het gebruik van de API ZoekMetBurgerservicenum
 
     @fout-case
     Scenario: Gemeente zoekt een reisdocument voor een inwoner van een andere gemeente
-      Gegeven de response van de downstream api heeft de volgende body
+      Gegeven de response van de downstream api heeft de volgende headers
+      | x-geleverde-gemeentecodes |
+      | 0800                      |
+      En de response van de downstream api heeft de volgende body
       """
       {
         "reisdocumenten": [
-          {
-            "houder": {
-              "gemeenteVanInschrijving": {
-                "code": "0800"
-              }
-            }
-          }
+          {}
         ]
       }
       """
