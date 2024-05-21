@@ -1,0 +1,117 @@
+name: continuous integration
+
+on:
+  push:
+    paths:
+      - src/**
+      - features/**
+      - .github/workflows/ci.yml
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: 6.0.x
+  DOTNET_SOLUTION: src/brp-shared.sln
+  NODE_VERSION: '18'
+  COMPOSE_FILE_ARGUMENT: -f .docker/db-ci.yml -f .docker/identityserver.yml -f .docker/referentie-api.yml -f .docker/autorisatie-protocollering-proxy.yml
+  UPDATE_VERSION_CSPROJ: src/Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnProtocollering.Proxy.csproj
+  CONTAINER_IMAGE: ghcr.io/brp-api/brp-autorisatie-protocollering
+  BUILD_RUN: ''
+  APP_VERSION: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set environment variables
+        run: |
+          export TZ="Europe/Amsterdam"
+          echo "BUILD_RUN=$(date +'%Y%m%d%H')" >> $GITHUB_ENV
+
+          echo "APP_VERSION=$(sed -n 's/.*<Version>\([0-9.]*\).*/\1/p' ${{ env.UPDATE_VERSION_CSPROJ}})" >> $GITHUB_ENV
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+            8.0.x
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.DOTNET_SOLUTION }}
+      - name: Build
+        run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
+      - name: Run unit tests
+        run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./test-reports/coverage
+    outputs:
+      app_version: ${{ env.APP_VERSION }}
+      build_run: ${{ env.BUILD_RUN }}
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Set applicatie version
+        run: |
+          search_string="\(<Version>\([0-9.]*\)\)"
+          replace_string="<Version>${{ needs.build.outputs.app_version }}+${{ needs.build.outputs.build_run }}"
+          sed -i "s/$search_string/$replace_string/" ${{ env.UPDATE_VERSION_CSPROJ}}
+
+          cat ${{ env.UPDATE_VERSION_CSPROJ}}
+      - name: Build container images
+        run: docker compose -f src/docker-compose.yml build
+      - name: Add identityserver host name to /etc/hosts
+        run: |
+          sudo echo '127.0.0.1 identityserver' | sudo tee -a /etc/hosts
+      - name: Set read/write permissions on test-data/IdentityServer folder
+        run: |
+          sudo chmod ugo+rw ./test-data/IdentityServer
+      - name: Start containers
+        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} up -d
+      - name: Wait for DB restart
+        run: sleep 5s
+        shell: bash
+      - name: Validate functional specs
+        run: |
+          ./scripts/specs-verify.sh
+      - name: Stop containers
+        if: always()
+        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
+      - name: Genereer test rapportage
+        if: always()
+        run: |
+          node ./scripts/generate-cucumber-reports.js ${{ needs.build.outputs.app_version }} ${{ needs.build.outputs.build_run }} ${{ github.ref_name }}
+      - name: Upload test rapportage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports
+          path: test-reports
+      - name: Push test rapportage naar brp-api.github.io repo
+        if: always()
+        uses: tech-thinker/push-to-repo@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
+        with:
+          source-directory: test-reports/cucumber-js/reports
+          destination-repository-name: brp-api.github.io
+          destination-github-username: BRP-API
+          target-branch: test-reports/autorisatie-en-protocollering
+          commit-message: "test rapporten van build: ${{ needs.build.outputs.build_run }}"
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag & push container images naar registry
+        run: |
+          docker tag ${{ env.CONTAINER_IMAGE }}:latest ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
+          docker push ${{ env.CONTAINER_IMAGE }}:latest
+          docker push ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
