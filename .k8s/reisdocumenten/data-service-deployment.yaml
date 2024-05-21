@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reisdocumenten-data-service
+  labels:
+    app: reisdocumenten-data-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: reisdocumenten-data-service
+  template:
+    metadata:
+      labels:
+        name: reisdocumenten-data-service
+    spec:
+      containers:
+        - name: reisdocumenten-data-service
+          image: haalcentraal.azurecr.io/gba-reisdocumenten-api:2.0.10-2024052101
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+
+            - name: Serilog__LogLevel__Default
+              value: Warning
+            - name: Serilog__MinimumLevel__Override__Serilog
+              value: Information
+
+            - name: Ecs__Path
+              value: /var/log/reisdocumenten-data-service.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: Database__Host
+              value: postgres
+            - name: Database__Database
+              value: rvig_haalcentraal_testdata
+            - name: Database__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Database__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+
+            - name: HaalcentraalApi__MaxSearchResults
+              value: "10"
+            - name: ProtocolleringAuthorization__UseAuthorizationChecks
+              value: "false"
+            - name: ProtocolleringAuthorization__UseProtocollering
+              value: "false"
+
+          ports:
+            - name: http
+              containerPort: 80
