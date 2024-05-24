@@ -30,7 +30,7 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met peildatum
       Dan heeft de response 1 verblijfplaats
 
     @fout-case
-    Abstract Scenario: Afnemer vraagt <gevraagd veld> (<missende autorisatie>), waarvoor deze niet geautoriseerd is
+    Abstract Scenario: Afnemer vraagt verblijfplaatshistorie, maar is niet geautoriseerd voor <missende autorisatie>
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | <ad hoc rubrieken>              | N                        | 20201128                |
@@ -94,12 +94,14 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met peildatum
       | PAVP04: adressering.adresregel2                       | 10120 80910 81010 81110 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 81310 81330 81340 81350 580910 581010 581110 581115 581120 581130 581140 581150 581160 581170 581180 581190 581210 581310 581330 581340 581350 PAVP01 PAVP02 PAVP03  |
       
   Regel: Een gemeente als afnemer is geautoriseerd voor alle verblijfplaats gegevens
+    Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
+    dan wordt niet gekeken naar de autorisatie van de afnemer
 
     @geen-protocollering     
-    Abstract Scenario: Gemeente vraagt om velden in verblijfplaats en er zit geen enkel verblijfplaatsgegeven in de autorisatie
+    Abstract Scenario: Gemeente vraagt om verblijfplaatshistorie en <omschrijving>
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10210                           | N                        | 20201128                |
+      | <ad hoc rubrieken>              | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |
       | afnemerID    | 000008 |
@@ -110,4 +112,10 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met peildatum
       | burgerservicenummer | 000000012             |
       | peildatum           | 2023-05-26            |
       Dan heeft de response 1 verblijfplaats
-      
+
+      Voorbeelden:
+      | ad hoc rubrieken                                                                                                                                                                                                                                  | omschrijving                                                          |
+      | 10210                                                                                                                                                                                                                                             | er zit geen enkel verblijfplaatsgegeven in de autorisatie             |
+      | 10120 80910 81010 81110 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 81310 81330 81340 81350 PAVP01 PAVP02 PAVP03 PAVP04                                                                                                           | afnemer is alleen geautoriseerd voor actuele verblijfplaatsgegevens   |
+      | 10120 80910 81010 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 81310 81330 81340 81350 580910 581110 581115 581120 581130 581140 581150 581160 581170 581180 581190 581210 581310 581330 581340 581350 PAVP01 PAVP02 PAVP03 PAVP04 | afnemer is niet geautoriseerd voor alle verblijfplaatsgegevens        |
+      | 10120 80910 81010 81110 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 580910 581010 581110 581115 581120 581130 581140 581150 581160 581170 581180 581190 581210 PAVP01 PAVP02 PAVP03 PAVP04                                        | afnemer is niet geautoriseerd voor verblijfplaats buitenland gegevens |
