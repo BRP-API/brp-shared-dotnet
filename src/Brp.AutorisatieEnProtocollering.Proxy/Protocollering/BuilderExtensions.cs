@@ -1,14 +1,14 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Validatie.Personen;
-using Brp.AutorisatieEnProtocollering.Proxy.Validatie.Reisdocumenten;
-using Brp.Shared.Infrastructure.Validatie;
+﻿using Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Personen;
+using Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Reisdocumenten;
+using Brp.Shared.Infrastructure.Protocollering;
 
-namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
 
 public static class BuilderExtensions
 {
     public static void SetupRequestValidation(this WebApplicationBuilder builder)
     {
-        builder.Services.AddKeyedTransient<IRequestBodyValidator, PersonenRequestBodyValidatieService>("personen");
-        builder.Services.AddKeyedTransient<IRequestBodyValidator, ReisdocumentenRequestBodyValidatieService>("reisdocumenten");
+        builder.Services.AddKeyedTransient<IProtocollering, PersonenProtocolleringService>("personen");
+        builder.Services.AddKeyedTransient<IProtocollering, ReisdocumentenProtocolleringService>("reisdocumenten");
     }
 }

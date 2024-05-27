@@ -156,11 +156,6 @@ public class PersonenAuthorisatieService : AbstractAutorisatieService
 
         return isGeautoriseerdVoorOuder1 && isGeautoriseerdVoorOuder2;
     }
-
-    public override AuthorisationResult AuthorizeResponse(int afnemerCode, int? gemeenteCode, string responseBody)
-    {
-        return Authorized();
-    }
 }
 
 internal static class AutorisationServiceHelpers
