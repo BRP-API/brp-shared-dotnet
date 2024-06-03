@@ -3,6 +3,11 @@
 @autorisatie
 Functionaliteit: adressering - autorisatie bij gebruik van de fields alias
 
+  Achtergrond:
+    Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+    | afnemerID |
+    | 000008    |
+
 Regel: de 'adresseringBinnenland' field alias moet worden gebruikt door een consumer die niet is geautoriseerd voor het bevragen van adresregels horende bij verblijfplaats buitenland
 
   @fout-case
