@@ -1,7 +1,7 @@
 # language: nl
 
 @autorisatie
-Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
+Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeildatum
   Autorisatie voor het gebruik van de API gebeurt op twee niveau's:
   1. autorisatie van de gebruiker door de afnemende organisatie
   2. autorisatie van de afnemer (organisatie) door RvIG
@@ -28,18 +28,17 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | 0518                 | 0518010000000002                         |
 
 
-  Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van bewoning waarbij voor de gevonden verblijfplaats(en) de gemeente van inschrijving gelijk is aan de gemeentecode in de 'claim' uit de token
+  Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van bewoning waarbij voor de gevonden verblijfplaats de gemeente van inschrijving gelijk is aan de gemeentecode in de 'claim' uit de token
 
     Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20100818                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2022-01-01           |
+      | adresseerbaarObjectIdentificatie | 0800010000000001     |
       Dan heeft de response 1 bewoning
 
     @fout-case
@@ -48,11 +47,10 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20041103                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0518010000000002   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2022-01-01           |
+      | adresseerbaarObjectIdentificatie | 0518010000000002     |
       Dan heeft de response een object met de volgende gegevens
       | naam     | waarde                                                                                 |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
@@ -70,11 +68,10 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20230526                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2022-01-01           |
+      | adresseerbaarObjectIdentificatie | 0800010000000001     |
       Dan heeft de response 1 bewoning
 
     @fout-case
@@ -86,11 +83,10 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20230601                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0518010000000002   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2022-01-01           |
+      | adresseerbaarObjectIdentificatie | 0518010000000002     |
       Dan heeft de response een object met de volgende gegevens
       | naam     | waarde                                                                                 |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
@@ -100,43 +96,7 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | code     | unauthorized                                                                           |
       | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
 
-    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente en de bewoner is binnen de periode verhuisd buiten de gemeente
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20220526                           |
-      En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20220820                           |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
-
-    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente en de bewoner is binnen de periode vertrokken naar het buitenland
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20220526                           |
-      En de 'verblijfplaats' is gewijzigd naar de volgende gegevens
-      | land (13.10) | datum aanvang adres buitenland (13.20) | regel 1 adres buitenland (13.30) | regel 2 adres buitenland (13.40) | regel 3 adres buitenland (13.50) |
-      | 5010         | 20220820                               | Rue du pomme 26                  | Bruxelles                        | postcode 1000                    |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
-
-    Scenario: Vorige verblijf is in andere gemeente en aanvang verblijf is gedeeltelijk onbekend en de periode valt binnen de onzekerheidsperiode
+    Scenario: Vorige verblijf is in andere gemeente en aanvang verblijf is gedeeltelijk onbekend en de peildatum valt binnen de onzekerheidsperiode
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20100818                           |
@@ -144,14 +104,13 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20230000                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2023-07-01         |
-      | datumTot                         | 2023-08-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2023-04-01           |
+      | adresseerbaarObjectIdentificatie | 0800010000000001     |
       Dan heeft de response 1 bewoning
 
-    Scenario: Volgende verblijf is in andere gemeente en aanvang volgende verblijf is gedeeltelijk onbekend en de periode valt binnen de onzekerheidsperiode
+    Scenario: Volgende verblijf is in andere gemeente en aanvang volgende verblijf is gedeeltelijk onbekend en de peildatum valt binnen de onzekerheidsperiode
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20100818                           |
@@ -159,11 +118,10 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20230000                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2023-07-01         |
-      | datumTot                         | 2023-08-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2023-04-01           |
+      | adresseerbaarObjectIdentificatie | 0800010000000001     |
       Dan heeft de response 1 bewoning
 
 
@@ -171,11 +129,10 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
 
     Scenario: Het adresseerbaar object wordt niet gevonden en dus is er kan de gemeente van het adresseerbaarbaar object niet gelijk of ongelijk zijn aan de afnemer
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2010-01-01         |
-      | datumTot                         | 2010-08-17         |
-      | adresseerbaarObjectIdentificatie | 1234010000123456   |
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2023-04-01           |
+      | adresseerbaarObjectIdentificatie | 1234010000123456     |
       Dan heeft de response 0 bewoningen
 
     @fout-case
@@ -184,11 +141,9 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20230701                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0518010000000002   |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2023-04-01           |
+      | adresseerbaarObjectIdentificatie | 0518010000000002     |
       Dan heeft de response een object met de volgende gegevens
       | naam     | waarde                                                                                 |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
@@ -210,11 +165,9 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0530                              | 20210601                           |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0518010000000002   |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2023-04-01           |
+      | adresseerbaarObjectIdentificatie | 0518010000000002     |
       Dan heeft de response een object met de volgende gegevens
       | naam     | waarde                                                                                 |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
@@ -238,18 +191,16 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeentecode (92.10) |
       | 0800                 |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | <datum van>        |
-      | datumTot                         | <datum tot>        |
-      | adresseerbaarObjectIdentificatie | 0530010000000003   |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | <peildatum>          |
+      | adresseerbaarObjectIdentificatie | 0530010000000003     |
       Dan heeft de response 1 bewoning
 
       Voorbeelden:
-      | datum van  | datum tot  | omschrijving                                            |
-      | 2023-07-01 | 2023-08-01 | de periode ligt na de herindeling                       |
-      | 2022-01-01 | 2023-01-01 | de periode ligt voor de herindeling                     |
-      | 2023-01-01 | 2023-07-01 | de herindeling vindt plaats binnen de gevraagde periode |
+      | peildatum  | omschrijving                                       |
+      | 2023-07-01 | de peildatum ligt na de herindeling                |
+      | 2022-01-01 | de peildatum ligt voor de herindeling              |
+      | 2023-05-26 | de herindeling vindt plaats op gevraagde peildatum |
 
 
   Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van bewoning van een object dat na gemeentelijke herindeling is komen te liggen in een andere gemeente, maar op een eerder moment de gemeente van inschrijving gelijk was aan de gemeentecode in de 'claim' uit de token
@@ -265,18 +216,16 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | gemeentecode (92.10) |
       | 0530                 |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | <datum van>        |
-      | datumTot                         | <datum tot>        |
-      | adresseerbaarObjectIdentificatie | 0800010000000003   |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | <peildatum>          |
+      | adresseerbaarObjectIdentificatie | 0800010000000003     |
       Dan heeft de response 1 bewoning
 
       Voorbeelden:
-      | datum van  | datum tot  | omschrijving                                            |
-      | 2023-07-01 | 2023-08-01 | de periode ligt na de herindeling                       |
-      | 2022-01-01 | 2023-01-01 | de periode ligt voor de herindeling                     |
-      | 2023-01-01 | 2023-07-01 | de herindeling vindt plaats binnen de gevraagde periode |
+      | peildatum  | omschrijving                                       |
+      | 2023-07-01 | de peildatum ligt na de herindeling                |
+      | 2022-01-01 | de peildatum ligt voor de herindeling              |
+      | 2023-05-26 | de herindeling vindt plaats op gevraagde peildatum |
 
 
   Regel: Een gemeente als afnemer is geautoriseerd voor bewoning, wanneer de gemeente van inschrijving van een gevonden verblijfplaats ongelijk is aan gemeentecode in de token, maar deze gemeente van inschrijving heeft in de gemeententabel nieuwe gemeentecode (92.12) gelijk aan de gemeentecode in de token
@@ -295,15 +244,12 @@ Functionaliteit: autorisatie voor het gebruik van de API BewoningMetPeriode
       | nieuwe gemeentecode (92.12) | datum beëindiging (99.99) |
       | 0800                        | 20230526                  |
       Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | <datum van>        |
-      | datumTot                         | <datum tot>        |
-      | adresseerbaarObjectIdentificatie | 9999010000000003   |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | <peildatum>          |
+      | adresseerbaarObjectIdentificatie | 9999010000000003     |
       Dan heeft de response 1 bewoning
 
       Voorbeelden:
-      | datum van  | datum tot  | scenario                                                                                                                                 |
-      | 2023-07-01 | 2023-08-01 | periode ligt na datum samenvoeging (adresseerbaar object ligt in gemeente 0800)                                                          |
-      | 2022-01-01 | 2023-01-01 | periode ligt voor datum samenvoeging (adresseerbaar object ligt in gemeente 9999)                                                        |
-      | 2023-01-01 | 2023-08-01 | periode overlapt de datum samenvoeging (adresseerbaar object ligt een deel van de periode in gemeente 0800 en een deel in gemeente 9999) |
+      | peildatum  | scenario                                                                            |
+      | 2023-07-01 | peildatum ligt na datum samenvoeging (adresseerbaar object ligt in gemeente 0800)   |
+      | 2022-01-01 | peildatum ligt voor datum samenvoeging (adresseerbaar object ligt in gemeente 9999) |
