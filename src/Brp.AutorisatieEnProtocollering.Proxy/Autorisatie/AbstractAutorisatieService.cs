@@ -15,8 +15,6 @@ public abstract class AbstractAutorisatieService : IAuthorisation
 
     public virtual AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody) => throw new NotImplementedException();
 
-    public virtual AuthorisationResult AuthorizeResponse(int afnemerCode, int? gemeenteCode, string? geleverdeGemeenteCodes) => throw new NotImplementedException();
-
     protected Data.Autorisatie? GetActueleAutorisatieFor(int afnemerCode)
     {
         var featureManager = _serviceProvider.GetRequiredService<IFeatureManager>();
