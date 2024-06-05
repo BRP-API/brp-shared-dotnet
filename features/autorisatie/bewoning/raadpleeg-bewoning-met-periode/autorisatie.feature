@@ -11,7 +11,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
   De BRP API Bewoning wordt alleen aangeboden aan gemeenten voor het raadplegen de bewoning van adresseerbare object binnen de eigen gemeente.
 
   Autorisatie wordt verkregen met behulp van een OAuth 2 token. 
-  Wanneer de afnemer een gemeente is, bevat het OAuth token een claim met een gemeentecode. Deze wordt gebruikt om te bepalen of het bevraagde adres binnen de eigen gemeente ligt.
+  Wanneer de afnemer een gemeente is, bevat het OAuth token een gemeentecode. Deze wordt gebruikt om te bepalen of het bevraagde adres binnen de eigen gemeente ligt.
   Autorisatie voor bewoning wordt bepaald door de gemeente waar het gevraagde adresseerbaar object ligt.
   Een afnemer is alleen geautoriseerd wanneer iedere (mogelijke) bewoner in de gevraagde periode van bewoning in de afnemergemeente was ingeschreven.
 
@@ -28,7 +28,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       | 0518                 | 0518010000000002                         |
 
 
-  Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van bewoning waarbij voor de gevonden verblijfplaats(en) de gemeente van inschrijving gelijk is aan de gemeentecode in de 'claim' uit de token
+  Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van bewoning waarbij de gemeente van de gevonden verblijfplaats(en) gelijk is aan de gemeentecode van de afnemer.
 
     Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
@@ -62,7 +62,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       | code     | unauthorized                                                                           |
       | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
 
-    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente en de bewoner is nu niet meer ingeschreven in de gemeente
+    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner nu niet meer is ingeschreven in de gemeente
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20100818                           |
@@ -78,7 +78,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       Dan heeft de response 1 bewoning
 
     @fout-case
-    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object buiten de gemeente en de bewoner is nu wel ingeschreven in de gemeente
+    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object buiten de gemeente waarvan de bewoner is nu wel ingeschreven in de gemeente
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20041103                           |
@@ -118,7 +118,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       | adresseerbaarObjectIdentificatie | 0800010000000001   |
       Dan heeft de response 1 bewoning
 
-    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente en de bewoner is binnen de periode vertrokken naar het buitenland
+    Scenario: Gemeente raadpleegt bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner binnen de periode is vertrokken naar het buitenland
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20100818                           |
@@ -167,9 +167,9 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       Dan heeft de response 1 bewoning
 
 
-  Regel: Een gemeente als afnemer is geautoriseerd voor een antwoord wanneer het gevraagde adresseerbaar object niet bestaat
+  Regel: Een gemeente als afnemer is geautoriseerd voor een bewoning wanneer het gevraagde adresseerbaar object niet bestaat
 
-    Scenario: Het adresseerbaar object wordt niet gevonden en dus is er kan de gemeente van het adresseerbaarbaar object niet gelijk of ongelijk zijn aan de afnemer
+    Scenario: Het adresseerbaar object wordt niet gevonden, waardoor de gemeente van het adresseerbaarbaar object niet gelijk of ongelijk kan zijn aan de afnemer
       Als bewoning wordt gezocht met de volgende parameters
       | naam                             | waarde             |
       | type                             | BewoningMetPeriode |
@@ -179,7 +179,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       Dan heeft de response 0 bewoningen
 
     @fout-case
-    Scenario: Het adresseerbaar object wordt nog niet bewoond in de gevraagde periode en dus kan de gemeente van inschrijving van het verblijf in die periode niet gelijk of ongelijk zijn aan de afnemer (gemeentecode in token)
+    Scenario: Het adresseerbaar object wordt nog niet bewoond in de gevraagde periode, waarmee de gemeente van inschrijving van het verblijf in die periode niet gelijk of ongelijk kan zijn aan gemeentecode van de afnemer
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20230701                           |
@@ -199,7 +199,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
       | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
 
     @fout-case
-    Scenario: Het adresseerbaar object wordt niet meer bewoond in de gevraagde periode en dus kan de gemeente van inschrijving van het verblijf in die periode niet gelijk of ongelijk zijn aan de afnemer (gemeentecode in token)
+    Scenario: Het adresseerbaar object wordt niet meer bewoond in de gevraagde periode, waarmee de gemeente van inschrijving van het verblijf in die periode niet gelijk of ongelijk kan zijn aan de gemeentecode van de afnemer
       Gegeven adres 'A3' heeft de volgende gegevens
       | gemeentecode (92.10) | identificatiecode verblijfplaats (11.80) |
       | 0530                 | 0530010000000003                         |
