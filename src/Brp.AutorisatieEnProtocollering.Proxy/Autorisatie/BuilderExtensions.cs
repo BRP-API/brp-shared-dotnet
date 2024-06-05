@@ -10,5 +10,6 @@ public static class BuilderExtensions
     {
         builder.Services.AddKeyedTransient<IAuthorisation, PersonenAuthorisatieService>("personen");
         builder.Services.AddKeyedTransient<IAuthorisation, ReisdocumentenAutorisatieService>("reisdocumenten");
+        builder.Services.AddKeyedTransient<IAuthorisation, Historie.AutorisatieService>("verblijfplaatshistorie");
     }
 }
