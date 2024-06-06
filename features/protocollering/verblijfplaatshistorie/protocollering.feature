@@ -42,7 +42,7 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | request_zoek_rubrieken                 |
       | 010120, 081030, 081320, 581030, 581320 |
 
-  Regel: Velden van de response worden vertaald naar rubrieknummers volgens Logisch ontwerp BRP en vastgelegd in het veld 'request_gevraagde_rubrieken'.
+  Regel: Vragen om verblijfplaatshistorie wordt vastgelegd in het veld 'request_gevraagde_rubrieken' met virtuele rubriek PX.VP.07.
 
     Scenario: Raadpleeg verblijfplaatshistorie met peildatum
       Als verblijfplaatshistorie wordt gezocht met de volgende parameters
@@ -51,8 +51,8 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | burgerservicenummer | 000000012             |
       | peildatum           | 2023-05-26            |
       Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_gevraagde_rubrieken                                                                                                                                                                                                                                                                                    |
-      | 080910, 081010, 081110, 081115, 081120, 081130, 081140, 081150, 081160, 081170, 081180, 081190, 081210, 081310, 081330, 081340, 081350, 580910, 581010, 581110, 581115, 581120, 581130, 581140, 581150, 581160, 581170, 581180, 581190, 581210, 581310, 581330, 581340, 581350, PAVP01, PAVP02, PAVP03, PAVP04 |
+      | request_gevraagde_rubrieken |
+      | PXVP07                      |
 
     Scenario: Raadpleeg verblijfplaatshistorie met periode
       Als verblijfplaatshistorie wordt gezocht met de volgende parameters
@@ -62,5 +62,5 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | datumVan            | 2023-01-01          |
       | datumTot            | 2024-01-01          |
       Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_gevraagde_rubrieken                                                                                                                                                                                                                                                                                    |
-      | 080910, 081010, 081110, 081115, 081120, 081130, 081140, 081150, 081160, 081170, 081180, 081190, 081210, 081310, 081330, 081340, 081350, 580910, 581010, 581110, 581115, 581120, 581130, 581140, 581150, 581160, 581170, 581180, 581190, 581210, 581310, 581330, 581340, 581350, PAVP01, PAVP02, PAVP03, PAVP04 |
+      | request_gevraagde_rubrieken |
+      | PXVP07                      |
