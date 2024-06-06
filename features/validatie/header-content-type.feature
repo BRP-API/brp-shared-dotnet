@@ -48,12 +48,12 @@ Functionaliteit: Content-Type header waarde bij BRP API bevragingen
       Dan heeft de response 0 <response type>
 
       Voorbeelden:
-      | media type                      | zoek/raadpleeg type    | waarde zoek type param          | naam 1e param       | waarde 1e param | naam 2e param | waarde 2e param | naam 3e param | waarde 3e param | response type    |
-      | application/json                | personen               | RaadpleegMetBurgerservicenummer | burgerservicenummer | 000000012       | fields        | naam            |               |                 | personen         |
-      | application/json;charset=utf-8  | reisdocumenten         | RaadpleegMetReisdocumentnummer  | reisdocumentnummer  | AB1234567       | fields        | houder          |               |                 | reisdocumenten   |
-      | application/json; charset=utf-8 | verblijfplaatshistorie | RaadpleegMetPeildatum           | burgerservicenummer | 000000012       | peildatum     | 2020-04-01      |               |                 | verblijfplaatsen |
-      | application/json;charset=Utf-8  | verblijfplaatshistorie | RaadpleegMetPeriode             | burgerservicenummer | 000000012       | datumVan      | 2020-04-01      | datumTot      | 2021-05-01      | verblijfplaatsen |
-      | application/json; charset=UTF-8 | personen               | RaadpleegMetBurgerservicenummer | burgerservicenummer | 000000012       | fields        | naam            |               |                 | personen         |
+      | media type                      | zoek/raadpleeg type    | waarde zoek type param              | naam 1e param       | waarde 1e param | naam 2e param | waarde 2e param | naam 3e param | waarde 3e param | response type    |
+      | application/json                | personen               | RaadpleegMetBurgerservicenummer     | burgerservicenummer | 000000012       | fields        | naam            |               |                 | personen         |
+      | application/json;charset=utf-8  | reisdocumenten         | RaadpleegMetReisdocumentnummer      | reisdocumentnummer  | AB1234567       | fields        | houder          |               |                 | reisdocumenten   |
+      | application/json; charset=utf-8 | verblijfplaatshistorie | RaadpleegMetPeildatum               | burgerservicenummer | 000000012       | peildatum     | 2020-04-01      |               |                 | verblijfplaatsen |
+      | application/json;charset=Utf-8  | verblijfplaatshistorie | RaadpleegMetPeriode                 | burgerservicenummer | 000000012       | datumVan      | 2020-04-01      | datumTot      | 2021-05-01      | verblijfplaatsen |
+      | application/json; charset=UTF-8 | personen               | ZoekMetGeslachtsnaamEnGeboortedatum | geslachtsnaam       | brănduş-dendyuk | geboortedatum | 1983-05-26      | fields        | naam            | personen         |
 
 
   Regel: De default Content-Type waarde en charset zijn respectievelijk application/json en utf-8

@@ -5,7 +5,7 @@ Functionaliteit: BRP API bevragingen met behulp van de HTTP POST aanroep
 
   Als eigenaar van de BRP API
   wil ik dat bevragingen op de BRP API worden gedaan met behulp van de HTTP POST methode
-  zodat urls geen persoonsgegevens kunnen bevatten
+  zodat de BRP API urls geen persoonsgegevens kunnen bevatten
 
   @fout-case
   Abstract Scenario: '<zoek/raadpleeg type>' wordt geraadpleegd/gezocht met behulp van een '<aanroep type>' aanroep
@@ -19,10 +19,10 @@ Functionaliteit: BRP API bevragingen met behulp van de HTTP POST aanroep
     | instance | /haalcentraal/api<url deel>                                 |
 
     Voorbeelden:
-    | zoek/raadpleeg type    | url deel                            | aanroep type |
-    | personen               | /brp/personen                       | GET          |
-    | reisdocumenten         | /reisdocumenten/reisdocumenten      | PUT          |
-    | verblijfplaatshistorie | /brphistorie/verblijfplaatshistorie | PATCH        |
-    | bewoningen             | /bewoning/bewoningen                | DELETE       |
-    | personen               | /brp/personen                       | OPTIONS      |
-    | reisdocumenten         | /reisdocumenten/reisdocumenten      | TRACE        |
+    | aanroep type | zoek/raadpleeg type    | url deel                            |
+    | GET          | personen               | /brp/personen                       |
+    | PUT          | reisdocumenten         | /reisdocumenten/reisdocumenten      |
+    | PATCH        | verblijfplaatshistorie | /brphistorie/verblijfplaatshistorie |
+    | DELETE       | bewoningen             | /bewoning/bewoningen                |
+    | OPTIONS      | personen               | /brp/personen                       |
+    | TRACE        | reisdocumenten         | /reisdocumenten/reisdocumenten      |
