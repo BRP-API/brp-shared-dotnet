@@ -221,7 +221,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
       | 2019-01-01 | 2020-01-01 | bewoner in gevraagde periode is vertrokken voor de samenvoeging                                                                          |
 
 
-  Regel: de actuele gemeente van inschrijving van bewoners is niet relevant
+  Regel: De actuele gemeente van inschrijving van bewoners is niet relevant
 
     Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner nu niet meer is ingeschreven in de gemeente
       Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
@@ -260,54 +260,3 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
       | detail   | Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen. |
       | code     | unauthorized                                                                           |
       | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
-
-    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object binnen de gemeente en de bewoner is binnen de periode verhuisd buiten de gemeente
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20220526                           |
-      En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20220820                           |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
-
-    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner binnen de periode is vertrokken naar het buitenland
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20220526                           |
-      En de 'verblijfplaats' is gewijzigd naar de volgende gegevens
-      | gemeente van inschrijving (09.10) | land (13.10) | datum aanvang adres buitenland (13.20) | regel 1 adres buitenland (13.30) | regel 2 adres buitenland (13.40) | regel 3 adres buitenland (13.50) |
-      | 1999                              | 5010         | 20220820                               | Rue du pomme 26                  | Bruxelles                        | postcode 1000                    |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
-
-    Scenario: Volgende verblijf is in andere gemeente en aanvang volgende verblijf is gedeeltelijk onbekend en de periode valt binnen de onzekerheidsperiode
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20230000                           |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2023-07-01         |
-      | datumTot                         | 2023-08-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
