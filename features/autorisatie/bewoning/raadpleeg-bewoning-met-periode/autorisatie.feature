@@ -1,7 +1,7 @@
 # language: nl
 
 @autorisatie
-Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning
+Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met periode
   Autorisatie voor het gebruik van Bewoning gebeurt op twee niveau's:
   1. autorisatie van de gebruiker door de afnemende organisatie
   2. autorisatie van de afnemer (organisatie) door RvIG
