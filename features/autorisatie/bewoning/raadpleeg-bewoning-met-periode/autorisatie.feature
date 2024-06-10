@@ -11,7 +11,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
   De BRP API Bewoning wordt alleen aangeboden aan gemeenten voor het raadplegen de bewoning van adresseerbare object binnen de eigen gemeente.
 
   Autorisatie wordt verkregen met behulp van een OAuth 2 token. 
-  Wanneer de afnemer een gemeente is, bevat het OAuth token een gemeentecode. Deze wordt gebruikt om te bepalen of het bevraagde adres binnen de eigen gemeente ligt.
+  Wanneer de afnemer een gemeente is, bevat het OAuth token een gemeentecode claim. Deze wordt gebruikt om te bepalen of het bevraagde adres binnen de eigen gemeente ligt.
   Autorisatie voor bewoning wordt bepaald door de gemeente waar het gevraagde adresseerbaar object ligt.
   Een afnemer is alleen geautoriseerd wanneer iedere (mogelijke) bewoner in de gevraagde periode van bewoning in de afnemergemeente was ingeschreven.
 
