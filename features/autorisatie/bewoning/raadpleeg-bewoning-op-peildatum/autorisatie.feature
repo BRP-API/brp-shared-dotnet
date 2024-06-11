@@ -166,7 +166,9 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met peilda
       | 2023-05-26 | de herindeling vindt plaats op gevraagde peildatum |
 
 
-  Regel: Een gemeente als afnemer is geautoriseerd voor bewoning wanneer de gemeente van de gevonden verblijfplaats niet overeenkomt met de claim in het token, omdat de bevragende gemeente een nieuwe gemeentecode heeft gekregen (92.12) 
+  Regel: Een gemeente als afnemer is geautoriseerd voor bewoning in een gemeente die is samengevoegd in afnemende gemeente
+    Een afnemer is geautoriseerd voor bewoning wanneer in de gemeententabel bij de gemeentecode van het gevraagde adresseerbaar object
+    een nieuwe gemeentecode (92.12) staat die gelijk is aan de gemeentecode in de claim.
 
     Abstract Scenario: Adres ligt in samengevoegde gemeente en <scenario>
       Gegeven gemeente 'G1' heeft de volgende gegevens
