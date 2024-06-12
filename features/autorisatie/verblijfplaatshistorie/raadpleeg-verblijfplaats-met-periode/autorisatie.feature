@@ -3,14 +3,6 @@
 @autorisatie
 Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met periode
 
-    Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | identificatiecode verblijfplaats (11.80) | straatnaam (11.10) |
-      | 0530                 | 0530010000000001                         | Eerste straat      |
-      En de persoon met burgerservicenummer '000000012' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0530                              | 20000101                           |
-
   Regel: Wanneer verblijfplaatshistorie wordt geraadpleegd waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     Om verblijfplaatshistorie te mogen vragen moet de afnemer geautoriseerd zijn voor virtuele rubriek PX.VP.07
 
@@ -28,7 +20,7 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met periode
       | burgerservicenummer | 000000012           |
       | datumVan            | 2023-01-01          |
       | datumTot            | 2024-01-01          |
-      Dan heeft de response 1 verblijfplaats
+      Dan heeft de response 0 verblijfplaatsen
 
     @fout-case
     Scenario: Afnemer vraagt verblijfplaatshistorie, maar is niet geautoriseerd voor PX.VP.07 en wel voor alle losse rubrieken
@@ -73,4 +65,4 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met periode
       | burgerservicenummer | 000000012           |
       | datumVan            | 2023-01-01          |
       | datumTot            | 2024-01-01          |
-      Dan heeft de response 1 verblijfplaats
+      Dan heeft de response 0 verblijfplaatsen

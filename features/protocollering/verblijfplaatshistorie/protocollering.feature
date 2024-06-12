@@ -13,15 +13,12 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
   als één rubriek opgenomen in 'request_gevraagde_rubrieken': PX.VP.07.
 
     Achtergrond:
-      Gegeven adres 'A1' heeft de volgende gegevens
-      | gemeentecode (92.10) | identificatiecode verblijfplaats (11.80) | straatnaam (11.10) |
-      | 0530                 | 0530010000000001                         | Eerste straat      |
+      Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | afnemerID | gemeenteCode |
+      | 000008    | 0800         |
       En de persoon met burgerservicenummer '000000012' heeft de volgende gegevens
       | pl_id |
       | 1001  |
-      En de persoon is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0530                              | 20000101                           |
       En de response van de downstream api heeft de volgende headers
       | x-geleverde-pls |
       | 1001            |
@@ -47,5 +44,5 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | datumVan            | 2023-01-01          |
       | datumTot            | 2024-01-01          |
       Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_zoek_rubrieken                 |
-      | 010120, 081030, 081320, 581030, 581320 |
+      | request_zoek_rubrieken                 | request_gevraagde_rubrieken |
+      | 010120, 081030, 081320, 581030, 581320 | PXVP07                      |
