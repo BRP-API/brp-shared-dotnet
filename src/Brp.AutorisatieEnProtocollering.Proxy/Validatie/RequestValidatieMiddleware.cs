@@ -56,6 +56,10 @@ public class RequestValidatieMiddleware
                 responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
             }
         }
+        else
+        {
+            responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
+        }
 
         using var bodyStream = responseBody.ToMemoryStream(httpContext.Response.UseGzip());
 
@@ -110,6 +114,12 @@ public class RequestValidatieMiddleware
     {
         if (!await httpContext.HandleNotFound())
         {
+            return false;
+        }
+        if(httpContext.Response.StatusCode == StatusCodes.Status500InternalServerError)
+        {
+            await httpContext.HandleInternalServerError();
+
             return false;
         }
         if (!await httpContext.HandleServiceIsAvailable())
@@ -167,7 +177,8 @@ public class RequestValidatieMiddleware
         return requestedResource switch
         {
             "personen" or
-            "reisdocumenten" => serviceProvider.GetKeyedService<T>(requestedResource),
+            "reisdocumenten" or
+            "verblijfplaatshistorie" => serviceProvider.GetKeyedService<T>(requestedResource),
             _ => default
         };
     }

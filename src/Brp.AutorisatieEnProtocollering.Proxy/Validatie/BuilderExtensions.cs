@@ -10,5 +10,6 @@ public static class BuilderExtensions
     {
         builder.Services.AddKeyedTransient<IRequestBodyValidator, PersonenRequestBodyValidatieService>("personen");
         builder.Services.AddKeyedTransient<IRequestBodyValidator, ReisdocumentenRequestBodyValidatieService>("reisdocumenten");
+        builder.Services.AddKeyedTransient<IRequestBodyValidator, Historie.RequestBodyValidatieService>("verblijfplaatshistorie");
     }
 }
