@@ -2,7 +2,15 @@
 
 @protocollering
 Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
-  Zoeken en raadplegen van gegevens van burgers worden "geprotocolleerd" (formeel gelogd).
+  Zoeken en raadplegen van gegevens van burgers worden "geprotocolleerd" (formeel gelogd met als doel de burger te informeren 
+  over welke instantie voor welke taak welke gegevens heeft geraadpleegd).
+
+  Bij protocollering wordt voor elk request in 'request_zoek_rubrieken' vastgelegd welke parameters zijn gebruikt
+  en in 'request_gevraagde_rubrieken' vastgelegd welke gegevens daarbij zijn gevraagd.
+  Zowel bij verblijfplaatshistorie op peildatum als bij verblijfplaatshistorie op periode worden verblijfplaatsen gezocht met 
+  burgerservicenummer (01.01.20) plus actuele en historische datum aanvang (08.10.30, 08.13.20, 58.10.30, 58.13.20).
+  Aangezien verblijfplaatshistorie altijd in zijn geheel wordt gevraagd -er is geen parameter fields- wordt verblijfplaatshistorie
+  als één rubriek opgenomen in 'request_gevraagde_rubrieken': PX.VP.07.
 
     Achtergrond:
       Gegeven adres 'A1' heeft de volgende gegevens
@@ -19,7 +27,7 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | 1001            |
     
   
-  Regel: Gebruikte parameters worden vertaald naar rubrieknummers volgens Logisch ontwerp BRP en vastgelegd in het veld 'request_zoek_rubrieken'.
+  Regel: Verblijfplaatshistorie wordt geprotocolleerd
 
     Scenario: Raadpleeg verblijfplaatshistorie met peildatum
       Als verblijfplaatshistorie wordt gezocht met de volgende parameters
@@ -28,8 +36,8 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       | burgerservicenummer | 000000012             |
       | peildatum           | 2023-05-26            |
       Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_zoek_rubrieken                 |
-      | 010120, 081030, 081320, 581030, 581320 |
+      | request_zoek_rubrieken                 | request_gevraagde_rubrieken |
+      | 010120, 081030, 081320, 581030, 581320 | PXVP07                      |
 
     Scenario: Raadpleeg verblijfplaatshistorie met periode
       Als verblijfplaatshistorie wordt gezocht met de volgende parameters
@@ -41,26 +49,3 @@ Functionaliteit: Protocolleren van raadplegen van verblijfplaatshistorie
       Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
       | request_zoek_rubrieken                 |
       | 010120, 081030, 081320, 581030, 581320 |
-
-  Regel: Velden van de response worden vertaald naar rubrieknummers volgens Logisch ontwerp BRP en vastgelegd in het veld 'request_gevraagde_rubrieken'.
-
-    Scenario: Raadpleeg verblijfplaatshistorie met peildatum
-      Als verblijfplaatshistorie wordt gezocht met de volgende parameters
-      | naam                | waarde                |
-      | type                | RaadpleegMetPeildatum |
-      | burgerservicenummer | 000000012             |
-      | peildatum           | 2023-05-26            |
-      Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_gevraagde_rubrieken                                                                                                                                                                                                                                                                                    |
-      | 080910, 081010, 081110, 081115, 081120, 081130, 081140, 081150, 081160, 081170, 081180, 081190, 081210, 081310, 081330, 081340, 081350, 580910, 581010, 581110, 581115, 581120, 581130, 581140, 581150, 581160, 581170, 581180, 581190, 581210, 581310, 581330, 581340, 581350, PAVP01, PAVP02, PAVP03, PAVP04 |
-
-    Scenario: Raadpleeg verblijfplaatshistorie met periode
-      Als verblijfplaatshistorie wordt gezocht met de volgende parameters
-      | naam                | waarde              |
-      | type                | RaadpleegMetPeriode |
-      | burgerservicenummer | 000000012           |
-      | datumVan            | 2023-01-01          |
-      | datumTot            | 2024-01-01          |
-      Dan heeft de persoon met burgerservicenummer '000000012' de volgende 'protocollering' gegevens
-      | request_gevraagde_rubrieken                                                                                                                                                                                                                                                                                    |
-      | 080910, 081010, 081110, 081115, 081120, 081130, 081140, 081150, 081160, 081170, 081180, 081190, 081210, 081310, 081330, 081340, 081350, 580910, 581010, 581110, 581115, 581120, 581130, 581140, 581150, 581160, 581170, 581180, 581190, 581210, 581310, 581330, 581340, 581350, PAVP01, PAVP02, PAVP03, PAVP04 |
