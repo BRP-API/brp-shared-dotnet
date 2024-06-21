@@ -12,7 +12,7 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
 
   Autorisatie wordt verkregen met behulp van een OAuth 2 token. 
   Wanneer de afnemer een gemeente is, bevat het OAuth token een gemeentecode claim. Deze wordt gebruikt om te bepalen of het bevraagde adres binnen de eigen gemeente ligt.
-  Autorisatie voor bewoning wordt bepaald door de gemeente waar het gevraagde adresseerbaar object ligt.
+  Een gemeente is geautoriseerd voor Bewoning als het adresseerbaar object waarvan de bewoning wordt gevraagd in de gemeente ligt, of ooit in de gemeente heeft gelegen.
 
 
     Achtergrond:
@@ -60,9 +60,6 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
       | detail   | Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen. |
       | code     | unauthorized                                                                           |
       | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
-
-  
-  Regel: De gemeente waar het adresseerbaar object in ligt kan worden bepaald uit bewoning voor of na de gevraagde periode
 
     @fout-case
     Scenario: Het adresseerbaar object wordt nog niet bewoond in de gevraagde periode, maar is na de gevraagde periode wel bewoond
@@ -221,44 +218,3 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met period
       | 2022-01-01 | 2023-01-01 | periode ligt voor datum samenvoeging (adresseerbaar object ligt in gemeente 9999)                                                        |
       | 2023-01-01 | 2023-08-01 | periode overlapt de datum samenvoeging (adresseerbaar object ligt een deel van de periode in gemeente 0800 en een deel in gemeente 9999) |
       | 2019-01-01 | 2020-01-01 | bewoner in gevraagde periode is vertrokken voor de samenvoeging                                                                          |
-
-
-  Regel: De actuele gemeente van inschrijving van bewoners is niet relevant
-
-    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner nu niet meer is ingeschreven in de gemeente
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20100818                           |
-      En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20230526                           |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0800010000000001   |
-      Dan heeft de response 1 bewoning
-
-    @fout-case
-    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object buiten de gemeente waarvan de bewoner is nu wel ingeschreven in de gemeente
-      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0518                              | 20041103                           |
-      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
-      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
-      | 0800                              | 20230601                           |
-      Als bewoning wordt gezocht met de volgende parameters
-      | naam                             | waarde             |
-      | type                             | BewoningMetPeriode |
-      | datumVan                         | 2022-01-01         |
-      | datumTot                         | 2023-01-01         |
-      | adresseerbaarObjectIdentificatie | 0518010000000002   |
-      Dan heeft de response een object met de volgende gegevens
-      | naam     | waarde                                                                                 |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
-      | title    | U bent niet geautoriseerd voor deze vraag.                                             |
-      | status   | 403                                                                                    |
-      | detail   | Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen. |
-      | code     | unauthorized                                                                           |
-      | instance | /haalcentraal/api/bewoning/bewoningen                                                  |

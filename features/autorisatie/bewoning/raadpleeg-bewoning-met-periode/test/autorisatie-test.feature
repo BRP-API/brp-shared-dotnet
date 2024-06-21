@@ -99,3 +99,44 @@ Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en s
       | periode ligt voor samenvoegen en voor infrastructureel wijzigen | 2015-01-01 | 2016-01-01 |
       | periode ligt na samenvoegen en voor infrastructureel wijzigen   | 2019-01-01 | 2020-01-01 |
       | periode ligt na samenvoegen en na infrastructureel wijzigen     | 2023-07-01 | 2024-01-01 |
+
+
+  Regel: De actuele gemeente van inschrijving van bewoners is niet relevant
+
+    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object binnen de gemeente waarvan de bewoner nu niet meer is ingeschreven in de gemeente
+      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A1' met de volgende gegevens
+      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
+      | 0800                              | 20100818                           |
+      En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
+      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
+      | 0518                              | 20230526                           |
+      Als bewoning wordt gezocht met de volgende parameters
+      | naam                             | waarde             |
+      | type                             | BewoningMetPeriode |
+      | datumVan                         | 2022-01-01         |
+      | datumTot                         | 2023-01-01         |
+      | adresseerbaarObjectIdentificatie | 0800010000000001   |
+      Dan heeft de response 1 bewoning
+
+    @fout-case
+    Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object buiten de gemeente waarvan de bewoner is nu wel ingeschreven in de gemeente
+      Gegeven de persoon met burgerservicenummer '000000024' is ingeschreven op adres 'A2' met de volgende gegevens
+      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
+      | 0518                              | 20041103                           |
+      En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
+      | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
+      | 0800                              | 20230601                           |
+      Als bewoning wordt gezocht met de volgende parameters
+      | naam                             | waarde             |
+      | type                             | BewoningMetPeriode |
+      | datumVan                         | 2022-01-01         |
+      | datumTot                         | 2023-01-01         |
+      | adresseerbaarObjectIdentificatie | 0518010000000002   |
+      Dan heeft de response een object met de volgende gegevens
+      | naam     | waarde                                                                                 |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
+      | title    | U bent niet geautoriseerd voor deze vraag.                                             |
+      | status   | 403                                                                                    |
+      | detail   | Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen. |
+      | code     | unauthorized                                                                           |
+      | instance | /haalcentraal/api/bewoning/bewoningen                                                  |
