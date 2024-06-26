@@ -10,5 +10,6 @@ public static class BuilderExtensions
     {
         builder.Services.AddKeyedTransient<IProtocollering, PersonenProtocolleringService>("personen");
         builder.Services.AddKeyedTransient<IProtocollering, ReisdocumentenProtocolleringService>("reisdocumenten");
+        builder.Services.AddKeyedTransient<IProtocollering, Historie.ProtocolleringService>("verblijfplaatshistorie");
     }
 }
