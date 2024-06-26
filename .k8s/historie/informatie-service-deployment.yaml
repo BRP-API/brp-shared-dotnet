@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: historie-informatie-service
+  labels:
+    app: historie-informatie-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: historie-informatie-service
+  template:
+    metadata:
+      labels:
+        name: historie-informatie-service
+    spec:
+      containers:
+        - name: historie-informatie-service
+          image: ghcr.io/brp-api/historie-informatie-service:2.0.0-202406261155
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+            - name: ASPNETCORE_URLS
+              value: http://+:5000
+            # - name: Serilog__MinimumLevel__Override__Serilog
+            #   value: Debug
+
+            - name: Ecs__Path
+              value: /var/log/historie-informatie-service.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: HealthEndpointBase
+              value: /historie-informatie/health
+              # de volgende health endpoints worden gecreeerd:
+              # - <HealthEndpointBase>/startup
+              # - <HealthEndpointBase>/ready
+              # - <HealthEndpointBase>/live
+
+            - name: Routes__0__UpstreamPathTemplate
+              value: /haalcentraal/api/brphistorie/verblijfplaatshistorie
+            - name: Routes__0__DownstreamPathTemplate
+              value: /haalcentraal/api/brphistorie/verblijfplaatshistorie
+            - name: Routes__0__DownstreamScheme
+              value: http
+            - name: Routes__0__DownstreamHostAndPorts__0__Host
+              value: historie-data-service
+            - name: Routes__0__DownstreamHostAndPorts__0__Port
+              value: "8000"
+          ports:
+            - name: http
+              containerPort: 5000

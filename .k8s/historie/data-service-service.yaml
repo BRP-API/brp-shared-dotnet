@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: historie-data-service
+  labels:
+    app: historie-data-service
+spec:
+  selector:
+    name: historie-data-service
+  # type: ClusterIP
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 80

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: historie-data-service
+  labels:
+    app: historie-data-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: historie-data-service
+  template:
+    metadata:
+      labels:
+        name: historie-data-service
+    spec:
+      containers:
+        - name: historie-data-service
+          image: ghcr.io/brp-api/historie-data-service:2.0.2-202406060648
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+
+            - name: Serilog__LogLevel__Default
+              value: Warning
+            - name: Serilog__MinimumLevel__Override__Serilog
+              value: Information
+
+            - name: Ecs__Path
+              value: /var/log/historie-data-service.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: Database__Host
+              value: kubernetes.docker.internal
+            - name: Database__Port
+              value: "5432"
+            - name: Database__Database
+              value: rvig_haalcentraal_testdata
+            - name: Database__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Database__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+
+            - name: HaalcentraalApi__MaxSearchResults
+              value: "10"
+            - name: ProtocolleringAuthorization__UseAuthorizationChecks
+              value: "false"
+            - name: ProtocolleringAuthorization__UseProtocollering
+              value: "false"
+
+          ports:
+            - name: http
+              containerPort: 80
