@@ -4,7 +4,6 @@ using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Stream;
 using Brp.Shared.Infrastructure.Validatie;
-using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
@@ -50,16 +49,16 @@ public class RequestValidatieMiddleware
 
         var responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
 
-        if (!await ValidateAndAuthoriseResponse(httpContext))
+        if (await ValidateResponse(httpContext))
         {
-            responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
-        }
-        else
-        {
-            if(!Protocolleer(httpContext, requestBody))
+            if (!Protocolleer(httpContext, requestBody))
             {
                 responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
             }
+        }
+        else
+        {
+            responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
         }
 
         using var bodyStream = responseBody.ToMemoryStream(httpContext.Response.UseGzip());
@@ -111,10 +110,16 @@ public class RequestValidatieMiddleware
             _diagnosticContext);
     }
 
-    private async Task<bool> ValidateAndAuthoriseResponse(HttpContext httpContext)
+    private static async Task<bool> ValidateResponse(HttpContext httpContext)
     {
         if (!await httpContext.HandleNotFound())
         {
+            return false;
+        }
+        if(httpContext.Response.StatusCode == StatusCodes.Status500InternalServerError)
+        {
+            await httpContext.HandleInternalServerError();
+
             return false;
         }
         if (!await httpContext.HandleServiceIsAvailable())
@@ -122,17 +127,7 @@ public class RequestValidatieMiddleware
             return false;
         }
 
-        (int afnemerId, int? gemeenteCode) = GetClaimValues(httpContext);
-
-        IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
-
-        var geleverdeGemeentecodes = httpContext.Response.Headers["x-geleverde-gemeentecodes"];
-
-        httpContext.Response.Headers.Remove("x-geleverde-gemeentecodes");
-
-        return await httpContext.HandleNotAuthorized(
-            authorisation!.AuthorizeResponse(afnemerId, gemeenteCode, geleverdeGemeentecodes!),
-            _diagnosticContext);
+        return true;
     }
 
     private bool Protocolleer(HttpContext httpContext, string requestBody)
@@ -182,7 +177,8 @@ public class RequestValidatieMiddleware
         return requestedResource switch
         {
             "personen" or
-            "reisdocumenten" => serviceProvider.GetKeyedService<T>(requestedResource),
+            "reisdocumenten" or
+            "verblijfplaatshistorie" => serviceProvider.GetKeyedService<T>(requestedResource),
             _ => default
         };
     }

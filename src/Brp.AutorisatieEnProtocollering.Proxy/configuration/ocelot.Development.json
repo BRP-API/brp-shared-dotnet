@@ -21,6 +21,17 @@
           "Port": "5010"
         }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+      "DownstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ]
     }
   ]
 }

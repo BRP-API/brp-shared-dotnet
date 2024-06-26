@@ -1,4 +1,3 @@
 .github/workflows/ci.yml
-features/step_definitions/world.js
 scripts/generate-cucumber-reports.js
 scripts/specs-verify.sh

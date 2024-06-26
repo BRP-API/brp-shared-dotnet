@@ -5,14 +5,20 @@ const { addDefaultAutorisatieSettings,
         handleRequest } = require('./requestHelpers');
 
 const apiEndpointPrefixMap = new Map([
+    ['bewoningen', 'bewoning'],
     ['personen', 'brp'],
     ['reisdocumenten', 'reisdocumenten'],
-    ['bestaat-niet', 'brp']
+    ['verblijfplaatshistorie', 'brphistorie'],
+    // niet bestaande endpoints
+    ['ingezetenen', 'brp'],
+    ['paspoorten', 'reisdocumenten'],
+    ['verblijfhistorie', 'brphistorie']
 ]);
 
 When(/^([a-zA-Z-]*) wordt gezocht met de volgende parameters$/, async function (endpoint, dataTable) {
     if(this.context.afnemerID === undefined) {
         this.context.afnemerID = this.context.oAuth.clients[0].afnemerID;
+        this.context.gemeenteCode = this.context.oAuth.clients[0].gemeenteCode;
     }
 
     if(this.context.gezag !== undefined) {
