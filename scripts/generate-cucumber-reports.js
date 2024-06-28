@@ -68,3 +68,29 @@ report.generate({
     hideMetadata: true,
     customData: customData
 });
+
+// verblijfplaatshistorie endpoint
+
+report.generate({
+    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/input-validatie',
+    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/input-validatie',
+    reportName: 'Verblijfplaatshistorie input validatie features',
+    hideMetadata: true,
+    customData: customData
+});
+
+report.generate({
+    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/autorisatie',
+    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/autorisatie',
+    reportName: 'Verblijfplaatshistorie autorisatie features',
+    hideMetadata: true,
+    customData: customData
+});
+
+report.generate({
+    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/protocollering',
+    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/protocollering',
+    reportName: 'Verblijfplaatshistorie protocollering features',
+    hideMetadata: true,
+    customData: customData
+});
