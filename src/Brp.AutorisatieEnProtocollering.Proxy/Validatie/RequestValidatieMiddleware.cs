@@ -1,5 +1,6 @@
 ﻿using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Http;
+using Brp.Shared.Infrastructure.Json;
 using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Stream;
@@ -12,18 +13,16 @@ public class RequestValidatieMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly IServiceProvider _serviceProvider;
-    private readonly IDiagnosticContext _diagnosticContext;
 
-    public RequestValidatieMiddleware(RequestDelegate next, IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+    public RequestValidatieMiddleware(RequestDelegate next, IServiceProvider serviceProvider)
     {
         _next = next;
         _serviceProvider = serviceProvider;
-        _diagnosticContext = diagnosticContext;
     }
 
     public async Task Invoke(HttpContext httpContext)
     {
-        if (!await httpContext.HandleNotAuthenticated(_diagnosticContext))
+        if (!await httpContext.HandleNotAuthenticated())
         {
             return;
         }
@@ -91,7 +90,7 @@ public class RequestValidatieMiddleware
 
             return false;
         }
-        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, requestBodyValidator!, _diagnosticContext))
+        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, requestBodyValidator!))
         {
             return false;
         }
@@ -105,9 +104,7 @@ public class RequestValidatieMiddleware
 
         IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
 
-        return await httpContext.HandleNotAuthorized(
-            authorisation!.Authorize(afnemerId, gemeenteCode, requestBody),
-            _diagnosticContext);
+        return await httpContext.HandleNotAuthorized(authorisation!.Authorize(afnemerId, gemeenteCode, requestBody));
     }
 
     private static async Task<bool> ValidateResponse(HttpContext httpContext)
@@ -148,7 +145,7 @@ public class RequestValidatieMiddleware
             return false;
         }
 
-        _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
+        httpContext.Items.Add("Protocollering", geleverdePls.ToString().Split(',').ToJsonCompact());
 
         return true;
     }

@@ -4,7 +4,7 @@ namespace Brp.Referentie.Api.Controllers;
 
 [ApiController,
 Route("haalcentraal/api/reisdocumenten")]
-public class ReisdocumentController : Controller
+public class ReisdocumentController : ControllerBase
 {
     private readonly IWebHostEnvironment _environment;
 

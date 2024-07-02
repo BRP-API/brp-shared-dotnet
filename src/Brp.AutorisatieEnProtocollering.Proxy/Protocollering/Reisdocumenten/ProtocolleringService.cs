@@ -4,9 +4,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Reisdocumenten
 {
-    public class ReisdocumentenProtocolleringService : AbstractProtocolleringService
+    public class ProtocolleringService : AbstractProtocolleringService
     {
-        public ReisdocumentenProtocolleringService(IServiceProvider serviceProvider)
+        public ProtocolleringService(IServiceProvider serviceProvider)
             : base(serviceProvider, Constanten.FieldElementNrDictionary)
         {
         }

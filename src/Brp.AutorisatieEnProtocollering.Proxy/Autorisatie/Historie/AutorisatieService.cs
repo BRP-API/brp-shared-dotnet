@@ -1,31 +1,30 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
-using Serilog;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Historie;
 
 public class AutorisatieService : AbstractAutorisatieService
 {
-    private readonly IDiagnosticContext _diagnosticContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AutorisatieService(IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+    public AutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
         : base(serviceProvider)
     {
-        _diagnosticContext = diagnosticContext;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
+        if (gemeenteCode.HasValue)
+        {
+            _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'");
+            return Authorized();
+        }
+
         var autorisatie = GetActueleAutorisatieFor(afnemerCode);
         if (autorisatie != null)
         {
-            _diagnosticContext.Set("Autorisatie", autorisatie, true);
-        }
-
-        if (gemeenteCode.HasValue)
-        {
-            _diagnosticContext.Set("Authorized", "Afnemer is gemeente");
-            return Authorized();
+            _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", autorisatie);
         }
 
         var geautoriseerdeElementNrs = autorisatie!.RubrieknummerAdHoc!.Split(' ');

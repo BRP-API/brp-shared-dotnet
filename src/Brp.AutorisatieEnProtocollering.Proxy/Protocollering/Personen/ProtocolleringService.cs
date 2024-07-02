@@ -4,9 +4,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Personen
 {
-    public class PersonenProtocolleringService : AbstractProtocolleringService
+    public class ProtocolleringService : AbstractProtocolleringService
     {
-        public PersonenProtocolleringService(IServiceProvider serviceProvider)
+        public ProtocolleringService(IServiceProvider serviceProvider)
             : base(serviceProvider, Constanten.FieldElementNrDictionary)
         {
         }

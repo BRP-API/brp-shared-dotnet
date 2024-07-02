@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie.Reisdocumenten;
 
-public class ReisdocumentenRequestBodyValidatieService : IRequestBodyValidator
+public class RequestBodyValidatieService : IRequestBodyValidator
 {
     public ValidationResult ValidateRequestBody(string requestBody)
     {
