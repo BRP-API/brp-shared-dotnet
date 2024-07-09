@@ -3,6 +3,7 @@
 MODE=$1
 
 if [ "$MODE" = "ci" ]; then
+    docker buildx create --name container --driver=docker-container
     docker compose -f .docker/docker-compose-ci.yml build
 else
     docker compose -f src/docker-compose.yml build
