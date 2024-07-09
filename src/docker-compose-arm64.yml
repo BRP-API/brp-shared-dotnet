@@ -1,28 +1,28 @@
-version: '3.4'
-
 services:
 
   identityserver:
     container_name: identityserver
-    image: ghcr.io/brp-api/idp-mock:latest
+    image: ghcr.io/brp-api/idp-mock-arm64:latest
     build:
       context: .
       dockerfile: IdentityServer/Dockerfile
       platforms:
-        - linux/amd64
+        - linux/arm64
 
   brp.autorisatie.proxy:
     container_name: brp-autorisatie
-    image: ghcr.io/brp-api/brp-autorisatie-protocollering:latest
+    image: ghcr.io/brp-api/brp-autorisatie-protocollering-arm64:latest
     build:
       context: .
       dockerfile: Brp.AutorisatieEnProtocollering.Proxy/Dockerfile
       platforms:
-        - linux/amd64
+        - linux/arm64
 
   brp.referentie.api:
     container_name: brp-referentie-api
-    image: ghcr.io/brp-api/brp-referentie-api:latest
+    image: ghcr.io/brp-api/brp-referentie-api-arm64:latest
     build:
       context: .
       dockerfile: Brp.Referentie.Api/Dockerfile
+      platforms:
+        - linux/arm64

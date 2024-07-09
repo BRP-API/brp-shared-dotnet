@@ -83,7 +83,10 @@ jobs:
       - name: Build container images
         run: |
           ./scripts/containers-build.sh
-
+      - name: Build container images
+        run: |
+          ./scripts/containers-build-arm64.sh
+  
       - name: Voeg identityserver toe als host naam
         uses: ./.github/actions/toevoegen-localhost-naam
         with:
