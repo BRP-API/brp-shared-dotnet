@@ -93,7 +93,8 @@ jobs:
           sudo chmod ugo+rw ./test-data/IdentityServer
 
       - name: Start containers
-        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} up -d
+        run: |
+          ./scripts/containers-start.sh ci
       - name: Wait for DB restart
         run: sleep 5s
         shell: bash
@@ -104,8 +105,9 @@ jobs:
 
       - name: Stop containers
         if: always()
-        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
-
+        run: |
+          ./scripts/containers-stop.sh ci
+  
       - name: Genereer test rapportage
         if: always()
         run: |
