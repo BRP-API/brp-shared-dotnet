@@ -1,4 +1,4 @@
-# Logging in de BRP APIs geïmplementeerd in .NET conform de Elastic Common Schema 
+# Logging van de BRP API microservices, geïmplementeerd in .NET zijn conform de Elastic Common Schema 
 
 ## Status
 
@@ -6,128 +6,156 @@ voorstel
 
 ## Context
 
-Om te kunnen monitoren of een BRP API goed functioneert en goed blijft functioneren, is het noodzakelijk dat de verschillende sub-systemen waaruit de BRP API bestaat loggen op een manier dat het gemakkelijk wordt om de benodigde informatie uit de logs te halen. De best practice om dit te realiseren, is de logberichten niet als platte tekst te formatteren, maar als gestructureerde data in json formaat.
+Om makkelijk te kunnen monitoren of de microservices van de BRP API goed functioneren en goed blijft functioneren, is het noodzakelijk dat de BRP API microservices gegevens hiervoor vastlegt. Een best practice om dit te realiseren is om de benodigde gegevens te loggen als gestructureerde data in json formaat (structured logging).
 
-De logs van de BRP APIs zullen worden verwerkt met behulp van producten uit de ELK-suite. Om de log gegevens makkelijker te kunnen verwerken en beter te kunnen analyseren, visualiseren en te correleren is het noodzakelijk dat de logs van de verschillende sub-systemen van de BRP API zich conformeren aan één formaat. De [Elastic Common Schema](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html) is hiervoor ontwikkeld en wordt beschouwd als het standaard formaat voor het verwerken van logs met behulp van de ELK-suite.
+De logs van de BRP APIs zullen worden verwerkt met behulp van producten uit de ELK-suite. Om de log gegevens makkelijker te kunnen verwerken en beter te kunnen analyseren, te visualiseren en te correleren is het noodzakelijk dat de logs van de BRP API microservices zich conformeren aan één formaat. De [Elastic Common Schema](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html) is hiervoor ontwikkeld en wordt beschouwd als het standaard formaat voor het verwerken van logs met behulp van de ELK-suite.
 
 ## Beslissing
 
-Om log regels gestructureerd conform het Elastic Common Schema te formatteren, moet elk in .NET geïmplementeerd sub-systeem van de BRP API gebruik maken van de volgende libraries:
+Om log regels gestructureerd conform het Elastic Common Schema te formatteren, moet elk BRP API microservice geïmplementeerd in .NET gebruik maken van de volgende libraries:
 
-- [Serilog](https://serilog.net/), een .NET logging library met als hoofddoel log gegevens gestructureerd te loggen.
+- [Serilog](https://serilog.net/), een .NET logging library met als hoofddoel gegevens gestructureerd te loggen.
 - [Elastic Common Schema Serilog Text Formatter](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog), een .NET library van Elasticsearch waarmee Serilog wordt geïnstrueerd om log regels te formatteren conform de Elastic Common Schema specificatie.
 
-Het gebruik van deze libraries maakt het mogelijk om met een beperkte hoeveelheid custom code (voornamelijk code om Serilog en de ECS Text Formatter te configureren) gestructureerd te kunnen loggen conform de Elastic Common Schema specificatie. Voorbeelden van log regels die zijn gegenereerd door Serilog volgens de Elastic Common Schema zijn te vinden in de [Voorbeeld log regels](#voorbeeld-log-regels) paragraaf. De log regels (elke request = 1 log regel) en de velden in de log regels zijn met uitzondering van de request.body.content, response.body.content en metadata velden automatisch gegenereerd en gevuld door Serilog met de Elastic Common Schema Serilog Text Formatter. 
+Het gebruik van deze libraries maakt het mogelijk om met een beperkte hoeveelheid custom code (voornamelijk code om Serilog en de ECS Text Formatter te configureren) gestructureerd te kunnen loggen conform de Elastic Common Schema specificatie. Voorbeelden van log regels die zijn gegenereerd door Serilog volgens de Elastic Common Schema zijn te vinden in de [Voorbeeld log regels](#voorbeeld-log-regels) paragraaf. De log regels en de velden in een log regel zijn, met uitzondering van de request.body.content, response.body.content en brp velden, automatisch gegenereerd en gevuld door Serilog met de Elastic Common Schema Serilog Text Formatter. 
 
-Met behulp van Serilog is het ook mogelijk om custom objecten als een data structuur toe te laten voegen aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar en in log regels kan worden gezocht op basis van veld namen en waarden binnen zo'n custom data structuur in plaats van door log regels te parsen. Een voorbeeld van een destructured object is de metadata.request.body veld van de [Voorbeeld log regel voor een succesvol afgehandeld request](#voorbeeld-log-regel-voor-een-succesvol-afgehandeld-request) 
+Met Serilog kunnen .NET objecten als JSON objecten worden toegevoegd aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar log regels én in log regels kan worden gezocht op basis van de veld namen en waarden binnen zo'n destructured object in plaats van door de inhoud van de log regels te parsen. Het brp veld is het destructured object waarin de BRP API microservices hun log gegevens vastleggen.
+
+### Afspraken
+
+- Voor elke request/response wordt ten hoogste één log regel gegenereerd
+- Een health check request/response wordt niet gelogd
+- De volgende log levels worden gehanteerd voor een log regel:
+  - information voor een 2xx response
+  - warning voor een 4xx response
+  - error voor een 5xx response
+- Voor het loggen van een exception moet de DiagnosticContext.SetException methode worden gebruikt. Dit zorgt ervoor dat de exceptie wordt weggeschreven in de ECS [error velden](https://www.elastic.co/guide/en/ecs/8.11/ecs-error.html) van een log regel
+- Er worden twee log stromen gebruikt:
+  - secured. Log regels binnen deze stroom mogen privacy gevoelige informatie bevatten zodat issues die optreden in een specifieke situatie kunnen worden opgelost zonder de situatie opnieuw te moeten reproduceren 
+  - unsecured. Log regels binnen deze stroom mogen geen privacy gevoelige informatie bevatten. De inhoud van privacy gevoelige velden moeten worden gemaskeerd
 
 ## Voorbeeld log regels
 
-Deze paragraaf bevat voorbeeld log regels van de Reisdocumenten proxy, gegenereerd door Serilog met de Elastic Common Schema Serilog Text Formatter, voor de volgende gebeurtenissen:
+Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering microservice, gegenereerd door Serilog en de Elastic Common Schema Serilog Text Formatter, voor de volgende gebeurtenissen:
 
 - een succesvol afgehandeld request
 - een request met ongeldig input data
 - een request dat tot een onverwachte fout leidt
 
-De volgende tabel is een overzicht van de velden die qua naamgeving en/of inhoud verschillen van de velden die staan beschreven onder paragraaf 2.2 Definitie logging van het 230425 Logging BRP API v0.8 document
-
-| Serilog + ECS | ECS volgens logging document | opmerkingen |
-|---------------|------------------------------|-------------|
-| http.request.id | request.id | |
-| log.logger | log.logger | Standaard wordt dit veld gevuld met de naam van logger binnen de applicatie, conform de [Elastic Common Schema specificatie](https://www.elastic.co/guide/en/ecs/8.11/ecs-log.html#field-log-logger) |
-| service.version | version | Standaard worden de service.name en service.version velden gevuld met de waarden uit de AssemblyName en AssemblyVersion metagegevens van een in .NET geïmplementeerd (sub-)systeem |
-| agent.type & agent.version | agent.name | |
-| host.hostname | hostname | |
-| | token | TODO |
-| http.request.body.content | request.body.stringified | gewenste type en fields velden staan in de destructured metadata.request.body veld |
-| http.response.body.content |http.response.body| |
-| error | TODO?| in de Elastic Common Schema specificatie is voor excepties [error velden](https://www.elastic.co/guide/en/ecs/8.11/ecs-error.html) gedefinieerd met stack_trace veld voor de stack trace. Wanneer de exceptie door de applicatie wordt toegevoegd aan de log context van Serilog, dan worden de error velden automatisch gevuld | 
-
 ### Voorbeeld log regel voor een succesvol afgehandeld request
 
 ```json
 {
-    "@timestamp": "2024-02-06T17:51:57.0807865+01:00",
+    "@timestamp": "2024-07-11T11:05:22.7945983+02:00",
     "log.level": "Information",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/reisdocumenten/reisdocumenten\" responded 200 in 381.5390 ms",
-    "ecs.version": "8.6.0",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 200 in 2710.5636 ms",
+    "ecs.version": "8.11.0",
     "log": {
         "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
     },
-    "span.id": "9bc7cd8933c7de41",
-    "trace.id": "44f299b86683bc456a4a92adc70d771b",
+    "span.id": "d68926c5209d59ca",
+    "trace.id": "eb2f31761eb14d0827751dd95ff25781",
     "labels": {
         "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN176FMTA88H"
+        "ConnectionId": "0HN51H2BFFNBP"
     },
     "agent": {
         "type": "Elastic.CommonSchema.Serilog",
-        "version": "8.6.1+88f2bc81a0b7440e4059e323e610bb03df61862c"
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
     },
     "event": {
-        "created": "2024-02-06T17:51:57.0807865+01:00",
-        "duration": 381539000,
+        "created": "2024-07-11T11:05:22.7945983+02:00",
+        "duration": 2710563630,
         "severity": 2,
-        "timezone": "W. Europe Standard Time"
+        "timezone": "Central European Standard Time"
     },
     "host": {
         "os": {
-            "full": "Microsoft Windows 10.0.22631",
-            "platform": "Win32NT",
-            "version": "10.0.22631.0"
+            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
+            "platform": "Unix",
+            "version": "5.15.90.1"
         },
         "architecture": "X64",
-        "hostname": "NUC11TNK"
+        "hostname": "fe1fbfd2ff7e"
     },
     "http": {
-        "request.body.content": "{\"type\":\"RaadpleegMetReisdocumentnummer\",\"reisdocumentnummer\":[\"NE3663258\"],\"fields\":[\"reisdocumentnummer\",\"houder\"]}",
-        "request.id": "0HN176FMTA88H:00000001",
+        "request.id": "0HN51H2BFFNBP:00000002",
         "request.method": "POST",
-        "request.mime_type": "application/json",
-        "response.body.content": "{\"type\":\"RaadpleegMetReisdocumentnummer\",\"reisdocumenten\":[{\"reisdocumentnummer\":\"NE3663258\",\"houder\":{\"burgerservicenummer\":\"000000152\"}}]}",
         "response.mime_type": "application/json; charset=utf-8",
         "response.status_code": 200
     },
     "process": {
-        "name": "ReisdocumentProxy",
-        "pid": 35308,
-        "thread.id": 14,
-        "thread.name": ".NET TP Worker",
+        "name": "dotnet",
+        "pid": 1,
+        "thread.id": 8,
+        "thread.name": ".NET ThreadPool Worker",
         "title": ""
     },
     "service": {
-        "name": "ReisdocumentProxy",
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
         "type": "dotnet",
-        "version": "2.0.3+2024020616.1.35fdf372a72da9ddb15726107b6b5ee21a39753f"
+        "version": "1.2.0+202407021819"
     },
     "url": {
-        "path": "/haalcentraal/api/reisdocumenten/reisdocumenten"
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
     },
     "user": {
-        "domain": "NUC11TNK",
-        "name": "......"
+        "domain": "fe1fbfd2ff7e",
+        "name": "root"
     },
-    "metadata": {
-        "request.headers": [
-            "[Accept, application/json]",
-            "[Connection, keep-alive]",
-            "[Host, localhost:5000]",
-            "[User-Agent, axios/1.6.7]",
-            "[Accept-Encoding, gzip, compress, deflate, br]",
-            "[Authorization, Basic MDAwMDA4fDgwMDp0ZW1wc29sdXRpb24h]",
-            "[Content-Type, application/json]",
-            "[Content-Length, 117]"
-        ],
+    "brp": {
+        "autorisatie": "afnemer: 8 is gemeente '800'",
+        "claims": {
+            "OIN": "000000099000000080000",
+            "afnemerID": "000008",
+            "gemeenteCode": "0800"
+        },
+        "protocollering": "[\"1\"]",
+        "request.headers": {
+            "Accept": [
+                "application/json"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "Host": [
+                "localhost:8080"
+            ],
+            "User-Agent": [
+                "axios/1.7.2"
+            ],
+            "Accept-Encoding": [
+                "gzip, compress, deflate, br"
+            ],
+            "Authorization": [
+                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4ODcxOSwiaWF0IjoxNzIwNjg4NzE5LCJleHAiOjE3MjA2OTIzMTksImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiOEVDNEZBRkJGMTVERDQzMDY3OEVFRDNERTI3QzI1ODUifQ.TAgJI6zg8jHbTFd3ncllN-DYqozg4G4S7xKit4mzg8NYMx5ljV3cX8KudVKeX4N2wFbGByVHTxnmYiZQ0L6l8Bd6mtZffyOHX9U4V4AApKsAOeNLqbSNj1pqxg93YWv8d9UlbjPl_EG-0tWRNvN24BIhk9Pp01WIrzeWKkxQP5-4qQwYus697_QnDAYXXttUPwtJZfMWfVL0pW9FcTo6aA45xYrPdEfQULXaOv4Iah18dVE71S4p6sGpzfB4IPcPjpomd7w3XWJrU3Pxy2mKPbMZCaeMrLSxkM_CsjeSdPUaZibF6FiY_MWqm7ebEo5XqcB6r27NxMDz0aY0qFrohA"
+            ],
+            "Content-Type": [
+                "application/json"
+            ],
+            "Content-Length": [
+                "112"
+            ]
+        },
         "request.body": {
-            "Reisdocumentnummer": [
-                "NE3663258"
+            "type": "RaadpleegMetPeriode",
+            "burgerservicenummer": "000000012",
+            "datumVan": "2010-01-01",
+            "datumTot": "2011-01-01"
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/json; charset=utf-8"
             ],
-            "Fields": [
-                "reisdocumentnummer",
-                "houder"
+            "Date": [
+                "Thu, 11 Jul 2024 09:05:20 GMT"
             ],
-            "AdditionalProperties": {},
-            "$type": "RaadpleegMetReisdocumentnummer"
+            "Server": [
+                "Kestrel"
+            ],
+            "Content-Length": [
+                "663"
+            ]
         }
     }
 }
@@ -137,77 +165,122 @@ De volgende tabel is een overzicht van de velden die qua naamgeving en/of inhoud
 
 ```json
 {
-    "@timestamp": "2024-02-06T18:03:33.1953642+01:00",
+    "@timestamp": "2024-07-11T11:11:31.4110883+02:00",
     "log.level": "Warning",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/reisdocumenten/reisdocumenten\" responded 400 in 12.3939 ms",
-    "ecs.version": "8.6.0",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 400 in 62.2947 ms",
+    "ecs.version": "8.11.0",
     "log": {
         "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
     },
-    "span.id": "a420527657191fd8",
-    "trace.id": "aba894608d0865f38ff8be55ee2830a0",
+    "span.id": "b4001845f120368f",
+    "trace.id": "acc16d1189be223e7ef382e4b4eb3305",
     "labels": {
         "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN176FMTA88I"
+        "ConnectionId": "0HN51H2BFFNBQ"
     },
     "agent": {
         "type": "Elastic.CommonSchema.Serilog",
-        "version": "8.6.1+88f2bc81a0b7440e4059e323e610bb03df61862c"
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
     },
     "event": {
-        "created": "2024-02-06T18:03:33.1953642+01:00",
-        "duration": 12393900,
+        "created": "2024-07-11T11:11:31.4110883+02:00",
+        "duration": 62294685,
         "severity": 3,
-        "timezone": "W. Europe Standard Time"
+        "timezone": "Central European Standard Time"
     },
     "host": {
         "os": {
-            "full": "Microsoft Windows 10.0.22631",
-            "platform": "Win32NT",
-            "version": "10.0.22631.0"
+            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
+            "platform": "Unix",
+            "version": "5.15.90.1"
         },
         "architecture": "X64",
-        "hostname": "NUC11TNK"
+        "hostname": "fe1fbfd2ff7e"
     },
     "http": {
-        "request.body.content": "{\"type\":\"RaadpleegMetReisdocumentnummer\",\"fields\":[\"reisdocumentnummer\"]}",
-        "request.id": "0HN176FMTA88I:00000001",
+        "request.id": "0HN51H2BFFNBQ:00000002",
         "request.method": "POST",
-        "request.mime_type": "application/json",
-        "response.body.content": "{\"invalidParams\":[{\"name\":\"reisdocumentnummer\",\"code\":\"required\",\"reason\":\"Parameter is verplicht.\"}],\"type\":\"https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1\",\"title\":\"Een of meerdere parameters zijn niet correct.\",\"status\":400,\"detail\":\"De foutieve parameter(s) zijn: reisdocumentnummer.\",\"instance\":\"/haalcentraal/api/reisdocumenten/reisdocumenten\",\"code\":\"paramsValidation\"}",
         "response.mime_type": "application/problem+json",
         "response.status_code": 400
     },
     "process": {
-        "name": "ReisdocumentProxy",
-        "pid": 35308,
-        "thread.id": 26,
-        "thread.name": ".NET TP Worker",
+        "name": "dotnet",
+        "pid": 1,
+        "thread.id": 20,
+        "thread.name": ".NET ThreadPool Worker",
         "title": ""
     },
     "service": {
-        "name": "ReisdocumentProxy",
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
         "type": "dotnet",
-        "version": "2.0.3+2024020616.1.35fdf372a72da9ddb15726107b6b5ee21a39753f"
+        "version": "1.2.0+202407021819"
     },
     "url": {
-        "path": "/haalcentraal/api/reisdocumenten/reisdocumenten"
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
     },
     "user": {
-        "domain": "NUC11TNK",
-        "name": "......"
+        "domain": "fe1fbfd2ff7e",
+        "name": "root"
     },
-    "metadata": {
-        "request.headers": [
-            "[Accept, application/json]",
-            "[Connection, keep-alive]",
-            "[Host, localhost:5000]",
-            "[User-Agent, axios/1.6.7]",
-            "[Accept-Encoding, gzip, compress, deflate, br]",
-            "[Authorization, Basic MDAwMDA4fDgwMDp0ZW1wc29sdXRpb24h]",
-            "[Content-Type, application/json]",
-            "[Content-Length, 73]"
-        ]
+    "brp": {
+        "claims": {
+            "OIN": "000000099000000080000",
+            "afnemerID": "000008",
+            "gemeenteCode": "0800"
+        },
+        "request.headers": {
+            "Connection": [
+                "close"
+            ],
+            "Host": [
+                "localhost:8080"
+            ],
+            "User-Agent": [
+                "vscode-restclient"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Authorization": [
+                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4OTA4OCwiaWF0IjoxNzIwNjg5MDg4LCJleHAiOjE3MjA2OTI2ODgsImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiQjM3RDNDRTE3NkRFMjc0OTQ5MTdCMTQxODk1MUIwQzUifQ.qi6pxB03qNYJyuC5K_2ntAg8Ft9B1IfMzfmvn0tWAm-STVdjBEFmxfKLTaFRSqAvH87oxgWG3edpO0mgh09HPbatJi3zCOwDA8ipEq0JLry58Ck6YYZhRcHivQdE-mAJJSwBcBCkc2NbZz7oguxrBKKzqkCu283hnxF9D5akdwCMU01WxDGQHP4Vd9qvvKysU7A6atWIfSWt3InOAenakV85Dgmqfvnq9YetrwatXn3TVgPIxtJy_OnPQsPzXc2KivINAaPUd9RxifVX8-6ueVq8_STIxwkhH7qmNq4b4Vyk7oUlRqsaJ8xEe9GQDYhYD1lfLzvK-z6TuFTsaCRJew"
+            ],
+            "baggage": [
+                "sentry-environment=release,sentry-release=1.8.2,sentry-public_key=01c918981c1d900a22d02793e241de70,sentry-trace_id=234dfd798c8ca1dad651e0f3608c2874"
+            ],
+            "Content-Type": [
+                "application/json"
+            ],
+            "Content-Length": [
+                "82"
+            ],
+            "sentry-trace": [
+                "234dfd798c8ca1dad651e0f3608c2874-dd19796342bc6366"
+            ]
+        },
+        "request.body": {
+            "type": "RaadpleegMetPeildatum",
+            "burgerservicenummer": "000000012"
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/problem+json"
+            ]
+        },
+        "response.body": {
+            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
+            "title": "Een of meerdere parameters zijn niet correct.",
+            "status": 400,
+            "detail": "De foutieve parameter(s) zijn: peildatum.",
+            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+            "code": "paramsValidation",
+            "invalidParams": [
+                {
+                    "name": "peildatum",
+                    "code": "required",
+                    "reason": "Parameter is verplicht."
+                }
+            ]
+        }
     }
 }
 ```
@@ -216,88 +289,123 @@ De volgende tabel is een overzicht van de velden die qua naamgeving en/of inhoud
 
 ```json
 {
-    "@timestamp": "2024-02-06T18:04:30.0958902+01:00",
+    "@timestamp": "2024-07-11T09:19:50.6031497+00:00",
     "log.level": "Error",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/reisdocumenten/reisdocumenten\" responded 500 in 50.5894 ms",
-    "ecs.version": "8.6.0",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 500 in 0.6077 ms",
+    "ecs.version": "8.11.0",
     "log": {
         "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
     },
-    "span.id": "f12cce8e45b5b51e",
-    "trace.id": "626d7942f74d8ece6354f1ce386e7b75",
+    "span.id": "38c1923b93e53cd1",
+    "trace.id": "38730d24f403191afcc96e37209b137e",
     "labels": {
         "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN176MNDPLPG"
+        "ConnectionId": "0HN51H9ULC4NM"
     },
     "agent": {
         "type": "Elastic.CommonSchema.Serilog",
-        "version": "8.6.1+88f2bc81a0b7440e4059e323e610bb03df61862c"
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
     },
     "error": {
-        "message": "Operation is not valid due to the current state of the object.",
-        "stack_trace": "System.InvalidOperationException: Operation is not valid due to the current state of the object.\r\n   at async Task ReisdocumentProxy.Middlewares.OverwriteResponseBodyMiddleware.Invoke(HttpContext context) in C:/Projects/haal-centraal/nieuw/Haal-Centraal-Reisdocumenten-bevragen/src/ReisdocumentProxy/Middlewares/OverwriteResponseBodyMiddleware.cs:line 99",
+        "message": "",
+        "stack_trace": "System.InvalidOperationException\n   at async Task Historie.Informatie.Service.Middlewares.OverwriteResponseBodyMiddleware.Invoke(HttpContext context) in /src/Historie.Informatie.Service/Middlewares/OverwriteResponseBodyMiddleware.cs:line 25\n   at async Task Brp.Shared.Infrastructure.Logging.RequestResponseLoggerMiddleware.Invoke(HttpContext context) in /src/Brp.Shared.Infrastructure/Logging/RequestResponseLoggerMiddleware.cs:line 45",
         "type": "System.InvalidOperationException"
     },
     "event": {
-        "created": "2024-02-06T18:04:30.0958902+01:00",
-        "duration": 50589400,
+        "created": "2024-07-11T09:19:50.6031497+00:00",
+        "duration": 607745,
         "severity": 4,
-        "timezone": "W. Europe Standard Time"
+        "timezone": "Coordinated Universal Time"
     },
     "host": {
         "os": {
-            "full": "Microsoft Windows 10.0.22631",
-            "platform": "Win32NT",
-            "version": "10.0.22631.0"
+            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
+            "platform": "Unix",
+            "version": "5.15.90.1"
         },
         "architecture": "X64",
-        "hostname": "NUC11TNK"
+        "hostname": "baae6d7269ea"
     },
     "http": {
-        "request.body.content": "{\"type\":\"RaadpleegMetReisdocumentnummer\",\"reisdocumentnummer\":[\"NE3663258\"],\"fields\":[\"reisdocumentnummer\",\"houder\"]}",
-        "request.id": "0HN176MNDPLPG:00000001",
+        "request.id": "0HN51H9ULC4NM:00000004",
         "request.method": "POST",
-        "request.mime_type": "application/json",
-        "response.body.content": "{\"type\":\"https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1\",\"title\":\"Internal Server error.\",\"status\":500,\"instance\":\"/haalcentraal/api/reisdocumenten/reisdocumenten\"}",
         "response.mime_type": "application/problem+json",
         "response.status_code": 500
     },
     "process": {
-        "name": "ReisdocumentProxy",
-        "pid": 32512,
-        "thread.id": 9,
-        "thread.name": ".NET TP Worker",
+        "name": "dotnet",
+        "pid": 1,
+        "thread.id": 14,
+        "thread.name": ".NET ThreadPool Worker",
         "title": ""
     },
     "service": {
-        "name": "ReisdocumentProxy",
+        "name": "Historie.Informatie.Service",
         "type": "dotnet",
-        "version": "2.0.3+2024020617.1.35fdf372a72da9ddb15726107b6b5ee21a39753f"
+        "version": "2.0.0"
     },
     "url": {
-        "path": "/haalcentraal/api/reisdocumenten/reisdocumenten"
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
     },
     "user": {
-        "domain": "NUC11TNK",
-        "name": "......"
+        "domain": "baae6d7269ea",
+        "name": "root"
     },
     "metadata": {
-        "request.headers": [
-            "[Accept, application/json]",
-            "[Connection, keep-alive]",
-            "[Host, localhost:5000]",
-            "[User-Agent, axios/1.6.7]",
-            "[Accept-Encoding, gzip, compress, deflate, br]",
-            "[Authorization, Basic MDAwMDA4fDgwMDp0ZW1wc29sdXRpb24h]",
-            "[Content-Type, application/json]",
-            "[Content-Length, 117]"
-        ],
         "ExceptionDetail": {
             "Type": "System.InvalidOperationException",
             "HResult": -2146233079,
-            "Message": "Operation is not valid due to the current state of the object.",
-            "Source": "ReisdocumentProxy",
+            "Message": "",
+            "Source": "Historie.Informatie.Service",
             "TargetSite": "Void MoveNext()"
+        }
+    },
+    "brp": {
+        "request.headers": {
+            "Accept": [
+                "application/json"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "Host": [
+                "historie-informatie-service:5000"
+            ],
+            "User-Agent": [
+                "axios/1.7.2"
+            ],
+            "Accept-Encoding": [
+                "gzip, compress, deflate, br"
+            ],
+            "Authorization": [
+                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4OTU5MCwiaWF0IjoxNzIwNjg5NTkwLCJleHAiOjE3MjA2OTMxOTAsImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiQkI0REFFODgyRjcwOUVGMTU1NzQ5NDZGMDEwRDYwQ0UifQ.KuKxHpk3Mt1RKjRZhccCNLmI3lP6476DB7Vdc8JSyO3eOgfTXgbymUO8EzkRWgxNm9G8m6P7u9E5s8HzWRA5v6V1KPBh-DXgYuPsPuZRny7KEJh6Qtw1yIh8Q5iQ3rWRb4ZFTwWKy_IwqWWS8gB-medD1kqIWv720HjTd2ESJDA4CfRmsFMb9NFPgTi7EM6veADrlDQsEZEfAPpnd72b0Z-bEm0S8bQ7K3UQ_IOlAoocnsQWaYeq2OcFD3xZGqpb8zDKsyuSmmjGg0eKCXWTKXdT61fKliJp7EDlxoZb5kU8ATeq40aP8u3STz15UempOBeVKlE7EWzQk7QPHCk5_Q"
+            ],
+            "Content-Type": [
+                "application/json"
+            ],
+            "traceparent": [
+                "00-38730d24f403191afcc96e37209b137e-3e673e9852fefcdb-00"
+            ],
+            "Content-Length": [
+                "112"
+            ]
+        },
+        "request.body": {
+            "type": "RaadpleegMetPeriode",
+            "burgerservicenummer": "000000012",
+            "datumVan": "2010-01-01",
+            "datumTot": "2011-01-01"
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/problem+json"
+            ]
+        },
+        "response.body": {
+            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+            "title": "Internal Server error.",
+            "status": 500,
+            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
         }
     }
 }
