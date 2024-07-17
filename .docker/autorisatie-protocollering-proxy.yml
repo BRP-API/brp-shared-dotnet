@@ -13,7 +13,8 @@ services:
       - Db__Password=root
       - Db__Database=rvig_haalcentraal_testdata
       - OAuth__Authority=http://identityserver:6000
-      - Serilog__MinimumLevel__Override__Ocelot=Warning
+      - Serilog__MinimumLevel__Override__Elastic=Information
+      - Serilog__MinimumLevel__Override__Ocelot=Information
     ports:
       - "8080:8080"
     volumes:
