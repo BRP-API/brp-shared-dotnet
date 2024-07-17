@@ -5,7 +5,6 @@ using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Stream;
 using Brp.Shared.Infrastructure.Validatie;
-using Serilog;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 
@@ -171,7 +170,6 @@ public class RequestValidatieMiddleware
     {
         var requestedResource = GetRequestedResource(httpContext);
 
-        Serilog.Log.Warning("requestedResource: {RequestedResource}", requestedResource);
         return requestedResource switch
         {
             "personen" or
