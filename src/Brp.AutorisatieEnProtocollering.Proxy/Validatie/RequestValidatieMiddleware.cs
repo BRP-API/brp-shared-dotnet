@@ -171,6 +171,7 @@ public class RequestValidatieMiddleware
     {
         var requestedResource = GetRequestedResource(httpContext);
 
+        Serilog.Log.Warning("requestedResource: {RequestedResource}", requestedResource);
         return requestedResource switch
         {
             "personen" or
