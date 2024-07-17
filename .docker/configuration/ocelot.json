@@ -12,8 +12,8 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
-      "DownstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "UpstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+      "DownstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -23,8 +23,8 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
-      "DownstreamPathTemplate": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+      "UpstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
+      "DownstreamPathTemplate": "/haalcentraal/api/reisdocumenten/reisdocumenten",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
