@@ -95,7 +95,7 @@ jobs:
           driver: docker-container
       - name: Build container images
         run: |
-          ./scripts/containers-build.sh
+          ./scripts/containers-build.sh ci
   
       - name: Voeg identityserver toe als host naam
         uses: ./.github/actions/toevoegen-localhost-naam
