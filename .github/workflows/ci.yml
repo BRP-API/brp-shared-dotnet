@@ -133,31 +133,31 @@ jobs:
           path: |
             test-reports
             test-data/logs
-      # - name: Push test rapportage naar brp-api.github.io repo
-      #   if: always()
-      #   uses: tech-thinker/push-to-repo@main
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
-      #   with:
-      #     source-directory: test-reports/cucumber-js/reports
-      #     destination-repository-name: brp-api.github.io
-      #     destination-github-username: BRP-API
-      #     target-branch: test-reports/autorisatie-en-protocollering
-      #     commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
+      - name: Push test rapportage naar brp-api.github.io repo
+        if: always()
+        uses: tech-thinker/push-to-repo@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
+        with:
+          source-directory: test-reports/cucumber-js/reports
+          destination-repository-name: brp-api.github.io
+          destination-github-username: BRP-API
+          target-branch: test-reports/autorisatie-en-protocollering
+          commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
 
-      # - name: Tag & push autz & prot container images naar registry
-      #   if: always() && (steps.changes.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
-      #   run: |
-      #     docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
-      #     docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
-      #     docker push ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
-      #     docker push ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
-      #     docker push ${{ env.APP_CONTAINER_IMAGE }}:latest
-      # - name: Tag & push IDP mock container images naar registry
-      #   if: always() && (steps.changes.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
-      #   run: |
-      #     docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
-      #     docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
-      #     docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
-      #     docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
-      #     docker push ${{ env.MOCK_CONTAINER_IMAGE }}:latest
+      - name: Tag & push autz & prot container images naar registry
+        if: always() && (steps.changes.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
+        run: |
+          docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
+          docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+          docker push ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
+          docker push ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+          docker push ${{ env.APP_CONTAINER_IMAGE }}:latest
+      - name: Tag & push IDP mock container images naar registry
+        if: always() && (steps.changes.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
+        run: |
+          docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
+          docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+          docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
+          docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+          docker push ${{ env.MOCK_CONTAINER_IMAGE }}:latest
