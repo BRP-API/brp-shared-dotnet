@@ -26,3 +26,5 @@ services:
     build:
       context: .
       dockerfile: Brp.Referentie.Api/Dockerfile
+      platforms:
+        - linux/amd64

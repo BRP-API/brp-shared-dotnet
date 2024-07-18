@@ -28,6 +28,8 @@ env:
   MOCK_PROJECT_PATH: ./src/IdentityServer
   MOCK_CSPROJ_FILE_PATH: ./src/IdentityServer/IdentityServer.csproj
   MOCK_CONTAINER_IMAGE: ghcr.io/brp-api/idp-mock
+  REF_API_PROJECT_PATH: ./src/Brp.Referentie.Api
+  REF_API_CONTAINER_IMAGE: ghcr.io/brp-api/brp-referentie-api
 
 jobs:
   continuous-integration:
@@ -63,6 +65,8 @@ jobs:
               - '${{ env.INFRA_PROJECT_PATH }}/**'
             mock:
               - '${{ env.MOCK_PROJECT_PATH }}/**'
+            ref-app:
+              - '${{ env.REF_API_PROJECT_PATH }}/**'
 
       - name: Valideer .NET solution
         uses: ./.github/actions/valideer-dotnet-solution
@@ -130,7 +134,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Reports
-          path: test-reports
+          path: |
+            test-reports
+            test-data/logs
       - name: Push test rapportage naar brp-api.github.io repo
         if: always()
         uses: tech-thinker/push-to-repo@main
@@ -144,7 +150,7 @@ jobs:
           commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
 
       - name: Tag & push autz & prot container images naar registry
-        if: always() && (steps.changes.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
+        if: always() && (steps.changed-project.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
         run: |
           docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
           docker tag ${{ env.APP_CONTAINER_IMAGE }}:latest ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
@@ -152,10 +158,14 @@ jobs:
           docker push ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
           docker push ${{ env.APP_CONTAINER_IMAGE }}:latest
       - name: Tag & push IDP mock container images naar registry
-        if: always() && (steps.changes.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
+        if: always() && (steps.changed-project.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
         run: |
           docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
           docker tag ${{ env.MOCK_CONTAINER_IMAGE }}:latest ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
           docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
           docker push ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
           docker push ${{ env.MOCK_CONTAINER_IMAGE }}:latest
+      - name: Tage & push referentie api container image naar registry
+        if: always() && steps.changed-project.outputs.ref-app == 'true'
+        run: |
+          docker push ${{ env.REF_API_CONTAINER_IMAGE }}:latest
