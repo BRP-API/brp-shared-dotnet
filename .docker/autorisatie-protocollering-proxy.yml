@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   autorisatie-protocollering-proxy:
     container_name: autorisatie-protocollering
@@ -19,7 +17,7 @@ services:
       - "8080:8080"
     volumes:
       - ../test-data/logs:/var/log
-      - ./configuration/ocelot.json:/app/configuration/ocelot.json
+      - ./configuration:/app/configuration
     networks:
       - brp-api-network
 
