@@ -246,5 +246,5 @@ Regel: Om privacy en security redenen moet een bevraging van reisdocumenten word
     | DELETE       |
   # | CONNECT      | een CONNECT aanroep wordt niet gebruikt om te bevragen
   # | HEAD         | een HEAD response bevat geen body
-    | OPTIONS |
-    | TRACE   |
+    | OPTIONS      |
+    | TRACE        |

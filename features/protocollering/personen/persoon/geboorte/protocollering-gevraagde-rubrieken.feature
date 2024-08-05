@@ -23,18 +23,18 @@ Functionaliteit: protocollering van geboortegegevens van de persoon
       | <gevraagde rubrieken>       |
 
       Voorbeelden:
-      | fields                                    | gevraagde rubrieken                            |
-      | geboorte                                  | 010310, 010320, 010330                         |
-      | geboorte.datum                            | 010310                                         |
-      | geboorte.datum.langFormaat                | 010310                                         |
-      | geboorte.datum.type                       | 010310                                         |
-      | geboorte.datum.datum                      | 010310                                         |
-      | geboorte.datum.onbekend                   | 010310                                         |
-      | geboorte.datum.jaar                       | 010310                                         |
-      | geboorte.datum.maand                      | 010310                                         |
-      | geboorte.land                             | 010330                                         |
-      | geboorte.land.code                        | 010330                                         |
-      | geboorte.land.omschrijving                | 010330                                         |
-      | geboorte.plaats                           | 010320                                         |
-      | geboorte.plaats.code                      | 010320                                         |
-      | geboorte.plaats.omschrijving              | 010320                                         |
+      | fields                       | gevraagde rubrieken    |
+      | geboorte                     | 010310, 010320, 010330 |
+      | geboorte.datum               | 010310                 |
+      | geboorte.datum.langFormaat   | 010310                 |
+      | geboorte.datum.type          | 010310                 |
+      | geboorte.datum.datum         | 010310                 |
+      | geboorte.datum.onbekend      | 010310                 |
+      | geboorte.datum.jaar          | 010310                 |
+      | geboorte.datum.maand         | 010310                 |
+      | geboorte.land                | 010330                 |
+      | geboorte.land.code           | 010330                 |
+      | geboorte.land.omschrijving   | 010330                 |
+      | geboorte.plaats              | 010320                 |
+      | geboorte.plaats.code         | 010320                 |
+      | geboorte.plaats.omschrijving | 010320                 |

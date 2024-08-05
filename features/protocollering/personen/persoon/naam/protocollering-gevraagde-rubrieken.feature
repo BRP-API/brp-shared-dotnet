@@ -37,4 +37,3 @@ Functionaliteit: protocollering van naamgegevens van de persoon
       | naam.voorletters                          | PANM01                                                 |
       | naam.volledigeNaam                        | PANM02                                                 |
       | naam                                      | 010210, 010220, 010230, 010240, 016110, PANM01, PANM02 |
-
