@@ -34,7 +34,6 @@ Functionaliteit: autorisatie voor het zoeken van reisdocumenten met een burgerse
       | code     | unauthorized                                                |
       | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
 
-    @geen-protocollering
     Scenario: afnemer is een gemeente
       Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | naam         | waarde |

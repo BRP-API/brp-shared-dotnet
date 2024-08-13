@@ -3,7 +3,6 @@
 @input-validatie
 Functionaliteit: verblijfstitel velden vragen met fields bij raadplegen met burgerservicenummer
 
-  @geen-protocollering
   Abstract Scenario: de fields parameter bevat verblijfstitel veld(en): <fields>
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |

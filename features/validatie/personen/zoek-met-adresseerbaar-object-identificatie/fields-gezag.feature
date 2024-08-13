@@ -3,7 +3,6 @@
 @input-validatie
 Functionaliteit: gezagsrelaties vragen met fields bij zoeken op adresseerbaar object identificatie
 
-  @geen-protocollering
   Abstract Scenario: de fields parameter bevat gezag veld(en): <fields>
     Als personen wordt gezocht met de volgende parameters
     | naam                             | waarde                                  |

@@ -98,7 +98,6 @@ Regel: als content type voor de response wordt alleen application/json en charse
     | status   | 406                                                         |
     | instance | /haalcentraal/api/brp/personen                              |
 
-  @geen-protocollering
   Abstract Scenario: '<accept media type>' als Accept content type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |
@@ -123,7 +122,6 @@ Regel: als content type voor de response wordt alleen application/json en charse
 
 Regel: als content type voor het request wordt alleen application/json en charset utf-8 ondersteund
 
-  @geen-protocollering
   Abstract Scenario: '<media type>' als Content-Type waarde wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                          |
@@ -141,7 +139,6 @@ Regel: als content type voor het request wordt alleen application/json en charse
     | application/json;charset=Utf-8  |
     | application/json; charset=UTF-8 |
 
-  @geen-protocollering
   Abstract Scenario: '<media type>' als Content-Type waarde wordt ondersteund bij zoeken
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                              |
@@ -190,7 +187,7 @@ Regel: als content type voor het request wordt alleen application/json en charse
 
 Regel: content type voor de response is default application/json en charset utf-8
 
-  @geen-protocollering
+  
   Scenario: Lege Accept content type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |
@@ -203,7 +200,7 @@ Regel: content type voor de response is default application/json en charset utf-
 
 Regel: content type voor het request is default application/json en charset utf-8
 
-  @geen-protocollering
+  
   Scenario: Lege Content-Type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                          |
@@ -213,7 +210,7 @@ Regel: content type voor het request is default application/json en charset utf-
     | header: Content-Type |                                 |
     Dan heeft de response 0 personen
 
-  @geen-protocollering
+  
   Scenario: Lege Content-Type wordt ondersteund bij zoeken
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                              |

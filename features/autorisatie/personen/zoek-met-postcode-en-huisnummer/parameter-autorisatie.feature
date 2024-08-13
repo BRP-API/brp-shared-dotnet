@@ -64,7 +64,6 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       | code     | unauthorizedParameter                                                                          |
       | instance | /haalcentraal/api/brp/personen                                                                 |
 
-    @geen-protocollering
     Scenario: Zoeken met parameters postcode en huisnummer waarvoor de afnemer wel geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -81,7 +80,6 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
       Dan heeft de response 0 personen
 
 
-    @geen-protocollering
     Abstract Scenario: Zoeken met parameters postcode, huisnummer en <extra parameter> waarvoor de afnemer wel geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)             | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -109,7 +107,6 @@ Functionaliteit: autorisatie op parameters bij ZoekMetPostcodeEnHuisnummer
     en die is gelijk aan de waarde van gemeenteCode in de 'claim', 
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
-    @geen-protocollering
     Scenario: Gemeente is niet geautoriseerd voor de zoekparameters maar zoekt alleen eigen inwoners
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
