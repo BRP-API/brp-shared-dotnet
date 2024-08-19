@@ -46,7 +46,6 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | nationaliteiten                                   | 40510 46510 48510 | 46310                |
       | nationaliteiten                                   | 40510 46310 46510 | 48510                |
 
-    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <gevraagd veld>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -101,7 +100,6 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | code     | unauthorizedField                                                       |
       | instance | /haalcentraal/api/brp/personen                                          |
 
-    @geen-protocollering
     Scenario: Afnemer vraagt type, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |

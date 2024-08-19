@@ -93,7 +93,6 @@ Regel: Voor de response body wordt als content type en charset respectievelijk a
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
 
-  @geen-protocollering
   Abstract Scenario: '<accept media type>' wordt opgegeven als Accept content type
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                | waarde                     |
@@ -117,7 +116,6 @@ Regel: Voor de response body wordt als content type en charset respectievelijk a
 
 Regel: Voor de response body is application/json de default Accept waarde en is utf-8 de default charset waarde
 
-  @geen-protocollering
   Abstract Scenario: Er is geen Accept header met waarde opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -131,7 +129,6 @@ Regel: Voor de response body is application/json de default Accept waarde en is 
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
 
-  @geen-protocollering
   Abstract Scenario: Er is een lege waarde opgegeven voor de Accept header
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -174,7 +171,6 @@ Regel: Voor de request body wordt als content type en charset respectievelijk al
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        | */*; charset=utf-8               |
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        | */*;charset=utf-8                |
 
-  @geen-protocollering
   Abstract Scenario: '<media type>' is opgegeven als Content-Type waarde
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                    | waarde                     |
@@ -194,7 +190,6 @@ Regel: Voor de request body wordt als content type en charset respectievelijk al
 
 Regel: Voor de request body is application/json de default Content-Type waarde en is utf-8 de default charset waarde
 
-  @geen-protocollering
   Abstract Scenario: Er is geen Content-Type header met waarde opgegeven
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam             | waarde                     |
@@ -208,7 +203,6 @@ Regel: Voor de request body is application/json de default Content-Type waarde e
     | RaadpleegMetReisdocumentnummer | reisdocumentnummer  | NE3663258        |
     | ZoekMetBurgerservicenummer     | burgerservicenummer | 000000024        |
 
-  @geen-protocollering
   Abstract Scenario: Er is een lege waarde opgegeven voor de Content-Type header
     Als reisdocumenten wordt gezocht met de volgende parameters
     | naam                 | waarde                     |

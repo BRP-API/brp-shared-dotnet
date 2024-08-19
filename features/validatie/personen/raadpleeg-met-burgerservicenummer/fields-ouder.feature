@@ -3,7 +3,6 @@
 @input-validatie
 Functionaliteit: ouder velden vragen met fields bij raadplegen met burgerservicenummer
 
-  @geen-protocollering
   Abstract Scenario: de fields parameter bevat ouder veld(en): <fields>
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |

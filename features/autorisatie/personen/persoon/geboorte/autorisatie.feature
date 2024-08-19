@@ -44,7 +44,6 @@ Functionaliteit: autorisatie gegevens van geboortegegevens van Persoon
       | geboorte.plaats.code         | 10320                | 10120 10210 10310 10330 20310 20320 20330 30310 30320 30330 50310 50320 50330 |
       | geboorte.plaats.omschrijving | 10320                | 10120 10210 10310 10330 20310 20320 20330 30310 30320 30330 50310 50320 50330 |
 
-    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |

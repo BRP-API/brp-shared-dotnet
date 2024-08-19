@@ -3,7 +3,6 @@
 @input-validatie
 Functionaliteit: indicatie curatele register veld vragen met fields bij raadplegen met burgerservicenummer
 
-  @geen-protocollering
   Abstract Scenario: de fields parameter bevat indicatie curatele register veld: <fields>
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |

@@ -6,7 +6,6 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met peildatum
   Regel: Wanneer verblijfplaatshistorie wordt geraadpleegd waarvoor de gebruiker niet geautoriseerd is, wordt een foutmelding gegeven
     Om verblijfplaatshistorie te mogen vragen moet de afnemer geautoriseerd zijn voor virtuele rubriek PX.VP.07
 
-    @geen-protocollering
     Scenario: Afnemer vraagt verblijfplaatshistorie, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -48,7 +47,6 @@ Functionaliteit: autorisatie verblijfplaatshistorie raadplegen met peildatum
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
-    @geen-protocollering     
     Scenario: Gemeente vraagt om verblijfplaatshistorie en afnemer is niet geautoriseerd voor verblijfplaatshistorie (PX.VP.07)
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60)                                                                                                                                                                                                                   | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
