@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PARAMS="{ \
+    \"apiUrl\": \"http://localhost:8080/haalcentraal/api\", \
     \"logFileToAssert\": \"./test-data/logs/brp-autorisatie-protocollering.json\", \
     \"oAuth\": { \
         \"enable\": true \
