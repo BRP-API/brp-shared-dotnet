@@ -6,6 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Release
       - ASPNETCORE_URLS=http://+:8080
       - Ecs__Path=/var/log/brp-autorisatie-protocollering.json
+      - Ecs__SecuredPath=/var/log/brp-autorisatie-protocollering-secured.json
       - Ecs__FileSizeLimitBytes=1073741824
       - Ecs__RetainedFileCountLimit=10
       - Db__Host=postgres
