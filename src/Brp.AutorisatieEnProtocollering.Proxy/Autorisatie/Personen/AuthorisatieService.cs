@@ -1,6 +1,7 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Json;
+using Brp.Shared.Infrastructure.Logging;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using static Brp.AutorisatieEnProtocollering.Proxy.Helpers.StringDictionaryHelpers;
@@ -19,16 +20,21 @@ public class AuthorisatieService : AbstractAutorisatieService
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
+        var autorisatieLog = _httpContextAccessor.HttpContext?.GetAutorisatieLog();
+
         if (gemeenteCode.HasValue)
         {
-            _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", $"afnemer met id {afnemerCode} is gemeente met code '{gemeenteCode}'");
+            if (autorisatieLog != null)
+            {
+                autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
+            }
             return Authorized();
         }
 
         var autorisatie = GetActueleAutorisatieFor(afnemerCode);
-        if (autorisatie != null)
+        if (autorisatie != null && autorisatieLog != null)
         {
-           _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", autorisatie.ToJsonCompact());
+            autorisatieLog.Regel = autorisatie;
         }
 
         if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))

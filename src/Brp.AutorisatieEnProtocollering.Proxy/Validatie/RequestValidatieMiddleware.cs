@@ -1,6 +1,6 @@
 ﻿using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Http;
-using Brp.Shared.Infrastructure.Json;
+using Brp.Shared.Infrastructure.Logging;
 using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Stream;
@@ -144,7 +144,7 @@ public class RequestValidatieMiddleware
             return false;
         }
 
-        httpContext.Items.Add("Protocollering", geleverdePls.ToString().Split(',').ToJsonCompact());
+        httpContext.Items.Add(LogConstants.Protocollering, geleverdePls.ToString().Split(','));
 
         return true;
     }

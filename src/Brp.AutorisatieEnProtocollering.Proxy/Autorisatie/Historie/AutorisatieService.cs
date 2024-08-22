@@ -1,5 +1,6 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Brp.Shared.Infrastructure.Logging;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Historie;
 
@@ -15,16 +16,26 @@ public class AutorisatieService : AbstractAutorisatieService
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
+        var autorisatieLog = _httpContextAccessor.HttpContext?.GetAutorisatieLog();
+
         if (gemeenteCode.HasValue)
         {
-            _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'");
+            if(autorisatieLog != null)
+            {
+                autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
+            }
             return Authorized();
         }
 
         var autorisatie = GetActueleAutorisatieFor(afnemerCode);
-        if (autorisatie != null)
+        if (autorisatie != null && autorisatieLog != null)
         {
-            _httpContextAccessor.HttpContext?.Items.Add("Autorisatie", autorisatie);
+            autorisatieLog.Regel = autorisatie;
+        }
+
+        if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
+        {
+            return NietGeautoriseerdVoorAdhocGegevensverstrekking(autorisatie, afnemerCode);
         }
 
         var geautoriseerdeElementNrs = autorisatie!.RubrieknummerAdHoc!.Split(' ');
