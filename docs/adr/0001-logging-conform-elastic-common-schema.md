@@ -46,71 +46,65 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
 
 ```json
 {
-    "@timestamp": "2024-07-11T11:05:22.7945983+02:00",
+    "@timestamp": "2024-08-30T08:34:07.8497851+02:00",
     "log.level": "Information",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 200 in 2710.5636 ms",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 200 in 305.0777 ms",
     "ecs.version": "8.11.0",
     "log": {
         "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
     },
-    "span.id": "d68926c5209d59ca",
-    "trace.id": "eb2f31761eb14d0827751dd95ff25781",
+    "span.id": "0af571898810c02b",
+    "trace.id": "dd3588bfa059a31b6b2ea5168e7b91cf",
     "labels": {
         "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN51H2BFFNBP"
+        "ConnectionId": "0HN68NKKO70BO"
     },
     "agent": {
         "type": "Elastic.CommonSchema.Serilog",
         "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
     },
     "event": {
-        "created": "2024-07-11T11:05:22.7945983+02:00",
-        "duration": 2710563630,
+        "created": "2024-08-30T08:34:07.8497851+02:00",
+        "duration": 305077726,
         "severity": 2,
         "timezone": "Central European Standard Time"
     },
     "host": {
         "os": {
-            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
+            "full": "Linux 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 2024",
             "platform": "Unix",
-            "version": "5.15.90.1"
+            "version": "5.15.153.1"
         },
         "architecture": "X64",
-        "hostname": "fe1fbfd2ff7e"
+        "hostname": "8322b0e2ea7e"
     },
     "http": {
-        "request.id": "0HN51H2BFFNBP:00000002",
+        "request.id": "0HN68NKKO70BO:00000002",
         "request.method": "POST",
+        "request.mime_type": "application/json",
         "response.mime_type": "application/json; charset=utf-8",
         "response.status_code": 200
     },
     "process": {
         "name": "dotnet",
         "pid": 1,
-        "thread.id": 8,
+        "thread.id": 34,
         "thread.name": ".NET ThreadPool Worker",
         "title": ""
     },
     "service": {
         "name": "Brp.AutorisatieEnProtocollering.Proxy",
         "type": "dotnet",
-        "version": "1.2.0+202407021819"
+        "version": "1.2.0"
     },
     "url": {
         "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
     },
     "user": {
-        "domain": "fe1fbfd2ff7e",
+        "domain": "8322b0e2ea7e",
         "name": "root"
     },
-    "brp": {
-        "autorisatie": "afnemer: 8 is gemeente '800'",
-        "claims": {
-            "OIN": "000000099000000080000",
-            "afnemerID": "000008",
-            "gemeenteCode": "0800"
-        },
-        "protocollering": "[\"1\"]",
+    "metadata": {
         "request.headers": {
             "Accept": [
                 "application/json"
@@ -122,14 +116,12 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
                 "localhost:8080"
             ],
             "User-Agent": [
-                "axios/1.7.2"
+                "axios/1.7.3"
             ],
             "Accept-Encoding": [
                 "gzip, compress, deflate, br"
             ],
-            "Authorization": [
-                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4ODcxOSwiaWF0IjoxNzIwNjg4NzE5LCJleHAiOjE3MjA2OTIzMTksImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiOEVDNEZBRkJGMTVERDQzMDY3OEVFRDNERTI3QzI1ODUifQ.TAgJI6zg8jHbTFd3ncllN-DYqozg4G4S7xKit4mzg8NYMx5ljV3cX8KudVKeX4N2wFbGByVHTxnmYiZQ0L6l8Bd6mtZffyOHX9U4V4AApKsAOeNLqbSNj1pqxg93YWv8d9UlbjPl_EG-0tWRNvN24BIhk9Pp01WIrzeWKkxQP5-4qQwYus697_QnDAYXXttUPwtJZfMWfVL0pW9FcTo6aA45xYrPdEfQULXaOv4Iah18dVE71S4p6sGpzfB4IPcPjpomd7w3XWJrU3Pxy2mKPbMZCaeMrLSxkM_CsjeSdPUaZibF6FiY_MWqm7ebEo5XqcB6r27NxMDz0aY0qFrohA"
-            ],
+            "Authorization": "***MASKED***",
             "Content-Type": [
                 "application/json"
             ],
@@ -139,22 +131,35 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
         },
         "request.body": {
             "type": "RaadpleegMetPeriode",
-            "burgerservicenummer": "000000012",
-            "datumVan": "2010-01-01",
-            "datumTot": "2011-01-01"
+            "burgerservicenummer": "***MASKED***",
+            "datumVan": "2023-01-01",
+            "datumTot": "2024-01-01"
+        },
+        "autorisatie": {
+            "Regel": {
+                "AutorisatieId": 1,
+                "AfnemerCode": 8,
+                "AdHocMedium": "N",
+                "TabelRegelStartDatum": 20201128,
+                "RubrieknummerAdHoc": "PXVP07"
+            },
+            "Claims": {
+                "OIN": "000000099000000080000",
+                "afnemerID": "000008"
+            }
         },
         "response.headers": {
             "Content-Type": [
                 "application/json; charset=utf-8"
             ],
             "Date": [
-                "Thu, 11 Jul 2024 09:05:20 GMT"
+                "Fri, 30 Aug 2024 06:34:07 GMT"
             ],
             "Server": [
                 "Kestrel"
             ],
             "Content-Length": [
-                "663"
+                "23"
             ]
         }
     }
@@ -165,202 +170,65 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
 
 ```json
 {
-    "@timestamp": "2024-07-11T11:11:31.4110883+02:00",
+    "@timestamp": "2024-08-30T08:29:55.5406805+02:00",
     "log.level": "Warning",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 400 in 62.2947 ms",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 400 in 356.5468 ms",
     "ecs.version": "8.11.0",
     "log": {
         "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
     },
-    "span.id": "b4001845f120368f",
-    "trace.id": "acc16d1189be223e7ef382e4b4eb3305",
+    "span.id": "e04066537af10744",
+    "trace.id": "c08c19ab182a89481ee4fb8436bd53e2",
     "labels": {
         "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN51H2BFFNBQ"
+        "ConnectionId": "0HN68NKKO70BM"
     },
     "agent": {
         "type": "Elastic.CommonSchema.Serilog",
         "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
     },
     "event": {
-        "created": "2024-07-11T11:11:31.4110883+02:00",
-        "duration": 62294685,
+        "created": "2024-08-30T08:29:55.5406805+02:00",
+        "duration": 356546811,
         "severity": 3,
         "timezone": "Central European Standard Time"
     },
     "host": {
         "os": {
-            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
+            "full": "Linux 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 2024",
             "platform": "Unix",
-            "version": "5.15.90.1"
+            "version": "5.15.153.1"
         },
         "architecture": "X64",
-        "hostname": "fe1fbfd2ff7e"
+        "hostname": "8322b0e2ea7e"
     },
     "http": {
-        "request.id": "0HN51H2BFFNBQ:00000002",
+        "request.id": "0HN68NKKO70BM:00000002",
         "request.method": "POST",
+        "request.mime_type": "application/json",
         "response.mime_type": "application/problem+json",
         "response.status_code": 400
     },
     "process": {
         "name": "dotnet",
         "pid": 1,
-        "thread.id": 20,
+        "thread.id": 13,
         "thread.name": ".NET ThreadPool Worker",
         "title": ""
     },
     "service": {
         "name": "Brp.AutorisatieEnProtocollering.Proxy",
         "type": "dotnet",
-        "version": "1.2.0+202407021819"
+        "version": "1.2.0"
     },
     "url": {
         "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
     },
     "user": {
-        "domain": "fe1fbfd2ff7e",
-        "name": "root"
-    },
-    "brp": {
-        "claims": {
-            "OIN": "000000099000000080000",
-            "afnemerID": "000008",
-            "gemeenteCode": "0800"
-        },
-        "request.headers": {
-            "Connection": [
-                "close"
-            ],
-            "Host": [
-                "localhost:8080"
-            ],
-            "User-Agent": [
-                "vscode-restclient"
-            ],
-            "Accept-Encoding": [
-                "gzip, deflate"
-            ],
-            "Authorization": [
-                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4OTA4OCwiaWF0IjoxNzIwNjg5MDg4LCJleHAiOjE3MjA2OTI2ODgsImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiQjM3RDNDRTE3NkRFMjc0OTQ5MTdCMTQxODk1MUIwQzUifQ.qi6pxB03qNYJyuC5K_2ntAg8Ft9B1IfMzfmvn0tWAm-STVdjBEFmxfKLTaFRSqAvH87oxgWG3edpO0mgh09HPbatJi3zCOwDA8ipEq0JLry58Ck6YYZhRcHivQdE-mAJJSwBcBCkc2NbZz7oguxrBKKzqkCu283hnxF9D5akdwCMU01WxDGQHP4Vd9qvvKysU7A6atWIfSWt3InOAenakV85Dgmqfvnq9YetrwatXn3TVgPIxtJy_OnPQsPzXc2KivINAaPUd9RxifVX8-6ueVq8_STIxwkhH7qmNq4b4Vyk7oUlRqsaJ8xEe9GQDYhYD1lfLzvK-z6TuFTsaCRJew"
-            ],
-            "baggage": [
-                "sentry-environment=release,sentry-release=1.8.2,sentry-public_key=01c918981c1d900a22d02793e241de70,sentry-trace_id=234dfd798c8ca1dad651e0f3608c2874"
-            ],
-            "Content-Type": [
-                "application/json"
-            ],
-            "Content-Length": [
-                "82"
-            ],
-            "sentry-trace": [
-                "234dfd798c8ca1dad651e0f3608c2874-dd19796342bc6366"
-            ]
-        },
-        "request.body": {
-            "type": "RaadpleegMetPeildatum",
-            "burgerservicenummer": "000000012"
-        },
-        "response.headers": {
-            "Content-Type": [
-                "application/problem+json"
-            ]
-        },
-        "response.body": {
-            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
-            "title": "Een of meerdere parameters zijn niet correct.",
-            "status": 400,
-            "detail": "De foutieve parameter(s) zijn: peildatum.",
-            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
-            "code": "paramsValidation",
-            "invalidParams": [
-                {
-                    "name": "peildatum",
-                    "code": "required",
-                    "reason": "Parameter is verplicht."
-                }
-            ]
-        }
-    }
-}
-```
-
-### Voorbeeld log regel voor een request dat tot een onverwachte fout leidt
-
-```json
-{
-    "@timestamp": "2024-07-11T09:19:50.6031497+00:00",
-    "log.level": "Error",
-    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 500 in 0.6077 ms",
-    "ecs.version": "8.11.0",
-    "log": {
-        "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
-    },
-    "span.id": "38c1923b93e53cd1",
-    "trace.id": "38730d24f403191afcc96e37209b137e",
-    "labels": {
-        "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
-        "ConnectionId": "0HN51H9ULC4NM"
-    },
-    "agent": {
-        "type": "Elastic.CommonSchema.Serilog",
-        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
-    },
-    "error": {
-        "message": "",
-        "stack_trace": "System.InvalidOperationException\n   at async Task Historie.Informatie.Service.Middlewares.OverwriteResponseBodyMiddleware.Invoke(HttpContext context) in /src/Historie.Informatie.Service/Middlewares/OverwriteResponseBodyMiddleware.cs:line 25\n   at async Task Brp.Shared.Infrastructure.Logging.RequestResponseLoggerMiddleware.Invoke(HttpContext context) in /src/Brp.Shared.Infrastructure/Logging/RequestResponseLoggerMiddleware.cs:line 45",
-        "type": "System.InvalidOperationException"
-    },
-    "event": {
-        "created": "2024-07-11T09:19:50.6031497+00:00",
-        "duration": 607745,
-        "severity": 4,
-        "timezone": "Coordinated Universal Time"
-    },
-    "host": {
-        "os": {
-            "full": "Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27 02:56:13 UTC 2023",
-            "platform": "Unix",
-            "version": "5.15.90.1"
-        },
-        "architecture": "X64",
-        "hostname": "baae6d7269ea"
-    },
-    "http": {
-        "request.id": "0HN51H9ULC4NM:00000004",
-        "request.method": "POST",
-        "response.mime_type": "application/problem+json",
-        "response.status_code": 500
-    },
-    "process": {
-        "name": "dotnet",
-        "pid": 1,
-        "thread.id": 14,
-        "thread.name": ".NET ThreadPool Worker",
-        "title": ""
-    },
-    "service": {
-        "name": "Historie.Informatie.Service",
-        "type": "dotnet",
-        "version": "2.0.0"
-    },
-    "url": {
-        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
-    },
-    "user": {
-        "domain": "baae6d7269ea",
+        "domain": "8322b0e2ea7e",
         "name": "root"
     },
     "metadata": {
-        "ExceptionDetail": {
-            "Type": "System.InvalidOperationException",
-            "HResult": -2146233079,
-            "Message": "",
-            "Source": "Historie.Informatie.Service",
-            "TargetSite": "Void MoveNext()"
-        }
-    },
-    "brp": {
         "request.headers": {
             "Accept": [
                 "application/json"
@@ -369,22 +237,149 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
                 "keep-alive"
             ],
             "Host": [
-                "historie-informatie-service:5000"
+                "localhost:8080"
             ],
             "User-Agent": [
-                "axios/1.7.2"
+                "axios/1.7.3"
             ],
             "Accept-Encoding": [
                 "gzip, compress, deflate, br"
             ],
-            "Authorization": [
-                "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3N0Q0NUFENjFBMjI0NjQwNDc1QzAxNDYzRkY3NEY3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwOi8vaWRlbnRpdHlzZXJ2ZXI6NjAwMCIsIm5iZiI6MTcyMDY4OTU5MCwiaWF0IjoxNzIwNjg5NTkwLCJleHAiOjE3MjA2OTMxOTAsImF1ZCI6Imh0dHA6Ly9pZGVudGl0eXNlcnZlcjo2MDAwL3Jlc291cmNlcyIsInNjb3BlIjpbIjAwMDAwMDA5OTAwMDAwMDA4MDAwMCJdLCJjbGllbnRfaWQiOiJjbGllbnQgbWV0IGdlbWVlbnRlY29kZSAoZWlnZW4gZ2VtZWVudGUpIiwiY2xhaW1zIjpbIk9JTj0wMDAwMDAwOTkwMDAwMDAwODAwMDAiLCJhZm5lbWVySUQ9MDAwMDA4IiwiZ2VtZWVudGVDb2RlPTA4MDAiXSwianRpIjoiQkI0REFFODgyRjcwOUVGMTU1NzQ5NDZGMDEwRDYwQ0UifQ.KuKxHpk3Mt1RKjRZhccCNLmI3lP6476DB7Vdc8JSyO3eOgfTXgbymUO8EzkRWgxNm9G8m6P7u9E5s8HzWRA5v6V1KPBh-DXgYuPsPuZRny7KEJh6Qtw1yIh8Q5iQ3rWRb4ZFTwWKy_IwqWWS8gB-medD1kqIWv720HjTd2ESJDA4CfRmsFMb9NFPgTi7EM6veADrlDQsEZEfAPpnd72b0Z-bEm0S8bQ7K3UQ_IOlAoocnsQWaYeq2OcFD3xZGqpb8zDKsyuSmmjGg0eKCXWTKXdT61fKliJp7EDlxoZb5kU8ATeq40aP8u3STz15UempOBeVKlE7EWzQk7QPHCk5_Q"
-            ],
+            "Authorization": "***MASKED***",
             "Content-Type": [
                 "application/json"
             ],
-            "traceparent": [
-                "00-38730d24f403191afcc96e37209b137e-3e673e9852fefcdb-00"
+            "Content-Length": [
+                "90"
+            ]
+        },
+        "request.body": {
+            "type": "RaadpleegMetPeildatum",
+            "burgerservicenummer": "***MASKED***",
+            "peildatum": "2020-01-01"
+        },
+        "autorisatie": {
+            "Claims": {
+                "OIN": "000000099000000080000",
+                "afnemerID": "000008",
+                "gemeenteCode": "0800"
+            }
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/problem+json"
+            ],
+            "Date": [
+                "Fri, 30 Aug 2024 06:29:55 GMT"
+            ],
+            "Server": [
+                "Kestrel"
+            ],
+            "Content-Length": [
+                "415"
+            ]
+        },
+        "response.body": {
+            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
+            "title": "Een of meerdere parameters zijn niet correct.",
+            "status": 400,
+            "detail": "De foutieve parameter(s) zijn: burgerservicenummer.",
+            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+            "code": "paramsValidation",
+            "invalidParams": [
+                {
+                    "name": "burgerservicenummer",
+                    "code": "pattern",
+                    "reason": "Waarde voldoet niet aan patroon ^[0-9]{9}$."
+                }
+            ]
+        }
+    }
+}
+```
+
+### Voorbeeld logregel voor een niet-geautoriseerd request
+
+```
+{
+    "@timestamp": "2024-08-30T08:33:05.4182647+02:00",
+    "log.level": "Warning",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 403 in 888.5858 ms",
+    "ecs.version": "8.11.0",
+    "log": {
+        "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
+    },
+    "span.id": "e44fd85f0b5eafeb",
+    "trace.id": "bf5d5a5adf9a97e2dd7117788c19ece6",
+    "labels": {
+        "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
+        "ConnectionId": "0HN68NKKO70BN"
+    },
+    "agent": {
+        "type": "Elastic.CommonSchema.Serilog",
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
+    },
+    "event": {
+        "created": "2024-08-30T08:33:05.4182647+02:00",
+        "duration": 888585819,
+        "severity": 3,
+        "timezone": "Central European Standard Time"
+    },
+    "host": {
+        "os": {
+            "full": "Linux 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 2024",
+            "platform": "Unix",
+            "version": "5.15.153.1"
+        },
+        "architecture": "X64",
+        "hostname": "8322b0e2ea7e"
+    },
+    "http": {
+        "request.id": "0HN68NKKO70BN:00000002",
+        "request.method": "POST",
+        "request.mime_type": "application/json",
+        "response.mime_type": "application/problem+json",
+        "response.status_code": 403
+    },
+    "process": {
+        "name": "dotnet",
+        "pid": 1,
+        "thread.id": 27,
+        "thread.name": ".NET ThreadPool Worker",
+        "title": ""
+    },
+    "service": {
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
+        "type": "dotnet",
+        "version": "1.2.0"
+    },
+    "url": {
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
+    },
+    "user": {
+        "domain": "8322b0e2ea7e",
+        "name": "root"
+    },
+    "metadata": {
+        "request.headers": {
+            "Accept": [
+                "application/json"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "Host": [
+                "localhost:8080"
+            ],
+            "User-Agent": [
+                "axios/1.7.3"
+            ],
+            "Accept-Encoding": [
+                "gzip, compress, deflate, br"
+            ],
+            "Authorization": "***MASKED***",
+            "Content-Type": [
+                "application/json"
             ],
             "Content-Length": [
                 "112"
@@ -392,13 +387,165 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
         },
         "request.body": {
             "type": "RaadpleegMetPeriode",
-            "burgerservicenummer": "000000012",
-            "datumVan": "2010-01-01",
-            "datumTot": "2011-01-01"
+            "burgerservicenummer": "***MASKED***",
+            "datumVan": "2023-01-01",
+            "datumTot": "2024-01-01"
+        },
+        "autorisatie": {
+            "Regel": {
+                "AutorisatieId": 1,
+                "AfnemerCode": 8,
+                "AdHocMedium": "N",
+                "TabelRegelStartDatum": 20201128,
+                "RubrieknummerAdHoc": "10120 80910 81010 81110 81115 81120 81130 81140 81150 81160 81170 81180 81190 81210 81310 81330 81340 81350 580910 581010 581110 581115 581120 581130 581140 581150 581160 581170 581180 581190 581210 581310 581330 581340 581350 PAVP01 PAVP02 PAVP03 PAVP04"
+            },
+            "NietGeautoriseerd": "afnemer '8' is niet geautoriseerd voor verblijfplaatshistorie",
+            "Claims": {
+                "OIN": "000000099000000080000",
+                "afnemerID": "000008"
+            }
         },
         "response.headers": {
             "Content-Type": [
                 "application/problem+json"
+            ],
+            "Date": [
+                "Fri, 30 Aug 2024 06:33:05 GMT"
+            ],
+            "Server": [
+                "Kestrel"
+            ],
+            "Content-Length": [
+                "297"
+            ]
+        },
+        "response.body": {
+            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3",
+            "title": "U bent niet geautoriseerd voor het gebruik van deze API.",
+            "status": 403,
+            "detail": "Niet geautoriseerd voor verblijfplaatshistorie.",
+            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie",
+            "code": "unauthorized"
+        }
+    }
+}
+```
+
+### Voorbeeld logregel bij een request waar een onverwachte fout is opgetreden
+
+- informatie over de exceptie wordt weggeschreven in het error veld
+- Authorization header is gemaskeerd
+- metadata veld bevat naam/waarde paren waarvan de naam niet overeenkomt met in het ECS gedefinieerde velden
+- ECS velden http.request.body.content en http.response.body.content zijn niet gevuld
+
+#### Geanonimiseerd variant
+
+```json
+{
+    "@timestamp": "2024-08-30T08:06:47.8039263+02:00",
+    "log.level": "Error",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 500 in 130.1929 ms",
+    "ecs.version": "8.11.0",
+    "log": {
+        "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
+    },
+    "span.id": "1cb2c88a24a65daa",
+    "trace.id": "9c062a7b87a668f26eca4ac8bf41b5bd",
+    "labels": {
+        "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
+        "ConnectionId": "0HN68N7N6VD3G"
+    },
+    "agent": {
+        "type": "Elastic.CommonSchema.Serilog",
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
+    },
+    "error": {
+        "message": "Specified method is not supported.",
+        "stack_trace": "System.NotSupportedException: Specified method is not supported.\r\n   at async Task Brp.AutorisatieEnProtocollering.Proxy.Validatie.RequestValidatieMiddleware.Invoke(HttpContext httpContext) in C:/Projects/brp-api/brp-shared-dotnet/src/Brp.AutorisatieEnProtocollering.Proxy/Validatie/RequestValidatieMiddleware.cs:line 24\r\n   at async Task Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)\r\n   at async Task Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)\r\n   at async Task Brp.Shared.Infrastructure.Logging.RequestResponseLoggerMiddleware.Invoke(HttpContext context) in C:/Projects/brp-api/brp-shared-dotnet/src/Brp.Shared.Infrastructure/Logging/RequestResponseLoggerMiddleware.cs:line 45",
+        "type": "System.NotSupportedException"
+    },
+    "event": {
+        "created": "2024-08-30T08:06:47.8039263+02:00",
+        "duration": 130192900,
+        "severity": 4,
+        "timezone": "W. Europe Standard Time"
+    },
+    "host": {
+        "os": {
+            "full": "Microsoft Windows 10.0.22631",
+            "platform": "Win32NT",
+            "version": "10.0.22631.0"
+        },
+        "architecture": "X64",
+        "hostname": "NUC11TNK"
+    },
+    "http": {
+        "request.id": "0HN68N7N6VD3G:00000002",
+        "request.method": "POST",
+        "request.mime_type": "application/json",
+        "response.mime_type": "application/problem+json",
+        "response.status_code": 500
+    },
+    "process": {
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
+        "pid": 11396,
+        "thread.id": 12,
+        "thread.name": ".NET ThreadPool Worker",
+        "title": ""
+    },
+    "service": {
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
+        "type": "dotnet",
+        "version": "1.2.0+c5323eeb1b00b5653d5300f47ca09c0b61e1ea89"
+    },
+    "url": {
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
+    },
+    "user": {
+        "domain": "NUC11TNK",
+        "name": "Melvin"
+    },
+    "metadata": {
+        "request.headers": {
+            "Accept": [
+                "application/json"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "Host": [
+                "localhost:5005"
+            ],
+            "User-Agent": [
+                "axios/1.7.3"
+            ],
+            "Accept-Encoding": [
+                "gzip, compress, deflate, br"
+            ],
+            "Authorization": "***MASKED***",
+            "Content-Type": [
+                "application/json"
+            ],
+            "Content-Length": [
+                "57"
+            ]
+        },
+        "request.body": {
+            "type": "RaadpleegMetPeildatum",
+            "peildatum": "2020-01-01"
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/problem+json"
+            ],
+            "Date": [
+                "Fri, 30 Aug 2024 06:06:47 GMT"
+            ],
+            "Server": [
+                "Kestrel"
+            ],
+            "Content-Length": [
+                "182"
             ]
         },
         "response.body": {
@@ -406,6 +553,149 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
             "title": "Internal Server error.",
             "status": 500,
             "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
+        },
+        "ExceptionDetail": {
+            "Type": "System.NotSupportedException",
+            "HResult": -2146233067,
+            "Message": "Specified method is not supported.",
+            "Source": "Brp.AutorisatieEnProtocollering.Proxy",
+            "TargetSite": "Void MoveNext()"
+        }
+    }
+}
+```
+
+#### Niet geanonimiseerd variant
+
+- informatie over de exceptie wordt weggeschreven in het error veld
+- Authorization header is niet gemaskeerd
+- metadata veld bevat naam/waarde paren waarvan de naam niet overeenkomt met in het ECS gedefinieerde velden
+- ECS velden http.request.body.content en http.response.body.content zijn gevuld
+
+```
+{
+    "@timestamp": "2024-08-30T08:06:47.8039263+02:00",
+    "log.level": "Error",
+    "message": "HTTP \"POST\" \"/haalcentraal/api/brphistorie/verblijfplaatshistorie\" responded 500 in 130.1929 ms",
+    "ecs.version": "8.11.0",
+    "log": {
+        "logger": "Serilog.AspNetCore.RequestLoggingMiddleware"
+    },
+    "span.id": "1cb2c88a24a65daa",
+    "trace.id": "9c062a7b87a668f26eca4ac8bf41b5bd",
+    "labels": {
+        "MessageTemplate": "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms",
+        "ConnectionId": "0HN68N7N6VD3G"
+    },
+    "agent": {
+        "type": "Elastic.CommonSchema.Serilog",
+        "version": "8.11.1+69a082298d546f804e5610128818fbf9154b9958"
+    },
+    "error": {
+        "message": "Specified method is not supported.",
+        "stack_trace": "System.NotSupportedException: Specified method is not supported.\r\n   at async Task Brp.AutorisatieEnProtocollering.Proxy.Validatie.RequestValidatieMiddleware.Invoke(HttpContext httpContext) in C:/Projects/brp-api/brp-shared-dotnet/src/Brp.AutorisatieEnProtocollering.Proxy/Validatie/RequestValidatieMiddleware.cs:line 24\r\n   at async Task Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)\r\n   at async Task Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)\r\n   at async Task Brp.Shared.Infrastructure.Logging.RequestResponseLoggerMiddleware.Invoke(HttpContext context) in C:/Projects/brp-api/brp-shared-dotnet/src/Brp.Shared.Infrastructure/Logging/RequestResponseLoggerMiddleware.cs:line 45",
+        "type": "System.NotSupportedException"
+    },
+    "event": {
+        "created": "2024-08-30T08:06:47.8039263+02:00",
+        "duration": 130192900,
+        "severity": 4,
+        "timezone": "W. Europe Standard Time"
+    },
+    "host": {
+        "os": {
+            "full": "Microsoft Windows 10.0.22631",
+            "platform": "Win32NT",
+            "version": "10.0.22631.0"
+        },
+        "architecture": "X64",
+        "hostname": "NUC11TNK"
+    },
+    "http": {
+        "request.body.content": "{\"type\":\"RaadpleegMetPeildatum\",\"peildatum\":\"2020-01-01\"}",
+        "request.id": "0HN68N7N6VD3G:00000002",
+        "request.method": "POST",
+        "request.mime_type": "application/json",
+        "response.body.content": "{\"type\":\"https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1\",\"title\":\"Internal Server error.\",\"status\":500,\"instance\":\"/haalcentraal/api/brphistorie/verblijfplaatshistorie\"}",
+        "response.mime_type": "application/problem+json",
+        "response.status_code": 500
+    },
+    "process": {
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
+        "pid": 11396,
+        "thread.id": 12,
+        "thread.name": ".NET ThreadPool Worker",
+        "title": ""
+    },
+    "service": {
+        "name": "Brp.AutorisatieEnProtocollering.Proxy",
+        "type": "dotnet",
+        "version": "1.2.0+c5323eeb1b00b5653d5300f47ca09c0b61e1ea89"
+    },
+    "url": {
+        "path": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
+    },
+    "user": {
+        "domain": "NUC11TNK",
+        "name": "Melvin"
+    },
+    "metadata": {
+        "request.headers": {
+            "Accept": [
+                "application/json"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "Host": [
+                "localhost:5005"
+            ],
+            "User-Agent": [
+                "axios/1.7.3"
+            ],
+            "Accept-Encoding": [
+                "gzip, compress, deflate, br"
+            ],
+            "Authorization": [
+                "Basic MDAwMDA4fDA4MDA6dGVtcHNvbHV0aW9uIQ=="
+            ],
+            "Content-Type": [
+                "application/json"
+            ],
+            "Content-Length": [
+                "57"
+            ]
+        },
+        "request.body": {
+            "type": "RaadpleegMetPeildatum",
+            "peildatum": "2020-01-01"
+        },
+        "response.headers": {
+            "Content-Type": [
+                "application/problem+json"
+            ],
+            "Date": [
+                "Fri, 30 Aug 2024 06:06:47 GMT"
+            ],
+            "Server": [
+                "Kestrel"
+            ],
+            "Content-Length": [
+                "182"
+            ]
+        },
+        "response.body": {
+            "type": "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+            "title": "Internal Server error.",
+            "status": 500,
+            "instance": "/haalcentraal/api/brphistorie/verblijfplaatshistorie"
+        },
+        "ExceptionDetail": {
+            "Type": "System.NotSupportedException",
+            "HResult": -2146233067,
+            "Message": "Specified method is not supported.",
+            "Source": "Brp.AutorisatieEnProtocollering.Proxy",
+            "TargetSite": "Void MoveNext()"
         }
     }
 }
