@@ -172,6 +172,7 @@ public class RequestValidatieMiddleware
 
         return requestedResource switch
         {
+            "bewoningen" or
             "personen" or
             "reisdocumenten" or
             "verblijfplaatshistorie" => serviceProvider.GetKeyedService<T>(requestedResource),
