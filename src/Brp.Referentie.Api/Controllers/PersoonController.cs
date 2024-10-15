@@ -16,7 +16,12 @@ public class PersoonController : ControllerBase
     Route("personen")]
     public async Task<IActionResult> Index([FromBody]object body)
     {
-        await HttpContext.Response.AddCustomResponseHeaders(_environment);
+        int status = await HttpContext.Response.AddCustomResponseHeaders(_environment);
+
+        if (await HttpContext.Response.AddCustomResponseBody(_environment))
+        {
+            return StatusCode(status);
+        }
 
         return Ok(new { personen = new List<object>() });
     }

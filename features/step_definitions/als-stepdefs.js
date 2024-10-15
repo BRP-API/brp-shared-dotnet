@@ -4,12 +4,6 @@ const { executeSqlStatements } = require('./postgresqlHelpers');
 const { addDefaultAutorisatieSettings,
         handleRequest } = require('./requestHelpers');
 
-const apiEndpointPrefixMap = new Map([
-    ['personen', 'brp'],
-    ['reisdocumenten', 'reisdocumenten'],
-    ['bestaat-niet', 'brp']
-]);
-
 When(/^([a-zA-Z-]*) wordt gezocht met de volgende parameters$/, async function (endpoint, dataTable) {
     if(this.context.afnemerID === undefined) {
         this.context.afnemerID = this.context.oAuth.clients[0].afnemerID;
@@ -35,7 +29,11 @@ When(/^([a-zA-Z-]*) wordt gezocht met de volgende parameters$/, async function (
 
     await executeSqlStatements(this.context.sql, this.context.sqlData, global.pool);
 
-    await handleRequest(this.context, `${apiEndpointPrefixMap.get(endpoint)}/${endpoint}`, dataTable);
+    const relativeUrl = this.context.apiEndpointPrefixMap.has(endpoint)
+        ? `${this.context.apiEndpointPrefixMap.get(endpoint)}/${endpoint}`
+        : '';
+
+    await handleRequest(this.context, relativeUrl, dataTable);
 });
 
 When(/^([a-zA-Z-]*) wordt gezocht met een '(\w*)' aanroep$/, async function (endpoint, httpMethod) {
@@ -43,5 +41,9 @@ When(/^([a-zA-Z-]*) wordt gezocht met een '(\w*)' aanroep$/, async function (end
         this.context.afnemerID = this.context.oAuth.clients[0].afnemerID;
     }
 
-    await handleRequest(this.context, `${apiEndpointPrefixMap.get(endpoint)}/${endpoint}`, undefined, httpMethod);
+    const relativeUrl = this.context.apiEndpointPrefixMap.has(endpoint)
+        ? `${this.context.apiEndpointPrefixMap.get(endpoint)}/${endpoint}`
+        : '';
+
+    await handleRequest(this.context, relativeUrl, undefined, httpMethod);
 });

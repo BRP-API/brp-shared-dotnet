@@ -188,7 +188,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
 
   Regel: Een veld dat automatisch wordt meegeleverd vereist geen autorisatie voor dat veld
 
-    @geen-protocollering
     Scenario: Afnemer heeft onderzoek, geheimhouding, opschorting, rni en verificatie en heeft dat niet in de autorisatie
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -220,7 +219,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
 
   Regel: voor het vragen en beoordelen van gegevens is geen autorisatie nodig voor gebruik van indicatie onjuist (84.10)
 
-    @geen-protocollering
     Scenario: kindgegevens zijn gecorrigeerd (zijn onjuist) en afnemer is heeft geen autorisatie voor indicatie onjuist (98410) 
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -258,7 +256,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
-    @geen-protocollering
     Abstract Scenario: Gemeente is niet geautoriseerd voor de gebruikte zoekparameter
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -283,7 +280,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
     Wanneer gemeenteCode in de 'claim' in de OAuth token gevuld is,
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
-    @geen-protocollering
     Abstract Scenario: Gemeente raadpleegt een <omschrijving> en fields vraagt om partners.geslacht (50410) dat niet in de autorisatie zit
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -387,7 +383,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | code     | unauthorizedField                                                       |
       | instance | /haalcentraal/api/brp/personen                                          |
 
-    @geen-protocollering
     Scenario: Autorisatie voor gevraagd veld is toegevoegd
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
@@ -405,7 +400,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | fields              | verblijfplaats.functieAdres     |
       Dan heeft de response 0 personen
 
-    @geen-protocollering
     Scenario: Autorisatie heeft einddatum in de toekomst
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |
@@ -444,7 +438,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | code     | unauthorized                                                |
       | instance | /haalcentraal/api/brp/personen                              |
 
-    @geen-protocollering
     Scenario: Autorisatie voor ad hoc gegevensverstrekking is vandaag ingegaan
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -483,7 +476,6 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | code     | unauthorizedField                                                       |
       | instance | /haalcentraal/api/brp/personen                                          |
 
-    @geen-protocollering
     Scenario: Autorisatie voor gevraagd gegeven wordt vanaf morgen ingetrokken
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) | Datum beëindiging tabelregel (35.99.99) |

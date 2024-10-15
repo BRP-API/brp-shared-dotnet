@@ -1,10 +1,8 @@
-version: '3.7'
-
 services:
 
   identityserver:
     container_name: identityserver
-    image: ghcr.io/brp-api/identityserver:latest
+    image: ghcr.io/brp-api/idp-mock:latest
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
       - ASPNETCORE_URLS=http://+:6000

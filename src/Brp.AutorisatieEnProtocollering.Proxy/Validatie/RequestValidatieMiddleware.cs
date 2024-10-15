@@ -1,10 +1,10 @@
 ﻿using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Http;
+using Brp.Shared.Infrastructure.Logging;
 using Brp.Shared.Infrastructure.ProblemDetails;
 using Brp.Shared.Infrastructure.Protocollering;
 using Brp.Shared.Infrastructure.Stream;
 using Brp.Shared.Infrastructure.Validatie;
-using Serilog;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Validatie;
 
@@ -12,18 +12,16 @@ public class RequestValidatieMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly IServiceProvider _serviceProvider;
-    private readonly IDiagnosticContext _diagnosticContext;
 
-    public RequestValidatieMiddleware(RequestDelegate next, IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+    public RequestValidatieMiddleware(RequestDelegate next, IServiceProvider serviceProvider)
     {
         _next = next;
         _serviceProvider = serviceProvider;
-        _diagnosticContext = diagnosticContext;
     }
 
     public async Task Invoke(HttpContext httpContext)
     {
-        if (!await httpContext.HandleNotAuthenticated(_diagnosticContext))
+        if (!await httpContext.HandleNotAuthenticated())
         {
             return;
         }
@@ -56,6 +54,10 @@ public class RequestValidatieMiddleware
                 responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
             }
         }
+        else
+        {
+            responseBody = await newBodyStream.ReadAsync(httpContext.Response.UseGzip());
+        }
 
         using var bodyStream = responseBody.ToMemoryStream(httpContext.Response.UseGzip());
 
@@ -87,7 +89,7 @@ public class RequestValidatieMiddleware
 
             return false;
         }
-        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, requestBodyValidator!, _diagnosticContext))
+        if (!await httpContext.HandleRequestBodyIsValidJson(requestBody, requestBodyValidator!))
         {
             return false;
         }
@@ -101,15 +103,19 @@ public class RequestValidatieMiddleware
 
         IAuthorisation? authorisation = GetService<IAuthorisation>(_serviceProvider, httpContext);
 
-        return await httpContext.HandleNotAuthorized(
-            authorisation!.Authorize(afnemerId, gemeenteCode, requestBody),
-            _diagnosticContext);
+        return await httpContext.HandleNotAuthorized(authorisation!.Authorize(afnemerId, gemeenteCode, requestBody));
     }
 
     private static async Task<bool> ValidateResponse(HttpContext httpContext)
     {
         if (!await httpContext.HandleNotFound())
         {
+            return false;
+        }
+        if(httpContext.Response.StatusCode == StatusCodes.Status500InternalServerError)
+        {
+            await httpContext.HandleInternalServerError();
+
             return false;
         }
         if (!await httpContext.HandleServiceIsAvailable())
@@ -138,7 +144,7 @@ public class RequestValidatieMiddleware
             return false;
         }
 
-        _diagnosticContext.Set("Protocollering voor pl's", geleverdePls.ToString().Split(','));
+        httpContext.Items.Add(LogConstants.Protocollering, geleverdePls.ToString().Split(','));
 
         return true;
     }
@@ -167,7 +173,8 @@ public class RequestValidatieMiddleware
         return requestedResource switch
         {
             "personen" or
-            "reisdocumenten" => serviceProvider.GetKeyedService<T>(requestedResource),
+            "reisdocumenten" or
+            "verblijfplaatshistorie" => serviceProvider.GetKeyedService<T>(requestedResource),
             _ => default
         };
     }

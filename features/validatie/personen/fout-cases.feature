@@ -98,7 +98,6 @@ Regel: als content type voor de response wordt alleen application/json en charse
     | status   | 406                                                         |
     | instance | /haalcentraal/api/brp/personen                              |
 
-  @geen-protocollering
   Abstract Scenario: '<accept media type>' als Accept content type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |
@@ -123,7 +122,6 @@ Regel: als content type voor de response wordt alleen application/json en charse
 
 Regel: als content type voor het request wordt alleen application/json en charset utf-8 ondersteund
 
-  @geen-protocollering
   Abstract Scenario: '<media type>' als Content-Type waarde wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                          |
@@ -141,7 +139,6 @@ Regel: als content type voor het request wordt alleen application/json en charse
     | application/json;charset=Utf-8  |
     | application/json; charset=UTF-8 |
 
-  @geen-protocollering
   Abstract Scenario: '<media type>' als Content-Type waarde wordt ondersteund bij zoeken
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                              |
@@ -190,7 +187,7 @@ Regel: als content type voor het request wordt alleen application/json en charse
 
 Regel: content type voor de response is default application/json en charset utf-8
 
-  @geen-protocollering
+  
   Scenario: Lege Accept content type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |
@@ -203,7 +200,7 @@ Regel: content type voor de response is default application/json en charset utf-
 
 Regel: content type voor het request is default application/json en charset utf-8
 
-  @geen-protocollering
+  
   Scenario: Lege Content-Type wordt ondersteund
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                          |
@@ -213,7 +210,7 @@ Regel: content type voor het request is default application/json en charset utf-
     | header: Content-Type |                                 |
     Dan heeft de response 0 personen
 
-  @geen-protocollering
+  
   Scenario: Lege Content-Type wordt ondersteund bij zoeken
     Als personen wordt gezocht met de volgende parameters
     | naam                 | waarde                              |
@@ -246,19 +243,5 @@ Regel: Om privacy en security redenen moet een bevraging van reisdocumenten word
     | DELETE       |
   # | CONNECT      | een CONNECT aanroep wordt niet gebruikt om te bevragen
   # | HEAD         | een HEAD response bevat geen body
-    | OPTIONS |
-    | TRACE   |
-
-  @fout-case
-  Scenario: niet-bestaand endpoint wordt aangeroepen
-    Als bestaat-niet wordt gezocht met de volgende parameters
-    | naam                | waarde                          |
-    | type                | RaadpleegMetBurgerservicenummer |
-    | burgerservicenummer | 000000024                       |
-    | fields              | burgerservicenummer             |
-    Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                      |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4 |
-    | title    | Opgevraagde resource bestaat niet.                          |
-    | status   | 404                                                         |
-    | instance | /haalcentraal/api/brp/bestaat-niet                          |
+    | OPTIONS      |
+    | TRACE        |

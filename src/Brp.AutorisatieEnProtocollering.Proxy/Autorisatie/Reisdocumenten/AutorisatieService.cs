@@ -2,9 +2,9 @@
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Reisdocumenten
 {
-    public class ReisdocumentenAutorisatieService : AbstractAutorisatieService
+    public class AutorisatieService : AbstractAutorisatieService
     {
-        public ReisdocumentenAutorisatieService(IServiceProvider serviceProvider)
+        public AutorisatieService(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
         }

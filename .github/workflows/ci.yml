@@ -7,92 +7,124 @@ on:
       - features/**
       - .github/workflows/ci.yml
   workflow_dispatch:
+    inputs:
+      publishType:
+        description: wat moet worden gereleased?
+        required: true
+        default: 'ci-only'
+        type: choice
+        options:
+          - ci-only
+          - authz-en-prot
+          - authn-mock
 
 env:
-  DOTNET_VERSION: 6.0.x
-  DOTNET_SOLUTION: src/brp-shared.sln
-  NODE_VERSION: '18'
-  COMPOSE_FILE_ARGUMENT: -f .docker/db-ci.yml -f .docker/identityserver.yml -f .docker/referentie-api.yml -f .docker/autorisatie-protocollering-proxy.yml
-  UPDATE_VERSION_CSPROJ: src/Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnProtocollering.Proxy.csproj
-  CONTAINER_IMAGE: ghcr.io/brp-api/brp-autorisatie-protocollering
-  BUILD_RUN: ''
-  APP_VERSION: ''
+  NODE_VERSION: '20'
+  DOTNET_SOLUTION_FILE_PATH: src/brp-shared.sln
+  INFRA_PROJECT_PATH: ./src/Brp.Shared.Infrastructure
+  APP_PROJECT_PATH: ./src/Brp.AutorisatieEnProtocollering.Proxy
+  APP_CSPROJ_FILE_PATH: ./src/Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnProtocollering.Proxy.csproj
+  APP_CONTAINER_IMAGE: ghcr.io/brp-api/brp-autorisatie-protocollering
+  MOCK_PROJECT_PATH: ./src/IdentityServer
+  MOCK_CSPROJ_FILE_PATH: ./src/IdentityServer/IdentityServer.csproj
+  MOCK_CONTAINER_IMAGE: ghcr.io/brp-api/idp-mock
+  REF_API_PROJECT_PATH: ./src/Brp.Referentie.Api
+  REF_API_CONTAINER_IMAGE: ghcr.io/brp-api/brp-referentie-api
 
 jobs:
-  build:
+  continuous-integration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Set environment variables
-        run: |
-          export TZ="Europe/Amsterdam"
-          echo "BUILD_RUN=$(date +'%Y%m%d%H')" >> $GITHUB_ENV
 
-          echo "APP_VERSION=$(sed -n 's/.*<Version>\([0-9.]*\).*/\1/p' ${{ env.UPDATE_VERSION_CSPROJ}})" >> $GITHUB_ENV
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Genereer build run identifier
+        id: build-run-id
+        uses: ./.github/actions/genereer-build-run-identifier
+
+      - name: Zet versie met build run in Autorisatie & Protocollering csproj
+        uses: ./.github/actions/zet-versie-met-build-run-in-csproj
+        id: app-version
         with:
-          dotnet-version: |
-            6.0.x
-            8.0.x
-      - name: Restore dependencies
-        run: dotnet restore ${{ env.DOTNET_SOLUTION }}
-      - name: Build
-        run: dotnet build ${{ env.DOTNET_SOLUTION }} --configuration Release --no-restore
-      - name: Run unit tests
-        run: dotnet test ${{ env.DOTNET_SOLUTION }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./test-reports/coverage
-    outputs:
-      app_version: ${{ env.APP_VERSION }}
-      build_run: ${{ env.BUILD_RUN }}
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+          path-csproj-file: ${{ env.APP_CSPROJ_FILE_PATH }}
+          build-run: ${{ steps.build-run-id.outputs.build-run }}
+      - name: Zet versie met build run in IDP mock csproj
+        uses: ./.github/actions/zet-versie-met-build-run-in-csproj
+        id: mock-version
+        with:
+          path-csproj-file: ${{ env.MOCK_CSPROJ_FILE_PATH }}
+          build-run: ${{ steps.build-run-id.outputs.build-run }}
+
+      - name: Bepaal de gewijzigde applicatie(s)
+        uses: dorny/paths-filter@v3
+        id: changed-project
+        with:
+          filters: |
+            app:
+              - '${{ env.APP_PROJECT_PATH }}/**'
+              - '${{ env.INFRA_PROJECT_PATH }}/**'
+            mock:
+              - '${{ env.MOCK_PROJECT_PATH }}/**'
+            ref-app:
+              - '${{ env.REF_API_PROJECT_PATH }}/**'
+
+      - name: Valideer .NET solution
+        uses: ./.github/actions/valideer-dotnet-solution
+        with:
+          path-solution-file: ${{ env.DOTNET_SOLUTION_FILE_PATH }} 
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies
         run: npm ci
-      - name: Set applicatie version
-        run: |
-          search_string="\(<Version>\([0-9.]*\)\)"
-          replace_string="<Version>${{ needs.build.outputs.app_version }}+${{ needs.build.outputs.build_run }}"
-          sed -i "s/$search_string/$replace_string/" ${{ env.UPDATE_VERSION_CSPROJ}}
 
-          cat ${{ env.UPDATE_VERSION_CSPROJ}}
+      - name: Zet run permissions op script folder
+        uses: ./.github/actions/zet-run-bash-scripts-permission
+        with:
+          path-bash-file-or-folder: ./scripts/*
+
       - name: Build container images
-        run: docker compose -f src/docker-compose.yml build
-      - name: Add identityserver host name to /etc/hosts
         run: |
-          sudo echo '127.0.0.1 identityserver' | sudo tee -a /etc/hosts
+          ./scripts/containers-build.sh
+
+      - name: Voeg identityserver toe als host naam
+        uses: ./.github/actions/toevoegen-localhost-naam
+        with:
+          host-name: identityserver
       - name: Set read/write permissions on test-data/IdentityServer folder
         run: |
           sudo chmod ugo+rw ./test-data/IdentityServer
+
       - name: Start containers
-        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} up -d
+        run: |
+          ./scripts/containers-start.sh ci
       - name: Wait for DB restart
         run: sleep 5s
         shell: bash
-      - name: Validate functional specs
+
+      - name: Valideer functionele specs
         run: |
           ./scripts/specs-verify.sh
+
       - name: Stop containers
         if: always()
-        run: docker compose ${{ env.COMPOSE_FILE_ARGUMENT }} down
+        run: |
+          ./scripts/containers-stop.sh ci
+  
       - name: Genereer test rapportage
         if: always()
         run: |
-          node ./scripts/generate-cucumber-reports.js ${{ needs.build.outputs.app_version }} ${{ needs.build.outputs.build_run }} ${{ github.ref_name }}
+          node ./scripts/generate-cucumber-reports.js ${{ steps.app-version.outputs.version }} ${{ steps.build-run-id.outputs.build-run }} ${{ github.ref_name }}
       - name: Upload test rapportage
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Reports
-          path: test-reports
+          path: |
+            test-reports
+            test-data/logs
       - name: Push test rapportage naar brp-api.github.io repo
         if: always()
         uses: tech-thinker/push-to-repo@main
@@ -103,15 +135,52 @@ jobs:
           destination-repository-name: brp-api.github.io
           destination-github-username: BRP-API
           target-branch: test-reports/autorisatie-en-protocollering
-          commit-message: "test rapporten van build: ${{ needs.build.outputs.build_run }}"
+          commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
+
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2.1.0
+        if: always()
+        uses: docker/login-action@v3.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tag & push container images naar registry
-        run: |
-          docker tag ${{ env.CONTAINER_IMAGE }}:latest ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
-          docker push ${{ env.CONTAINER_IMAGE }}:latest
-          docker push ${{ env.CONTAINER_IMAGE }}:${{ needs.build.outputs.app_version }}-${{ needs.build.outputs.build_run }}
+      - name: Configureer container image builder voor multi-platform
+        if: always()
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
+          driver: docker-container
+      - name: Build & push authz & protocollering container images naar registry
+        if: always() && (steps.changed-project.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ env.APP_PROJECT_PATH }}/Dockerfile
+          context: src
+          push: true
+          platforms: linux/arm64,linux/amd64
+          tags: |
+            ${{ env.APP_CONTAINER_IMAGE }}:latest
+            ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
+            ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+      - name: Build & push IDP mock container images naar registry
+        if: always() && (steps.changed-project.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ env.MOCK_PROJECT_PATH }}/Dockerfile
+          context: src
+          push: true
+          platforms: linux/arm64,linux/amd64
+          tags: |
+            ${{ env.MOCK_CONTAINER_IMAGE }}:latest
+            ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
+            ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+      - name: Build & push referentie api container image naar registry
+        if: always() && steps.changed-project.outputs.ref-app == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ env.REF_API_PROJECT_PATH }}/Dockerfile
+          context: src
+          push: true
+          platforms: linux/arm64,linux/amd64
+          tags: |
+            ${{ env.REF_API_CONTAINER_IMAGE }}:latest

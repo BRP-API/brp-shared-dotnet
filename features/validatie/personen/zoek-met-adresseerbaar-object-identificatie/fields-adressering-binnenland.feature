@@ -3,7 +3,6 @@
 @input-validatie
 Functionaliteit: adresregels vragen met adresseringBinnenland fields alias bij zoeken op adresseerbaar object identificatie
 
-  @geen-protocollering
   Abstract Scenario: de fields parameter bevat adressering veld(en): <fields>
     Als personen wordt gezocht met de volgende parameters
     | naam                             | waarde                                  |

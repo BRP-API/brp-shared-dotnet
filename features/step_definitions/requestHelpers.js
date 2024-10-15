@@ -38,13 +38,14 @@ function isRaadpleegMetReisdocumentnummerAanroep(type, param) {
            param.naam === 'reisdocumentnummer';
 }
 
-function isArrayParameter(type, param) {
+function isArrayParameter(type, param, baseUrl = undefined) {
     return isRaadpleegMetBurgerservicenummerAanroep(type, param) ||
            isRaadpleegMetReisdocumentnummerAanroep(type, param) ||
-           param.naam === 'fields';
+           param.naam === 'fields' ||
+           (baseUrl !== undefined && baseUrl.toLowerCase().includes('gezag'));
 }
 
-function createRequestBody(dataTable) {
+function createRequestBody(dataTable, baseUrl = undefined) {
     if(dataTable === undefined) {
         return undefined;
     }
@@ -57,18 +58,21 @@ function createRequestBody(dataTable) {
                 return !param.naam.startsWith("header:");
             })
             .forEach(function(param) {
-                if (isArrayParameter(type, param)) {
+                if (param.naam === '' && param.waarde === '') {
+                    // do nothing
+                }
+                else if (isArrayParameter(type, param, baseUrl)) {
                         requestBody[param.naam] = param.waarde === '' 
                             ? []
                             : param.waarde.split(',');
                 }
-                else if(param.naam === 'burgerservicenummer (als string)') {
+                else if (param.naam === 'burgerservicenummer (als string)') {
                     requestBody['burgerservicenummer'] = param.waarde;
                 }
-                else if(param.naam === 'fields (als string)') {
+                else if (param.naam === 'fields (als string)') {
                     requestBody['fields'] = param.waarde;
                 }
-                else if(param.waarde === '(131 maal aNummer)') {
+                else if (param.waarde === '(131 maal aNummer)') {
                     requestBody[param.naam] = [];
                     for(let count=0; count<=131; count++) {
                         requestBody[param.naam].push('aNummer');
@@ -168,9 +172,9 @@ async function sendRequest(config) {
 async function sendBevragenRequest(baseUrl, url, extraHeaders, dataTable, httpMethod) {
     const config = {
         method: httpMethod,
-        url: `/${url}`,
+        url: url ? `/${url}` : '',
         baseURL: baseUrl,
-        data: createRequestBody(dataTable),
+        data: createRequestBody(dataTable, baseUrl),
         headers: createHeaders(dataTable, extraHeaders)
     };
 
