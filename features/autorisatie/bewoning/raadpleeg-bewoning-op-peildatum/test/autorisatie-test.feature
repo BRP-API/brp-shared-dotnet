@@ -1,6 +1,6 @@
 # language: nl
 
-@autorisatie
+@autorisatie @skip-verify
 Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en samenvoeging gemeente bij BewoningMetPeildatum
 
 
@@ -26,7 +26,7 @@ Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en s
       En de persoon is vervolgens ingeschreven op adres 'A2' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0518                              | 20230526                           |
-      Als bewoning wordt gezocht met de volgende parameters
+      Als bewoningen wordt gezocht met de volgende parameters
       | naam                             | waarde               |
       | type                             | BewoningMetPeildatum |
       | peildatum                        | 2022-01-01           |
@@ -41,12 +41,12 @@ Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en s
       En de persoon is vervolgens ingeschreven op adres 'A1' met de volgende gegevens
       | gemeente van inschrijving (09.10) | datum aanvang adreshouding (10.30) |
       | 0800                              | 20230601                           |
-      Als bewoning wordt gezocht met de volgende parameters
+      Als bewoningen wordt gezocht met de volgende parameters
       | naam                             | waarde               |
       | type                             | BewoningMetPeildatum |
       | peildatum                        | 2022-01-01           |
       | adresseerbaarObjectIdentificatie | 0518010000000002     |
-      Dan heeft de response een object met de volgende gegevens
+      Dan heeft de response de volgende gegevens
       | naam     | waarde                                                                                 |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                            |
       | title    | U bent niet geautoriseerd voor deze vraag.                                             |
