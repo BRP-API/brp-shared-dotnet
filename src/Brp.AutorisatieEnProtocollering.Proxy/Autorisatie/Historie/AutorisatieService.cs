@@ -51,5 +51,5 @@ public class AutorisatieService : AbstractAutorisatieService
         return Authorized();
     }
 
-    private string BepaalKeyVoor(string field, string zoekType) => field;
+    private static string BepaalKeyVoor(string field, string zoekType) => field;
 }

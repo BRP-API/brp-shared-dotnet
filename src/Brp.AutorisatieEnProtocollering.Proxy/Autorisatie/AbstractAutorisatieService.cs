@@ -7,7 +7,7 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 
 public abstract class AbstractAutorisatieService : IAuthorisation
 {
-    private readonly IServiceProvider _serviceProvider;
+    protected readonly IServiceProvider _serviceProvider;
 
     protected AbstractAutorisatieService(IServiceProvider serviceProvider)
     {

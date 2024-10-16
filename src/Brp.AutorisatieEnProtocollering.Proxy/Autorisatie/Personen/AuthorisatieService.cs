@@ -1,9 +1,7 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
-using Brp.Shared.Infrastructure.Json;
 using Brp.Shared.Infrastructure.Logging;
 using Newtonsoft.Json.Linq;
-using Serilog;
 using static Brp.AutorisatieEnProtocollering.Proxy.Helpers.StringDictionaryHelpers;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;

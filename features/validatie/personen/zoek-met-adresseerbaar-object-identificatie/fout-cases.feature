@@ -60,8 +60,8 @@ Regel: Een adresseerbaarObjectIdentificatie is een string bestaande uit exact 16
     | code     | paramsValidation                                                 |
     | instance | /haalcentraal/api/brp/personen                                   |
     En heeft de response invalidParams met de volgende gegevens
-    | code    | name                             | reason                                       |
-    | pattern | adresseerbaarObjectIdentificatie | Waarde voldoet niet aan patroon ^[0-9]{16}$. |
+    | code    | name                             | reason                                                |
+    | pattern | adresseerbaarObjectIdentificatie | Waarde voldoet niet aan patroon ^(?!0{16})[0-9]{16}$. |
 
     Voorbeelden:
     | adresseerbaarObjectIdentificatie  | titel                                                                                 |

@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Autorisatie> Autorisaties => Set<Autorisatie>();
     public DbSet<Protocollering> Protocolleringen => Set<Protocollering>();
+    public DbSet<Adres> Adressen => Set<Adres>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,6 +35,15 @@ public class AppDbContext : DbContext
             ba.Property(p => p.PersoonslijstId).HasColumnName("pl_id");
             ba.Property(p => p.RequestZoekRubrieken).HasColumnName("request_zoek_rubrieken");
             ba.Property(p => p.RequestGevraagdeRubrieken).HasColumnName("request_gevraagde_rubrieken");
+        });
+
+        modelBuilder.Entity<Adres>(ba =>
+        {
+            ba.ToTable("lo3_adres");
+            ba.HasKey(p => p.AdresId);
+            ba.Property(p => p.AdresId).HasColumnName("adres_id");
+            ba.Property(p => p.GemeenteCode).HasColumnName("gemeente_code");
+            ba.Property(p => p.AdresseerbaarObjectIdentificatie).HasColumnName("verblijf_plaats_ident_code");
         });
     }
 }
