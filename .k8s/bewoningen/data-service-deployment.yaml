@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bewoningen-data-service
+  labels:
+    app: bewoningen-data-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: bewoningen-data-service
+  template:
+    metadata:
+      labels:
+        name: bewoningen-data-service
+    spec:
+      containers:
+        - name: bewoningen-data-service
+          image: ghcr.io/brp-api/bewoning-data-service:2.0.20-202410161341
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+
+            - name: Serilog__LogLevel__Default
+              value: Warning
+            # - name: Serilog__MinimumLevel__Override__Serilog
+            #   value: Information
+
+            - name: Ecs__Path
+              value: /var/log/bewoning-data-service.json
+            - name: Ecs__SecuredPath
+              value: /var/log/bewoning-data-service-secured.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: Database__Host
+              value: kubernetes.docker.internal
+            - name: Database__Port
+              value: "5432"
+            - name: Database__Database
+              value: rvig_haalcentraal_testdata
+            - name: Database__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Database__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+
+            - name: HaalcentraalApi__MaxSearchResults
+              value: "10"
+
+          ports:
+            - name: http
+              containerPort: 80

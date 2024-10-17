@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bewoningen-data-service
+  labels:
+    app: bewoningen-data-service
+spec:
+  selector:
+    name: bewoningen-data-service
+  # type: ClusterIP
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 80

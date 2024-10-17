@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bewoningen-autorisatie-protocollering
+  labels:
+    app: bewoningen-autorisatie-protocollering
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: bewoningen-autorisatie-protocollering
+  template:
+    metadata:
+      labels:
+        name: bewoningen-autorisatie-protocollering
+    spec:
+      containers:
+        - name: bewoningen-autorisatie-protocollering-service
+          image: ghcr.io/brp-api/brp-autorisatie-protocollering:1.5.0-202410161549
+          # imagePullPolicy: Never
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Release
+            - name: ASPNETCORE_URLS
+              value: http://+:8080
+            # - name: Serilog__MinimumLevel__Override__Serilog
+            #   value: Debug
+
+            - name: Ecs__Path
+              value: /var/log/bewoningen-autorisatie-protocollering.json
+            - name: Ecs__SecuredPath
+              value: /var/log/bewoningen-autorisatie-protocollering-secured.json
+            - name: Ecs__FileSizeLimitBytes
+              value: "1048576"
+              # max grootte in bytes van een log bestand
+            - name: Ecs__RetainedFileCountLimit
+              value: "10"
+              # max aantal behouden log bestanden
+
+            - name: Db__Host
+              value: kubernetes.docker.internal
+            - name: Db__Database
+              value: rvig_haalcentraal_testdata
+            - name: Db__Username
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-username
+            - name: Db__Password
+              valueFrom:
+                secretKeyRef:
+                  name: db-user
+                  key: db-password
+
+            - name: HealthEndpointBase
+              value: /bewoningen-autorisatie/health
+              # de volgende health endpoints worden gecreeerd:
+              # - <HealthEndpointBase>/startup
+              # - <HealthEndpointBase>/ready
+              # - <HealthEndpointBase>/live
+
+            - name: OAuth__Authority
+              # value: https://login.dev.idsecure.nl/nidp/oauth/nam
+              value: http://identityserver:6000
+
+            - name: Routes__0__UpstreamPathTemplate
+              value: /haalcentraal/api/bewoning/bewoningen
+            - name: Routes__0__DownstreamPathTemplate
+              value: /haalcentraal/api/bewoning/bewoningen
+            - name: Routes__0__DownstreamScheme
+              value: http
+            - name: Routes__0__DownstreamHostAndPorts__0__Host
+              value: bewoningen-informatie-service
+            - name: Routes__0__DownstreamHostAndPorts__0__Port
+              value: "5000"
+
+            - name: FeatureManagement__gebruikMeestRecenteAutorisatie
+              value: "false"
+
+          ports:
+            - name: http
+              containerPort: 8080
