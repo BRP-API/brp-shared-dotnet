@@ -36,7 +36,6 @@ Functionaliteit: Content-Type header waarde bij BRP API bevragingen
       | */*; charset=utf-8               | personen               | RaadpleegMetBurgerservicenummer | burgerservicenummer | 000000012       | fields        | naam            |               |                 | /brp/personen                       |
       | */*;charset=utf-8                | reisdocumenten         | RaadpleegMetReisdocumentnummer  | reisdocumentnummer  | AB1234567       | fields        | houder          |               |                 | /reisdocumenten/reisdocumenten      |
 
-    @geen-protocollering
     Abstract Scenario: '<media type>' is opgegeven als Content-Type waarde
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam                 | waarde                   |
@@ -58,7 +57,6 @@ Functionaliteit: Content-Type header waarde bij BRP API bevragingen
 
   Regel: De default Content-Type waarde en charset zijn respectievelijk application/json en utf-8
 
-    @geen-protocollering
     Abstract Scenario: Er is geen Content-Type header met waarde opgegeven
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam            | waarde                   |
@@ -75,7 +73,6 @@ Functionaliteit: Content-Type header waarde bij BRP API bevragingen
       | verblijfplaatshistorie | RaadpleegMetPeildatum           | burgerservicenummer | 000000012       | peildatum     | 2020-04-01      |               |                 | verblijfplaatsen |
       | verblijfplaatshistorie | RaadpleegMetPeriode             | burgerservicenummer | 000000012       | datumVan      | 2020-04-01      | datumTot      | 2021-05-01      | verblijfplaatsen |
 
-    @geen-protocollering
     Abstract Scenario: Er is een lege waarde opgegeven voor de Content-Type header
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam                 | waarde                   |

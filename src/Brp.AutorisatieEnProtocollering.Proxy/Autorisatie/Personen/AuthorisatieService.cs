@@ -1,38 +1,45 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Brp.Shared.Infrastructure.Json;
+using Brp.Shared.Infrastructure.Logging;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using static Brp.AutorisatieEnProtocollering.Proxy.Helpers.StringDictionaryHelpers;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
 
-public class PersonenAuthorisatieService : AbstractAutorisatieService
+public class AuthorisatieService : AbstractAutorisatieService
 {
-    private readonly IDiagnosticContext _diagnosticContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public PersonenAuthorisatieService(IServiceProvider serviceProvider, IDiagnosticContext diagnosticContext)
+    public AuthorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
         : base(serviceProvider)
     {
-        _diagnosticContext = diagnosticContext;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
-        var autorisatie = GetActueleAutorisatieFor(afnemerCode);
-        if (autorisatie != null)
+        var autorisatieLog = _httpContextAccessor.HttpContext?.GetAutorisatieLog();
+
+        if (gemeenteCode.HasValue)
         {
-            _diagnosticContext.Set("Autorisatie", autorisatie, true);
+            if (autorisatieLog != null)
+            {
+                autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
+            }
+            return Authorized();
+        }
+
+        var autorisatie = GetActueleAutorisatieFor(afnemerCode);
+        if (autorisatie != null && autorisatieLog != null)
+        {
+            autorisatieLog.Regel = autorisatie;
         }
 
         if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
         {
             return NietGeautoriseerdVoorAdhocGegevensverstrekking(autorisatie, afnemerCode);
-        }
-
-        if (gemeenteCode.HasValue)
-        {
-            _diagnosticContext.Set("Authorized", "Afnemer is gemeente");
-            return Authorized();
         }
 
         var input = JObject.Parse(requestBody);

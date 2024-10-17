@@ -31,7 +31,6 @@ Functionaliteit: autorisatie gegevens van leeftijd van persoon bij zoeken
       | fields   | missende autorisatie | ad hoc rubrieken                                |
       | leeftijd | PAGL01               | 10120 10210 10310 10320 10330 20310 30310 50310 |
 
-    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |

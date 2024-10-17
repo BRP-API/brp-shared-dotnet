@@ -33,7 +33,6 @@ Functionaliteit: autorisatie op parameters bij RaadpleegMetBurgerservicenummer
       | 10210 80910      | burgerservicenummer       | 10120               |
       | 10120 10210      | gemeenteVanInschrijving   | 80910               |
 
-    @geen-protocollering
     Scenario: Afnemer raadpleegt met alleen de verplichte parameter en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -48,7 +47,6 @@ Functionaliteit: autorisatie op parameters bij RaadpleegMetBurgerservicenummer
       | fields              | burgerservicenummer             |
       Dan heeft de response 0 personen
 
-    @geen-protocollering
     Scenario: Afnemer zoekt met de verplichte parameter en optionele parameter en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
@@ -69,7 +67,6 @@ Functionaliteit: autorisatie op parameters bij RaadpleegMetBurgerservicenummer
     Wanneer de afnemer gemeenteCode in de 'claim' van het OAuth token heeft, 
     dan wordt niet gekeken naar de autorisatie van de afnemer
 
-    @geen-protocollering
     Scenario: Gemeente is niet geautoriseerd voor de zoekparameters
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |

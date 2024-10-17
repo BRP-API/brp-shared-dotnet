@@ -66,7 +66,6 @@ Functionaliteit: autorisatie gegevens van kindgegevens van Persoon
       | kinderen.naam.voornamen                            | 90210                | 90120 90220 90230 90240 90310 90320 90330 PAKD01                         |
       | kinderen.naam.voorvoegsel                          | 90230                | 90120 90210 90220 90240 90310 90320 90330 PAKD01                         |
 
-    @geen-protocollering
     Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |

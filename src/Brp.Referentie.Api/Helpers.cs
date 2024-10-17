@@ -4,8 +4,10 @@ namespace Brp.Referentie.Api;
 
 public static class Helpers
 {
-    public static async Task AddCustomResponseHeaders(this HttpResponse response, IWebHostEnvironment environment)
+    public static async Task<int> AddCustomResponseHeaders(this HttpResponse response, IWebHostEnvironment environment)
     {
+        var retval = StatusCodes.Status200OK;
+
         var path = Path.Combine(environment.ContentRootPath, "Data", "response-headers.json");
         if (File.Exists(path))
         {
@@ -14,10 +16,16 @@ public static class Helpers
             var responseHeaders = JObject.Parse(data);
             foreach (var header in responseHeaders)
             {
-                response.Headers.Add(header.Key, header.Value?.ToString());
+                if(header.Key.Equals("status", StringComparison.OrdinalIgnoreCase))
+                {
+                    retval = int.Parse(header.Value!.ToString());
+                }
+                response.Headers.Add(header.Key, header.Value!.ToString());
             }
 
         }
+
+        return retval;
     }
 
     public static async Task<bool> AddCustomResponseBody(this HttpResponse response, IWebHostEnvironment environment)

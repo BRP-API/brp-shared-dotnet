@@ -1,11 +1,15 @@
-﻿using Destructurama;
+﻿using Brp.Shared.Infrastructure.Json;
+using Destructurama;
+using Elastic.CommonSchema;
 using Elastic.CommonSchema.Serilog;
+using Elastic.Serilog.Enrichers.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Serilog;
 using Serilog.Enrichers.Sensitive;
 using Serilog.Events;
@@ -104,6 +108,7 @@ public static class SerilogHelpers
     private static void EnrichDiagnosticContext(IDiagnosticContext diagnosticContext, HttpContext httpContext)
     {
         diagnosticContext.Set(MapToEcsKeys.EcsResponseContentType, httpContext.Response.ContentType);
+        httpContext.MapToDiagnosticContext(diagnosticContext);
     }
 
     private static Action<HostBuilderContext, IServiceProvider, LoggerConfiguration> Configure(Serilog.ILogger logger)
@@ -119,15 +124,10 @@ public static class SerilogHelpers
                 .Destructure.JsonNetTypes()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
-                .Enrich.WithSensitiveDataMasking(options =>
-                {
-                    options.MaskingOperators.Clear();
-                    options.MaskProperties.AddRange(maskProperties);
-                })
                 ;
 
             context.ConfigureConsoleLogging(config, logger);
-            context.ConfigureElasticLogging(serviceProvider, config, logger);
+            context.ConfigureElasticLogging(serviceProvider, config, maskProperties, logger);
             context.ConfigureSeqLogging(config, logger);
         };
     }
@@ -184,16 +184,35 @@ public static class SerilogHelpers
         config.WriteTo.Seq(serverUrl: seqServerUrl);
     }
 
-    private static EcsTextFormatter ConfigureLoggingWithEcsTextFormatter(this LoggerConfiguration config, IServiceProvider serviceProvider)
+    private static EcsTextFormatter<EcsDocument> ConfigureLoggingWithEcsTextFormatter(this LoggerConfiguration config, IServiceProvider serviceProvider)
     {
         var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
         config.Enrich.WithEcsHttpContext(httpContextAccessor);
 
-        EcsTextFormatterConfiguration ecsTextFormatterConfig = new()
+        EcsTextFormatterConfiguration<EcsDocument> ecsTextFormatterConfig = new ()
         {
             MapCustom = (ecs, logEvent) =>
             {
                 httpContextAccessor?.HttpContext?.MapHttpContextItemToEcsHttpProperty(MapToEcsKeys.EcsRequestContentType, ecs);
+
+                return ecs;
+            }
+        };
+
+        return new EcsTextFormatter<EcsDocument>(ecsTextFormatterConfig);
+    }
+
+    private static EcsTextFormatter<EcsDocument> ConfigureSecuredLoggingWithEcsTextFormatter(this LoggerConfiguration config, IServiceProvider serviceProvider)
+    {
+        var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+        config.Enrich.WithEcsHttpContext(httpContextAccessor);
+
+        EcsTextFormatterConfiguration<EcsDocument> ecsTextFormatterConfig = new()
+        {
+            MapCustom = (ecs, logEvent) =>
+            {
+                httpContextAccessor?.HttpContext?.MapHttpContextItemToEcsHttpProperty(MapToEcsKeys.EcsRequestContentType, ecs);
+                // Secured logging -> log request en response body tbv naspelen
                 httpContextAccessor?.HttpContext?.MapHttpContextItemToEcsHttpProperty(MapToEcsKeys.EcsRequestBody, ecs);
                 httpContextAccessor?.HttpContext?.MapHttpContextItemToEcsHttpProperty(MapToEcsKeys.EcsResponseBody, ecs);
 
@@ -201,10 +220,10 @@ public static class SerilogHelpers
             }
         };
 
-        return new EcsTextFormatter(ecsTextFormatterConfig);
+        return new EcsTextFormatter<EcsDocument>(ecsTextFormatterConfig);
     }
 
-    private static void MapHttpContextItemToEcsHttpProperty(this HttpContext httpContext, string key, Elastic.CommonSchema.EcsDocument ecs)
+    private static void MapHttpContextItemToEcsHttpProperty(this HttpContext httpContext, string key, EcsDocument ecs)
     {
         if (httpContext.Items[key] is not string val)
         {
@@ -225,14 +244,61 @@ public static class SerilogHelpers
                 break;
             default:
                 break;
+
         }
     }
 
-    private static void ConfigureElasticLogging(this HostBuilderContext context, IServiceProvider serviceProvider, LoggerConfiguration config, Serilog.ILogger logger)
+    private static void MapToDiagnosticContext(this HttpContext httpContext, IDiagnosticContext diagnosticContext)
+    {
+        foreach (var item in httpContext.Items)
+        {
+            var key = item.Key.ToString();
+            switch (key)
+            {
+                case LogConstants.Autorisatie:
+                case LogConstants.RequestHeaders:
+                case LogConstants.ResponseHeaders:
+                    try
+                    {
+                        diagnosticContext.Set(key, JObject.Parse(item.Value!.ToJsonCompact()), true);
+                    }
+                    catch
+                    {
+                        diagnosticContext.Set("error", $"destructuring voorbereiding gefaald voor '{key}'");
+                    }
+                    break;
+                case MapToEcsKeys.EcsRequestBody:
+                case MapToEcsKeys.EcsResponseBody:
+                    var val = item.Value as string;
+                    if (!string.IsNullOrWhiteSpace(val))
+                    {
+                        try
+                        {
+                            // remove 'ecs.' from property name
+                            diagnosticContext.Set(key[4..], JObject.Parse(val!), true);
+                        }
+                        catch
+                        {
+                            diagnosticContext.Set("error", $"destructuring voorbereiding gefaald voor {key[4..]}");
+                        }
+                    }
+                    break;
+                case LogConstants.Protocollering:
+                    diagnosticContext.Set(key, item.Value, true);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private static void ConfigureElasticLogging(this HostBuilderContext context, IServiceProvider serviceProvider, LoggerConfiguration config, IEnumerable<string> maskProperties, Serilog.ILogger logger)
     {
         var ecsPath = context.Configuration["Ecs:Path"];
-        if (string.IsNullOrWhiteSpace(ecsPath))
+        var ecsSecuredPath = context.Configuration["Ecs:SecuredPath"];
+        if (string.IsNullOrWhiteSpace(ecsPath) && string.IsNullOrWhiteSpace(ecsSecuredPath))
         {
+            logger.Information("No Path & SecuredPath setting provided. No file logging");
             return;
         }
         if(!long.TryParse(context.Configuration["Ecs:FileSizeLimitBytes"], out long fileSizeLimitBytes))
@@ -246,15 +312,44 @@ public static class SerilogHelpers
             retainedFileCountLimit = 10;
         }
 
-        logger.Information("Enable file logging using Elasticsearch Common Schema format. Path: {Path}, size limit: {FileSizeLimitBytes}, retained file count limit: {RetainedFileCountLimit}", ecsPath, fileSizeLimitBytes, retainedFileCountLimit);
+        if (!string.IsNullOrWhiteSpace(ecsPath))
+        {
+            logger.Information("Enable file logging using Elasticsearch Common Schema format. Path: {Path}, size limit: {FileSizeLimitBytes}, retained file count limit: {RetainedFileCountLimit}", ecsPath, fileSizeLimitBytes, retainedFileCountLimit);
 
-        config.WriteTo.PersistentFile(
-            formatter: config.ConfigureLoggingWithEcsTextFormatter(serviceProvider),
-            path: ecsPath,
-            fileSizeLimitBytes: fileSizeLimitBytes,
-            rollOnFileSizeLimit: true,
-            retainedFileCountLimit: retainedFileCountLimit,
-            preserveLogFilename: true,
-            shared: true);
+            config
+                .WriteTo.Logger(lc => lc
+                    .Enrich.WithSensitiveDataMasking(options =>
+                    {
+                        options.MaskingOperators.Clear();
+                        options.MaskProperties.AddRange(maskProperties);
+                    })
+                    .WriteTo.PersistentFile(
+                        formatter: config.ConfigureLoggingWithEcsTextFormatter(serviceProvider),
+                        path: ecsPath,
+                        fileSizeLimitBytes: fileSizeLimitBytes,
+                        rollOnFileSizeLimit: true,
+                        retainedFileCountLimit: retainedFileCountLimit,
+                        preserveLogFilename: true,
+                        shared: true
+                    )
+                );
+        }
+        if (!string.IsNullOrWhiteSpace(ecsSecuredPath))
+        {
+            logger.Information("Enable secured file logging using Elasticsearch Common Schema format. Path: {Path}, size limit: {FileSizeLimitBytes}, retained file count limit: {RetainedFileCountLimit}", ecsSecuredPath, fileSizeLimitBytes, retainedFileCountLimit);
+
+            config
+                .WriteTo.Logger(lc => lc
+                    .WriteTo.PersistentFile(
+                        formatter: config.ConfigureSecuredLoggingWithEcsTextFormatter(serviceProvider),
+                        path: ecsSecuredPath,
+                        fileSizeLimitBytes: fileSizeLimitBytes,
+                        rollOnFileSizeLimit: true,
+                        retainedFileCountLimit: retainedFileCountLimit,
+                        preserveLogFilename: true,
+                        shared: true
+                    )
+                );
+        }
     }
 }

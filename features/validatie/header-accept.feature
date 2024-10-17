@@ -39,7 +39,6 @@ Functionaliteit: Accept header waarde bij BRP API bevragingen
       | application/json; charset=cp1252 | verblijfplaatshistorie | RaadpleegMetPeildatum           | burgerservicenummer | 000000012       | peildatum     | 2020-04-01      |               |                 | /brphistorie/verblijfplaatshistorie |
       | image/gif                        | verblijfplaatshistorie | RaadpleegMetPeriode             | burgerservicenummer | 000000012       | datumVan      | 2020-04-01      | datumTot      | 2021-05-01      | /brphistorie/verblijfplaatshistorie |
 
-    @geen-protocollering
     Abstract Scenario: '<media type>' is opgegeven als Accept waarde
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam            | waarde                   |
@@ -65,7 +64,6 @@ Functionaliteit: Accept header waarde bij BRP API bevragingen
 
   Regel: De default Accept waarde en charset zijn respectievelijk application/json en utf-8
 
-    @geen-protocollering
     Abstract Scenario: Er is geen Accept header met waarde opgegeven
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam            | waarde                   |
@@ -82,7 +80,6 @@ Functionaliteit: Accept header waarde bij BRP API bevragingen
       | verblijfplaatshistorie | RaadpleegMetPeildatum           | burgerservicenummer | 000000012       | peildatum     | 2020-04-01      |               |                 | verblijfplaatsen |
       | verblijfplaatshistorie | RaadpleegMetPeriode             | burgerservicenummer | 000000012       | datumVan      | 2020-04-01      | datumTot      | 2021-05-01      | verblijfplaatsen |
 
-    @geen-protocollering
     Abstract Scenario: Er is een lege waarde opgegeven voor de Accept header
       Als <zoek/raadpleeg type> wordt gezocht met de volgende parameters
       | naam            | waarde                   |
