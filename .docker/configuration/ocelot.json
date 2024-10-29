@@ -32,6 +32,17 @@
           "Port": "5010"
         }
       ]
+    },
+    {
+      "UpstreamPathTemplate": "/haalcentraal/api/bewoning/bewoningen",
+      "DownstreamPathTemplate": "/haalcentraal/api/bewoning/bewoningen",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "referentie-api",
+          "Port": "5010"
+        }
+      ]
     }
   ]
 }

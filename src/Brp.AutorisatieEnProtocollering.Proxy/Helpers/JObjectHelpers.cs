@@ -22,4 +22,6 @@ public static class JObjectHelpers
     }
 
     public static string? WaardeTypeParameter(this JObject input) => input.Value<string>("type");
+
+    public static string? WaardeAdresseerbaarObjectIdentificatieParameter(this JObject input) => input.Value<string>("adresseerbaarObjectIdentificatie");
 }
