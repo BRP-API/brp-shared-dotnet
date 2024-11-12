@@ -94,13 +94,13 @@ Functionaliteit: autorisatie nationaliteitgegevens Persoon
       | burgerservicenummer | 000000024                                |
       | fields              | burgerservicenummer,nationaliteiten.type |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                        |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                   |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                       |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: nationaliteit.type |
-      | status   | 403                                                                                           |
-      | code     | unauthorizedField                                                                             |
-      | instance | /haalcentraal/api/brp/personen                                                                |
+      | naam     | waarde                                                                                          |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                     |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                         |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: nationaliteiten.type |
+      | status   | 403                                                                                             |
+      | code     | unauthorizedField                                                                               |
+      | instance | /haalcentraal/api/brp/personen                                                                  |
 
     Scenario: Afnemer vraagt type, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens

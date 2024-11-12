@@ -155,7 +155,7 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | naam     | waarde                                                                                                    |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                               |
       | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                   |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: geboorte.plaats, geboorte.land |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: geboorte.land, geboorte.plaats |
       | status   | 403                                                                                                       |
       | code     | unauthorizedField                                                                                         |
       | instance | /haalcentraal/api/brp/personen                                                                            |

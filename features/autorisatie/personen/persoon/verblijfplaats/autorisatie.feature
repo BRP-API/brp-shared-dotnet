@@ -346,13 +346,13 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
       | burgerservicenummer | 000000024                                                    |
       | fields              | burgerservicenummer,verblijfplaatsBinnenland.<gevraagd veld> |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                                             |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                                        |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                            |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaatsBinnenland<gevraagd veld> |
-      | status   | 403                                                                                                                |
-      | code     | unauthorizedField                                                                                                  |
-      | instance | /haalcentraal/api/brp/personen                                                                                     |
+      | naam     | waarde                                                                                                              |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                                         |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                             |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaatsBinnenland.<gevraagd veld> |
+      | status   | 403                                                                                                                 |
+      | code     | unauthorizedField                                                                                                   |
+      | instance | /haalcentraal/api/brp/personen                                                                                      |
 
       Voorbeelden:
       | gevraagd veld                                      | ad hoc rubrieken                                                                                 | missende autorisatie |
