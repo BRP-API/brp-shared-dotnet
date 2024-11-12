@@ -130,12 +130,13 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                                                         |
       | fields              | burgerservicenummer,geboorte.datum,geboorte.plaats,naam.voornamen |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                                     |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                    |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: geboorte.plaats |
+      | status   | 403                                                                                        |
+      | code     | unauthorizedField                                                                          |
+      | instance | /haalcentraal/api/brp/personen                                                             |
 
     @fout-case
     Scenario: Afnemer vraagt om meerdere velden (geboorteplaatsen geboorteland) waarvoor deze niet geautoriseerd is
@@ -151,12 +152,13 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                                    |
       | fields              | geboorte.datum,geboorte.plaats,geboorte.land |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                                                    |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                               |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                   |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: geboorte.plaats, geboorte.land |
+      | status   | 403                                                                                                       |
+      | code     | unauthorizedField                                                                                         |
+      | instance | /haalcentraal/api/brp/personen                                                                            |
 
     @fout-case
     Abstract Scenario: Afnemer vraagt om gegevensgroep <fields> en is niet geautoriseerd voor <missende autorisatie>
@@ -172,12 +174,13 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                       |
       | fields              | <fields>                        |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                              |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
+      | status   | 403                                                                                 |
+      | code     | unauthorizedField                                                                   |
+      | instance | /haalcentraal/api/brp/personen                                                      |
 
       Voorbeelden:
       | fields          | ad hoc rubrieken              | missende autorisatie                         |
@@ -376,12 +379,13 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                       |
       | fields              | verblijfplaats.functieAdres     |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                                                 |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                            |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.functieAdres |
+      | status   | 403                                                                                                    |
+      | code     | unauthorizedField                                                                                      |
+      | instance | /haalcentraal/api/brp/personen                                                                         |
 
     Scenario: Autorisatie voor gevraagd veld is toegevoegd
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
@@ -469,12 +473,13 @@ Functionaliteit: autorisatie voor het gebruik van de API
       | burgerservicenummer | 000000024                              |
       | fields              | burgerservicenummer,naam.geslachtsnaam |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                                        |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                   |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                       |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: naam.geslachtsnaam |
+      | status   | 403                                                                                           |
+      | code     | unauthorizedField                                                                             |
+      | instance | /haalcentraal/api/brp/personen                                                                |
 
     Scenario: Autorisatie voor gevraagd gegeven wordt vanaf morgen ingetrokken
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens

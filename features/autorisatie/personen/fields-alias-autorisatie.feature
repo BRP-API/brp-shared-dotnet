@@ -19,12 +19,13 @@ Regel: de 'adresseringBinnenland' field alias moet worden gebruikt door een cons
     | burgerservicenummer | 000000097                       |
     | fields              | <field>                         |
     Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                                  |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-    | status   | 403                                                                     |
-    | code     | unauthorizedField                                                       |
-    | instance | /haalcentraal/api/brp/personen                                          |
+    | naam     | waarde                                                                             |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                        |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.            |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <field> |
+    | status   | 403                                                                                |
+    | code     | unauthorizedField                                                                  |
+    | instance | /haalcentraal/api/brp/personen                                                     |
 
     Voorbeelden:
     | field                   |
@@ -41,12 +42,13 @@ Regel: de 'adresseringBinnenland' field alias moet worden gebruikt door een cons
     | adresseerbaarObjectIdentificatie | 0599010051001502                        |
     | fields                           | <field>                                 |
     Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                                  |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-    | status   | 403                                                                     |
-    | code     | unauthorizedField                                                       |
-    | instance | /haalcentraal/api/brp/personen                                          |
+    | naam     | waarde                                                                             |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                        |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.            |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <field> |
+    | status   | 403                                                                                |
+    | code     | unauthorizedField                                                                  |
+    | instance | /haalcentraal/api/brp/personen                                                     |
 
     Voorbeelden:
     | field                   |
@@ -63,12 +65,13 @@ Regel: de 'adresseringBinnenland' field alias moet worden gebruikt door een cons
     | nummeraanduidingIdentificatie | 0599010051001501                     |
     | fields                        | <field>                              |
     Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                                  |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-    | status   | 403                                                                     |
-    | code     | unauthorizedField                                                       |
-    | instance | /haalcentraal/api/brp/personen                                          |
+    | naam     | waarde                                                                             |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                        |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.            |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <field> |
+    | status   | 403                                                                                |
+    | code     | unauthorizedField                                                                  |
+    | instance | /haalcentraal/api/brp/personen                                                     |
 
     Voorbeelden:
     | field                   |
@@ -87,12 +90,13 @@ Regel: de 'verblijfplaatsBinnenland' field alias moet worden gebruikt door een c
     | burgerservicenummer | 000000097                       |
     | fields              | <field>                         |
     Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                                  |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-    | status   | 403                                                                     |
-    | code     | unauthorizedField                                                       |
-    | instance | /haalcentraal/api/brp/personen                                          |
+    | naam     | waarde                                                                             |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                        |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.            |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <field> |
+    | status   | 403                                                                                |
+    | code     | unauthorizedField                                                                  |
+    | instance | /haalcentraal/api/brp/personen                                                     |
 
     Voorbeelden:
     | field                               |
