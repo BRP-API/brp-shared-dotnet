@@ -44,12 +44,13 @@ Regel: Vragen met fields om een adres in adressering wanneer de gebruiker niet g
     | adresseerbaarObjectIdentificatie | 0599010051001502                        |
     | fields                           | <fields>                                |
     Dan heeft de response de volgende gegevens
-    | naam     | waarde                                                                  |
-    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-    | status   | 403                                                                     |
-    | code     | unauthorizedField                                                       |
-    | instance | /haalcentraal/api/brp/personen                                          |
+    | naam     | waarde                                                                              |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
+    | status   | 403                                                                                 |
+    | code     | unauthorizedField                                                                   |
+    | instance | /haalcentraal/api/brp/personen                                                      |
 
     Voorbeelden:
     | fields                            | ad hoc rubrieken                                                                                                          | missende autorisatie |
