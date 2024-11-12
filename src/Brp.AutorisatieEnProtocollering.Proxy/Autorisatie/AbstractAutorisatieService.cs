@@ -113,6 +113,7 @@ public abstract class AbstractAutorisatieService : IAuthorisation
 
     protected static AuthorisationResult NietGeautoriseerdVoorFields(IEnumerable<string> nietGeautoriseerdFieldNames, int afnemerCode) =>
         NotAuthorized(title: "U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.",
+                      detail: $"U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: {string.Join(", ", nietGeautoriseerdFieldNames.OrderBy(x => x))}",
                       code: "unauthorizedField",
                       reason: $"afnemer '{afnemerCode}' is niet geautoriseerd voor fields {string.Join(", ", nietGeautoriseerdFieldNames.OrderBy(x => x))}");
 
