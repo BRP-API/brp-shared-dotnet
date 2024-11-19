@@ -18,7 +18,6 @@ components:
             soort:
               $ref: '#/components/schemas/AdellijkeTitelPredicaatSoort'
           example:
-            value:
-              code: JV
-              omschrijving: jonkvrouw
-              soort: predicaat
+            code: JV
+            omschrijving: jonkvrouw
+            soort: predicaat
