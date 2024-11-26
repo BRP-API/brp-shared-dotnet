@@ -26,8 +26,11 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met peilda
   Regel: Alleen gemeenten zijn geautoriseerd voor het raadplegen van de bewoning van adresseerbare objecten
 
     @fout-case
-    Scenario: De afnemer is geen gemeente
-      Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+    Scenario: De niet-gemeentelijke afnemer heeft geen autorisatie rubrieknummer AX.BW.01
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      |                                 | N                        | 20201128                |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
       | afnemerID |
       | 000008    |
       Als bewoningen wordt gezocht met de volgende parameters
@@ -43,6 +46,20 @@ Functionaliteit: autorisatie voor het gebruik van de BRP API Bewoning met peilda
       | detail   | Alleen gemeenten mogen bewoningen raadplegen.               |
       | code     | unauthorized                                                |
       | instance | /haalcentraal/api/bewoning/bewoningen                       |
+
+    Scenario: De niet-gemeentelijke afnemer heeft wel autorisatie rubrieknummer AX.BW.01
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      | AXBW01                          | N                        | 20201128                |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | afnemerID |
+      | 000008    |
+      Als bewoningen wordt gezocht met de volgende parameters
+      | naam                             | waarde               |
+      | type                             | BewoningMetPeildatum |
+      | peildatum                        | 2022-01-01           |
+      | adresseerbaarObjectIdentificatie | 0518010000000002     |
+      Dan heeft de response 0 bewoningen
 
   Regel: Een gemeente als afnemer is geautoriseerd voor het vragen van de bewoning van een adresseerbaar object als het adresseerbaar object ooit in de gemeente van de afnemer heeft gelegen
 
