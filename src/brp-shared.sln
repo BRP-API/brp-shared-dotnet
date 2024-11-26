@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Sinks.PersistentFil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brp.Shared.DtoMappers", "Brp.Shared.DtoMappers\Brp.Shared.DtoMappers.csproj", "{2464F3AF-1A3A-434B-AFE4-12D370889855}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brp.Shared.DtoMappers.Tests", "Brp.Shared.DtoMappers.Tests\Brp.Shared.DtoMappers.Tests.csproj", "{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{2464F3AF-1A3A-434B-AFE4-12D370889855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2464F3AF-1A3A-434B-AFE4-12D370889855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2464F3AF-1A3A-434B-AFE4-12D370889855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{BE1FD3CC-063C-438F-8622-605C58F75EA9} = {61531A29-A03B-46F6-97BD-F5357290157F}
 		{FEE3D660-6DAD-4CA9-9920-B5D34CD15AA1} = {61531A29-A03B-46F6-97BD-F5357290157F}
 		{2464F3AF-1A3A-434B-AFE4-12D370889855} = {61531A29-A03B-46F6-97BD-F5357290157F}
+		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A} = {61531A29-A03B-46F6-97BD-F5357290157F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8E938E-00E6-4134-AEEA-28DF2EB5F12A}
