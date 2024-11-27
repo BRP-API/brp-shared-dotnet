@@ -10,8 +10,8 @@ Functionaliteit: autorisatie partners
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -53,8 +53,8 @@ Functionaliteit: autorisatie partners
       | Rubrieknummer ad hoc (35.95.60)                                                                  | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | 10120 50120 50210 50220 50230 50240 50310 50320 50330 50410 50610 50620 50630 50710 51510 PAHP01 | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
@@ -68,20 +68,21 @@ Functionaliteit: autorisatie partners
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | <ad hoc rubrieken>              | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | partners                        |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                              |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: partners |
+      | status   | 403                                                                                 |
+      | code     | unauthorizedField                                                                   |
+      | instance | /haalcentraal/api/brp/personen                                                      |
 
       Voorbeelden:
       | ad hoc rubrieken                                                                           | missende autorisatie |
@@ -107,20 +108,21 @@ Functionaliteit: autorisatie partners
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | <ad hoc rubrieken>              | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
       | burgerservicenummer | 000000024                       |
       | fields              | partners.<fields>               |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden. |
-      | status   | 403                                                                     |
-      | code     | unauthorizedField                                                       |
-      | instance | /haalcentraal/api/brp/personen                                          |
+      | naam     | waarde                                                                                       |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                  |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                      |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: partners.<fields> |
+      | status   | 403                                                                                          |
+      | code     | unauthorizedField                                                                            |
+      | instance | /haalcentraal/api/brp/personen                                                               |
 
       Voorbeelden:
       | fields                               | ad hoc rubrieken                                                                           | missende autorisatie |
@@ -170,8 +172,8 @@ Functionaliteit: autorisatie partners
       | Rubrieknummer ad hoc (35.95.60)            | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
       | 10120 50120 50210 50220 50230 50240 PAHP01 | N                        | 20201128                |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
+      | naam      | waarde |
+      | afnemerID | 000008 |
       En de persoon met burgerservicenummer '000000061' heeft een 'partner' met de volgende gegevens
       | naam                                                               | waarde          |
       | voornamen (02.10)                                                  | Daan            |
