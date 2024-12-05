@@ -66,3 +66,55 @@ Regel: Vragen met fields om een adres in adressering wanneer de gebruiker niet g
     | adressering                       | 81110 81120 81130 81140 81150 81160 81170 81210 81330 81340 81350 PANM03 PANM04 PANM05 PANM06 PAVP01 PAVP02 PAVP03 PAVP04 | land (81310)         |
     | adresseringBinnenland             | 81110 81120 81130 81140 81150 81160 81170 81210 PANM03 PANM04 PANM05 PANM06 PAVP01 PAVP02 PAVP04                          | adresregel1 (PAVP03) |
     | adresseringBinnenland             | 81110 81120 81130 81140 81150 81160 81170 81210 PANM03 PANM04 PANM05 PANM06 PAVP01 PAVP02 PAVP03                          | adresregel2 (PAVP04) |
+
+Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'adressering' (AD.01) en virtuele rubriek 'elektronische adressering' (AD.02) mag alle adres velden van adressering opvragen
+
+  Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'adressering'
+    Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+    | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+    | 81180 AD01                      | N                        | 20201128                |
+    En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+    | naam      | waarde |
+    | afnemerID | 000008 |
+    Als personen wordt gezocht met de volgende parameters
+    | naam                             | waarde                                  |
+    | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
+    | adresseerbaarObjectIdentificatie | 0599010051001502                        |
+    | fields                           | <fields>                                |
+    Dan heeft de response 0 personen
+
+    Voorbeelden:
+    | fields                            |
+    | adressering                       |
+    | adressering.adresregel1           |
+    | adressering.adresregel2           |
+    | adressering.adresregel3           |
+    | adressering.land                  |
+    | adresseringBinnenland             |
+    | adresseringBinnenland.adresregel1 |
+    | adresseringBinnenland.adresregel2 |
+
+  Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'elektronische adressering'
+    Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+    | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+    | 81180 AD02                      | N                        | 20201128                |
+    En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+    | naam      | waarde |
+    | afnemerID | 000008 |
+    Als personen wordt gezocht met de volgende parameters
+    | naam                             | waarde                                  |
+    | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
+    | adresseerbaarObjectIdentificatie | 0599010051001502                        |
+    | fields                           | <fields>                                |
+    Dan heeft de response 0 personen
+
+    Voorbeelden:
+    | fields                            |
+    | adressering                       |
+    | adressering.adresregel1           |
+    | adressering.adresregel2           |
+    | adressering.adresregel3           |
+    | adressering.land                  |
+    | adresseringBinnenland             |
+    | adresseringBinnenland.adresregel1 |
+    | adresseringBinnenland.adresregel2 |
