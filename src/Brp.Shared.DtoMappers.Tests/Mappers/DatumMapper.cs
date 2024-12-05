@@ -46,11 +46,12 @@ public class DatumMapper
         input.Map().Should().BeEquivalentTo(expected);
     }
 
-    [Fact]
-    public void ShouldMapToDatumOnbekend()
+    [InlineData("00000000")]
+    [InlineData("onbekend")]
+    [Theory]
+    public void ShouldMapToDatumOnbekend(string input)
     {
-        var input = "onbekend";
-        var expected = new DatumOnbekend() { LangFormaat = "onbekend" };
+        var expected = new DatumOnbekend() { LangFormaat = "onbekend", Onbekend = true };
 
         input.Map().Should().BeEquivalentTo(expected);
     }
