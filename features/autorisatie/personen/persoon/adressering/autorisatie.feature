@@ -73,11 +73,10 @@ Functionaliteit: autorisatie adressering Persoon
       | naam      | waarde |
       | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam          | waarde                              |
-      | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
-      | geslachtsnaam | Maassen                             |
-      | geboortedatum | 1983-05-26                          |
-      | fields        | <fields>                            |
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | <fields>                        |
       Dan heeft de response 0 personen
 
       Voorbeelden:
@@ -97,7 +96,7 @@ Functionaliteit: autorisatie adressering Persoon
       | adresseringBinnenland.adresregel1           |
       | adresseringBinnenland.adresregel2           |
 
-  Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (AD.02) mag alle adres velden van adressering opvragen
+    Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (AD.02) mag alle naamgebruik velden van adressering opvragen
 
     Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'elektronische adressering'
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
@@ -107,11 +106,10 @@ Functionaliteit: autorisatie adressering Persoon
       | naam      | waarde |
       | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam          | waarde                              |
-      | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
-      | geslachtsnaam | Maassen                             |
-      | geboortedatum | 1983-05-26                          |
-      | fields        | <fields>                            |
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | <fields>                        |
       Dan heeft de response 0 personen
 
       Voorbeelden:
@@ -131,11 +129,10 @@ Functionaliteit: autorisatie adressering Persoon
       | naam      | waarde |
       | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam          | waarde                              |
-      | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
-      | geslachtsnaam | Maassen                             |
-      | geboortedatum | 1983-05-26                          |
-      | fields        | <fields>                            |
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | <fields>                        |
       Dan heeft de response de volgende gegevens
       | naam     | waarde                                                                              |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
