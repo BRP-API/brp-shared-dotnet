@@ -22,12 +22,12 @@ Functionaliteit: adresregels vragen met fields bij zoeken op adresseerbaar objec
     | adressering.land.omschrijving |
 
   @fout-case
-  Scenario: De fields parameter bevat een niet-bestaand gezag veld
+  Abstract Scenario: De fields parameter bevat een niet-bestaand adressering veld
     Als personen wordt gezocht met de volgende parameters
     | naam                             | waarde                                  |
     | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
     | adresseerbaarObjectIdentificatie | 0599010051001502                        |
-    | fields                           | adressering.bestaatNiet                 |
+    | fields                           | <fields>                                |
     Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
@@ -39,3 +39,9 @@ Functionaliteit: adresregels vragen met fields bij zoeken op adresseerbaar objec
     En heeft de response invalidParams met de volgende gegevens
     | code   | name      | reason                                       |
     | fields | fields[0] | Parameter bevat een niet bestaande veldnaam. |
+
+    Voorbeelden:
+    | fields                            |
+    | adressering.aanhef                |
+    | adressering.aanschrijfwijze       |
+    | adressering.gebruikInLopendeTekst |

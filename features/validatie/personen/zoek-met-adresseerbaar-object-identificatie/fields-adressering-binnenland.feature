@@ -18,7 +18,7 @@ Functionaliteit: adresregels vragen met adresseringBinnenland fields alias bij z
     | adresseringBinnenland.adresregel2 |
 
   @fout-case
-  Abstract Scenario: De fields parameter bevat een niet-bestaand gezag veld
+  Abstract Scenario: De fields parameter bevat een niet-bestaand adressering veld
     Als personen wordt gezocht met de volgende parameters
     | naam                             | waarde                                  |
     | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
@@ -37,8 +37,11 @@ Functionaliteit: adresregels vragen met adresseringBinnenland fields alias bij z
     | fields | fields[0] | Parameter bevat een niet bestaande veldnaam. |
 
     Voorbeelden:
-    | fields                                  |
-    | adresseringBinnenland.adresregel3       |
-    | adresseringBinnenland.land              |
-    | adresseringBinnenland.land.code         |
-    | adresseringBinnenland.land.omschrijving |
+    | fields                                      |
+    | adresseringBinnenland.aanhef                |
+    | adresseringBinnenland.aanschrijfwijze       |
+    | adresseringBinnenland.gebruikInLopendeTekst |
+    | adresseringBinnenland.adresregel3           |
+    | adresseringBinnenland.land                  |
+    | adresseringBinnenland.land.code             |
+    | adresseringBinnenland.land.omschrijving     |
