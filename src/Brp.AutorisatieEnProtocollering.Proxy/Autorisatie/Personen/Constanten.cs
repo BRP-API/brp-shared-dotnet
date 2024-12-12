@@ -11,8 +11,8 @@ public static class Constanten
 
     public static ReadOnlyDictionary<string, string> FieldElementNrDictionary { get; }
 
-    private const string ElementNrAdressering = "PAAD01";
-    private const string ElementNrElektronischeAdressering = "PAAD02";
+    public const string ElementNrAdressering = "PAAD01";
+    public const string ElementNrElektronischeAdressering = "PAAD02";
     private const string ElementNrAanhef = "PANM03";
     private const string ElementNrAanspreekvorm = "PANM04";
     private const string ElementNrAanschrijfwijzeNaam = "PANM05";
@@ -24,8 +24,6 @@ public static class Constanten
 
     private const string ElementNrDatumEersteInschrijvingGba = "076810";
     private const string ElementNrGeslacht = "010410";
-    private const string ElementNrLand = "081310 PAAD01";
-    private const string ElementNrLandProtocollering = "081310";
     private const string ElementNrGeboortedatum = "010310";
     private const string ElementNrAanduidingEuropeesKiesrecht = "133110";
     private const string ElementNrEinddatumUitsluitingEuropeesKiesrecht = "133130";
@@ -98,12 +96,12 @@ public static class Constanten
         { "adressering.adresregel2-protocollering", ElementNrAdresregel2 },
         { "adressering.adresregel3", $"{ElementNrVerblijfplaatsRegel3} {ElementNrAdressering}" },
         { "adressering.adresregel3-protocollering", ElementNrVerblijfplaatsRegel3 },
-        { "adressering.land", ElementNrLand },
-        { "adressering.land-protocollering", ElementNrLandProtocollering },
-        { "adressering.land.code", ElementNrLand },
-        { "adressering.land.code-protocollering", ElementNrLandProtocollering },
-        { "adressering.land.omschrijving", ElementNrLand },
-        { "adressering.land.omschrijving-protocollering", ElementNrLandProtocollering },
+        { "adressering.land", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land-protocollering", ElementNrVerblijfplaatsLand },
+        { "adressering.land.code", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land.code-protocollering", ElementNrVerblijfplaatsLand },
+        { "adressering.land.omschrijving", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land.omschrijving-protocollering", ElementNrVerblijfplaatsLand },
 
         { "adresseringBinnenland", $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2} {ElementNrAdressering}" },
         { "adresseringBinnenland-protocollering", $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2}" },
