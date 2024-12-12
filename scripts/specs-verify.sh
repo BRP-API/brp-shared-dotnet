@@ -17,6 +17,8 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
 
 # personen endpoint
 
+echo "Valideer personen endpoint"
+
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/input-validatie/test-result.json \
                 -f summary:./test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt \
                 -f summary \
@@ -36,6 +38,8 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-
                 --world-parameters "$PARAMS"
 
 # reisdocumenten endpoint
+
+echo "Valideer reisdocumenten endpoint"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result.json \
                 -f summary:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt \
@@ -57,6 +61,8 @@ npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/protocollering
 
 # verblijfplaatshistorie endpoint
 
+echo "Valideer verblijfplaatshistorie endpoint"
+
 npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result.json \
                 -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result-summary.txt \
                 -f summary \
@@ -73,4 +79,26 @@ npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/protoc
                 -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result-summary.txt \
                 -f summary \
                 features/protocollering/verblijfplaatshistorie \
+                --world-parameters "$PARAMS"
+
+# bewoningen endpoint
+
+echo "Valideer bewoningen endpoint"
+
+npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/input-validatie/test-result.json \
+                -f summary:./test-reports/cucumber-js/bewoningen/input-validatie/test-result-summary.txt \
+                -f summary \
+                features/validatie/bewoningen \
+                --world-parameters "$PARAMS"
+
+npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/autorisatie/test-result.json \
+                -f summary:./test-reports/cucumber-js/bewoningen/autorisatie/test-result-summary.txt \
+                -f summary \
+                features/autorisatie/bewoning \
+                --world-parameters "$PARAMS"
+
+npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/protocollering/test-result.json \
+                -f summary:./test-reports/cucumber-js/bewoningen/protocollering/test-result-summary.txt \
+                -f summary \
+                features/protocollering/bewoning \
                 --world-parameters "$PARAMS"
