@@ -13,9 +13,9 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering.Personen
 
         private static string BepaalKeyVoor(string gevraagdField, string zoekType)
         {
-            return zoekType != "RaadpleegMetBurgerservicenummer"
-                    ? $"{gevraagdField}-beperkt"
-                    : $"{gevraagdField}-protocollering";
+            return zoekType == "RaadpleegMetBurgerservicenummer" || gevraagdField.Contains('.')
+                    ? $"{gevraagdField}-protocollering"
+                    : $"{gevraagdField}-beperkt-protocollering";
         }
 
         protected override IEnumerable<(string Name, string[] Value)> BepaalElementNrVanFieldsVoorProtocollering(JObject input)

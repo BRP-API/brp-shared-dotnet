@@ -54,12 +54,21 @@ public abstract class AbstractAutorisatieService : IAuthorisation
             {
                 retval.Add(Name);
             }
-         
-            foreach (var gevraagdElementNr in Value)
+            else if (Name.StartsWith("adressering"))
             {
-                if (!geautoriseerdeElementen.Any(x => gevraagdElementNr == x.PrefixWithZero()))
+                if (!IsGeautoriseerdVoorAdresseringAanvraag(geautoriseerdeElementen, Value))
                 {
                     retval.Add(Name);
+                }
+            }
+            else
+            {
+                foreach (var gevraagdElementNr in Value)
+                {
+                    if (!geautoriseerdeElementen.Any(x => gevraagdElementNr == x.PrefixWithZero()))
+                    {
+                        retval.Add(Name);
+                    }
                 }
             }
         }
@@ -67,10 +76,49 @@ public abstract class AbstractAutorisatieService : IAuthorisation
         return retval.Distinct();
     }
 
+    private static bool IsGeautoriseerdVoorAdresseringAanvraag(IEnumerable<string> geautoriseerdeElementen, IEnumerable<string> gevraagdeElementen)
+    {
+        if(geautoriseerdeElementen.Contains("PAAD01") || geautoriseerdeElementen.Contains("PAAD02"))
+        {
+            var values = gevraagdeElementen.Where(x => x == "PAAD01" || x == "PAAD02").ToArray();
+            if(values.Length == 0)
+            {
+                return false;
+            }
+            foreach (var gevraagdElementNr in values)
+            {
+                if(gevraagdElementNr == "PAAD02" && !geautoriseerdeElementen.Any(x => x == "PAAD02" || x == "PAAD01"))
+                {
+                    return false;
+                }
+                else if (gevraagdElementNr == "PAAD01" && !geautoriseerdeElementen.Any(x => x == "PAAD01"))
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            var values = gevraagdeElementen.Where(x => x != "PAAD01" && x != "PAAD02").ToArray();
+            if (values.Length == 0)
+            {
+                return false;
+            }
+            foreach (var gevraagdElementNr in values)
+            {
+                if (!geautoriseerdeElementen.Any(x => gevraagdElementNr == x.PrefixWithZero()))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private static bool IsGeautoriseerdVoorOuderAanduidingVraag(IEnumerable<string> geautoriseerdeElementen)
     {
-        var ouder1Regex = new Regex(@"^(02(01|02|03|04|62)\d{2}|PAOU01)$");
-        var ouder2Regex = new Regex(@"^(03(01|02|03|04|62)\d{2}|PAOU01)$");
+        var ouder1Regex = new Regex(@"^(02(01|02|03|04|62)\d{2}|PAOU01)$", RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        var ouder2Regex = new Regex(@"^(03(01|02|03|04|62)\d{2}|PAOU01)$", RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
         var isGeautoriseerdVoorOuder1 = false;
         var isGeautoriseerdVoorOuder2 = false;
