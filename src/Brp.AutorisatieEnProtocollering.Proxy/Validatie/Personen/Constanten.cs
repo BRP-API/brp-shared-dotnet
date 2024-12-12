@@ -224,6 +224,7 @@ internal static class Constanten
         "gezag.ouder.burgerservicenummer",
         "gezag.derde.burgerservicenummer",
         "gezag.derden.burgerservicenummer",
+        "gezag.toelichting"
     };
 
     internal static readonly string[] FieldsBeperktIdentiteit = new[]
