@@ -27,6 +27,7 @@ Functionaliteit: gezagsrelaties vragen met fields bij zoeken op adresseerbaar ob
     | gezag.derden.burgerservicenummer           |
     | gezag.ouders,gezag.ouder                   |
     | gezag.type,gezag.minderjarige,gezag.ouders |
+    | gezag.toelichting                          |
 
   @fout-case
   Scenario: De fields parameter bevat een niet-bestaand gezag veld
