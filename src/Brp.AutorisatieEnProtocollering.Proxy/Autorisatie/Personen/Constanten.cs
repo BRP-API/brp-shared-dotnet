@@ -72,54 +72,68 @@ public static class Constanten
     private const string ElementNrDatumEindeVerblijfstitel = "103920";
     private const string ElementNrDatumIngangVerblijfstitel = "103930";
 
+    private const string AdresseringBinnenlandBeperktElementen = $"{ElementNrAdresregel1} {ElementNrAdresregel2}";
+    private const string AdresseringBinnenlandElementen = $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {AdresseringBinnenlandBeperktElementen}";
+    private const string AdresseringElementen = $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {AdresseringBinnenlandElementen}";
+    private const string AdresseringBeperktElementen = $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {AdresseringBinnenlandBeperktElementen}";
+    private const string AanhefAutorisatieElementen = $"{ElementNrAanhef} {ElementNrElektronischeAdressering}";
+    private const string AanschrijfwijzeElementen = $"{ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam}";
+    private const string AanschrijfwijzeAutorisatieElementen = $"{AanschrijfwijzeElementen} {ElementNrElektronischeAdressering}";
+    private const string AanschrijfwijzeNaamAutorisatieElementen = $"{ElementNrAanschrijfwijzeNaam} {ElementNrElektronischeAdressering}";
+    private const string AanspreekvormAutorisatieElementen = $"{ElementNrAanspreekvorm} {ElementNrElektronischeAdressering}";
+    private const string GebruikInLopendeTekstAutorisatieElementen = $"{ElementNrGebruikInLopendeTekst} {ElementNrElektronischeAdressering}";
+    private const string AdresseringAdresregel1AutorisatieElementen = $"{ElementNrAdresregel1} {ElementNrAdressering}";
+    private const string AdresseringAdresregel2AutorisatieElementen = $"{ElementNrAdresregel2} {ElementNrAdressering}";
+    private const string AdresseringLandAutorisatieElementen = $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}";
+
     private static readonly Dictionary<string, string> _fieldElementNrDictionary = new()
     {
         { "adresseerbaarObjectIdentificatie", "081180" },
 
-        { "adressering", $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2} {ElementNrAdressering}" },
-        { "adressering-protocollering", $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2}" },
-        { "adressering-beperkt", $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {ElementNrAdresregel1} {ElementNrAdresregel2} {ElementNrAdressering}" },
-        { "adressering-beperkt-protocollering", $"{ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel3} {ElementNrAdresregel1} {ElementNrAdresregel2}" },
-        { "adressering.aanhef", $"{ElementNrAanhef} {ElementNrElektronischeAdressering}" },
+        { "adressering", $"{AdresseringElementen} {ElementNrAdressering}" },
+        { "adressering-protocollering", AdresseringElementen },
+        { "adressering-beperkt", $"{AdresseringBeperktElementen} {ElementNrAdressering}" },
+        { "adressering-beperkt-protocollering", AdresseringBeperktElementen },
+        { "adressering.aanhef", AanhefAutorisatieElementen },
         { "adressering.aanhef-protocollering", ElementNrAanhef },
-        { "adressering.aanschrijfwijze", $"{ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrElektronischeAdressering}" },
-        { "adressering.aanschrijfwijze-protocollering", $"{ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam}" },
-        { "adressering.aanschrijfwijze.aanspreekvorm", $"{ElementNrAanspreekvorm} {ElementNrElektronischeAdressering}" },
+        { "adressering.aanschrijfwijze", AanschrijfwijzeAutorisatieElementen },
+        { "adressering.aanschrijfwijze-protocollering", AanschrijfwijzeElementen },
+        { "adressering.aanschrijfwijze.aanspreekvorm", AanspreekvormAutorisatieElementen },
         { "adressering.aanschrijfwijze.aanspreekvorm-protocollering", ElementNrAanspreekvorm },
-        { "adressering.aanschrijfwijze.naam", $"{ElementNrAanschrijfwijzeNaam} {ElementNrElektronischeAdressering}" },
+        { "adressering.aanschrijfwijze.naam", AanschrijfwijzeNaamAutorisatieElementen },
         { "adressering.aanschrijfwijze.naam-protocollering", ElementNrAanschrijfwijzeNaam },
-        { "adressering.gebruikInLopendeTekst", $"{ElementNrGebruikInLopendeTekst} {ElementNrElektronischeAdressering}" },
+        { "adressering.gebruikInLopendeTekst", GebruikInLopendeTekstAutorisatieElementen },
         { "adressering.gebruikInLopendeTekst-protocollering", ElementNrGebruikInLopendeTekst },
-        { "adressering.adresregel1", $"{ElementNrAdresregel1} {ElementNrAdressering}" },
+        { "adressering.adresregel1", AdresseringAdresregel1AutorisatieElementen },
         { "adressering.adresregel1-protocollering", ElementNrAdresregel1 },
-        { "adressering.adresregel2", $"{ElementNrAdresregel2} {ElementNrAdressering}" },
+        { "adressering.adresregel2", AdresseringAdresregel2AutorisatieElementen },
         { "adressering.adresregel2-protocollering", ElementNrAdresregel2 },
         { "adressering.adresregel3", $"{ElementNrVerblijfplaatsRegel3} {ElementNrAdressering}" },
         { "adressering.adresregel3-protocollering", ElementNrVerblijfplaatsRegel3 },
-        { "adressering.land", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land", AdresseringLandAutorisatieElementen },
         { "adressering.land-protocollering", ElementNrVerblijfplaatsLand },
-        { "adressering.land.code", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land.code", AdresseringLandAutorisatieElementen },
         { "adressering.land.code-protocollering", ElementNrVerblijfplaatsLand },
-        { "adressering.land.omschrijving", $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}" },
+        { "adressering.land.omschrijving", AdresseringLandAutorisatieElementen },
         { "adressering.land.omschrijving-protocollering", ElementNrVerblijfplaatsLand },
 
-        { "adresseringBinnenland", $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2} {ElementNrAdressering}" },
-        { "adresseringBinnenland-protocollering", $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {ElementNrAdresregel1} {ElementNrAdresregel2}" },
-        { "adresseringBinnenland-beperkt", $"{ElementNrAdresregel1} {ElementNrAdresregel2} {ElementNrAdressering}" },
-        { "adresseringBinnenland-beperkt-protocollering", $"{ElementNrAdresregel1} {ElementNrAdresregel2}" },
-        { "adresseringBinnenland.aanhef", $"{ElementNrAanhef} {ElementNrElektronischeAdressering}" },
+        { "adresseringBinnenland", $"{AdresseringBinnenlandElementen} {ElementNrAdressering}" },
+        { "adresseringBinnenland-protocollering",  AdresseringBinnenlandElementen },
+        { "adresseringBinnenland-beperkt", $"{AdresseringBinnenlandBeperktElementen} {ElementNrAdressering}" },
+        { "adresseringBinnenland-beperkt-protocollering", AdresseringBinnenlandBeperktElementen },
+        { "adresseringBinnenland.aanhef", AanhefAutorisatieElementen },
         { "adresseringBinnenland.aanhef-protocollering", ElementNrAanhef },
-        { "adresseringBinnenland.aanschrijfwijze", $"{ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrElektronischeAdressering}" },
-        { "adresseringBinnenland.aanschrijfwijze-protocollering", $"{ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam}" },
-        { "adresseringBinnenland.aanschrijfwijze.aanspreekvorm", $"{ElementNrAanspreekvorm} {ElementNrElektronischeAdressering}" },
+        { "adresseringBinnenland.aanschrijfwijze", AanschrijfwijzeAutorisatieElementen },
+        { "adresseringBinnenland.aanschrijfwijze-protocollering", AanschrijfwijzeElementen },
+        { "adresseringBinnenland.aanschrijfwijze.aanspreekvorm", AanspreekvormAutorisatieElementen },
         { "adresseringBinnenland.aanschrijfwijze.aanspreekvorm-protocollering", ElementNrAanspreekvorm },
-        { "adresseringBinnenland.aanschrijfwijze.naam", $"{ElementNrAanschrijfwijzeNaam} {ElementNrElektronischeAdressering}" },
+        { "adresseringBinnenland.aanschrijfwijze.naam", AanschrijfwijzeNaamAutorisatieElementen },
         { "adresseringBinnenland.aanschrijfwijze.naam-protocollering", ElementNrAanschrijfwijzeNaam },
-        { "adresseringBinnenland.gebruikInLopendeTekst", $"{ElementNrGebruikInLopendeTekst} {ElementNrElektronischeAdressering}" },
+        { "adresseringBinnenland.gebruikInLopendeTekst", GebruikInLopendeTekstAutorisatieElementen },
         { "adresseringBinnenland.gebruikInLopendeTekst-protocollering", ElementNrGebruikInLopendeTekst },
-        { "adresseringBinnenland.adresregel1", $"{ElementNrAdresregel1} {ElementNrAdressering}" },
+        { "adresseringBinnenland.adresregel1", AdresseringAdresregel1AutorisatieElementen },
         { "adresseringBinnenland.adresregel1-protocollering", ElementNrAdresregel1 },
-        { "adresseringBinnenland.adresregel2", $"{ElementNrAdresregel2} {ElementNrAdressering}" },
+        { "adresseringBinnenland.adresregel2", AdresseringAdresregel2AutorisatieElementen },
         { "adresseringBinnenland.adresregel2-protocollering", ElementNrAdresregel2 },
 
         { "aNummer", "010110" },
