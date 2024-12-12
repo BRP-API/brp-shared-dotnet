@@ -69,12 +69,12 @@ Functionaliteit: autorisatie adressering adresregels PersoonBeperkt
       | adresseringBinnenland             | 81110 81120 81130 81140 81150 81160 81170 81210 PANM03 PANM04 PANM05 PANM06 PAVP01 PAVP02 PAVP04                          | adresregel1 (PAVP03) |
       | adresseringBinnenland             | 81110 81120 81130 81140 81150 81160 81170 81210 PANM03 PANM04 PANM05 PANM06 PAVP01 PAVP02 PAVP03                          | adresregel2 (PAVP04) |
 
-Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'adressering' (AD.01) mag alle adres velden van adressering opvragen
+Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'adressering' (PA.AD.01) mag alle adres velden van adressering opvragen
 
   Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'adressering'
     Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
     | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-    | 81180 AD01                      | N                        | 20201128                |
+    | 10240 10310 PAAD01              | N                        | 20201128                |
     En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
     | naam      | waarde |
     | afnemerID | 000008 |
@@ -97,12 +97,13 @@ Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'adressering' (AD.01) 
     | adresseringBinnenland.adresregel1 |
     | adresseringBinnenland.adresregel2 |
 
-Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (AD.02) mag geen adres velden van adressering opvragen
+Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (PA.AD.02) mag alle naamgebruik velden van adressering opvragen
 
+  @fout-case
   Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'elektronische adressering'
     Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
     | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-    | 81180 AD02                      | N                        | 20201128                |
+    | 10240 10310 PAAD02              | N                        | 20201128                |
     En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
     | naam      | waarde |
     | afnemerID | 000008 |
@@ -112,14 +113,14 @@ Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adresse
     | geslachtsnaam | Maassen                             |
     | geboortedatum | 1983-05-26                          |
     | fields        | <fields>                            |
-      Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                              |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
-      | status   | 403                                                                                 |
-      | code     | unauthorizedField                                                                   |
-      | instance | /haalcentraal/api/brp/personen                                                      |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                                              |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
+    | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
+    | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
+    | status   | 403                                                                                 |
+    | code     | unauthorizedField                                                                   |
+    | instance | /haalcentraal/api/brp/personen                                                      |
 
     Voorbeelden:
     | fields                            |
