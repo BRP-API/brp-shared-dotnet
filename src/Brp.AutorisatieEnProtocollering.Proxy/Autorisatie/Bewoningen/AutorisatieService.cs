@@ -23,10 +23,24 @@ public class AutorisatieService : AbstractAutorisatieService
 
         if (!gemeenteCode.HasValue)
         {
-            return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
-                                 detail: "Alleen gemeenten mogen bewoningen raadplegen.",
-                                 code: "unauthorized",
-                                 reason: "geen gemeente");
+            var autorisatie = GetActueleAutorisatieFor(afnemerCode);
+            if (autorisatie != null && autorisatieLog != null)
+            {
+                autorisatieLog.Regel = autorisatie;
+            }
+
+            if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
+            {
+                return NietGeautoriseerdVoorAdhocGegevensverstrekking(autorisatie, afnemerCode);
+            }
+
+            if (!autorisatie!.RubrieknummerAdHoc!.Contains("AXBW01"))
+            {
+                return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
+                                     detail: "Alleen gemeenten mogen bewoningen raadplegen.",
+                                     code: "unauthorized",
+                                     reason: "geen gemeente");
+            }
         }
         else
         {
@@ -34,16 +48,16 @@ public class AutorisatieService : AbstractAutorisatieService
             {
                 autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
             }
-        }
 
-        var input = JObject.Parse(requestBody);
+            var input = JObject.Parse(requestBody);
 
-        var adressen = GetAdressen(input.WaardeAdresseerbaarObjectIdentificatieParameter()!);
-        if(adressen.Any() && !adressen.Any(a => a.GemeenteCode == gemeenteCode))
-        {
-            return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
-                                 detail: "Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen.",
-                                 code: "unauthorized");
+            var adressen = GetAdressen(input.WaardeAdresseerbaarObjectIdentificatieParameter()!);
+            if (adressen.Any() && !adressen.Any(a => a.GemeenteCode == gemeenteCode))
+            {
+                return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
+                                     detail: "Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen.",
+                                     code: "unauthorized");
+            }
         }
 
         return Authorized();
