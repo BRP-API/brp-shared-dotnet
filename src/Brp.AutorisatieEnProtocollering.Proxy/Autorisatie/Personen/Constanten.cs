@@ -19,41 +19,43 @@ public static class Constanten
     private const string ElementNrGebruikInLopendeTekst = "PANM06";
     private const string ElementNrAdresregel1 = "PAVP03";
     private const string ElementNrAdresregel2 = "PAVP04";
-    private const string ElementNrVerblijfplaatsRegel3 = "081350";
     private const string ElementNrVerblijfplaatsLand = "081310";
 
-    private const string ElementNrDatumEersteInschrijvingGba = "076810";
-    private const string ElementNrGeslacht = "010410";
+    private const string ElementNrBurgerservicenummer = "010120";
+    private const string ElementNrVoornamen = "010210";
+    private const string ElementNrAdellijkeTitelPredicaat = "010220";
+    private const string ElementNrVoorvoegsel = "010230";
+    private const string ElementNrGeslachtsnaam = "010240";
     private const string ElementNrGeboortedatum = "010310";
-    private const string ElementNrAanduidingEuropeesKiesrecht = "133110";
-    private const string ElementNrEinddatumUitsluitingEuropeesKiesrecht = "133130";
     private const string ElementNrGeboorteplaats = "010320";
     private const string ElementNrGeboorteland = "010330";
-    private const string ElementNrGemeenteVanInschrijving = "080910";
-    private const string ElementNrDatumInschrijvingInGemeente = "080920";
-    private const string ElementNrGezag = "PAGZ01";
-    private const string ElementNrIndicatieGezagMinderjarige = "113210";
-    private const string ElementNrDatumVestigingInNederland = "081420";
-    private const string ElementNrLandVanwaarIngeschreven = "081410";
-    private const string ElementNrGeboortedatumKind = "090310";
-    private const string ElementNrGeboortelandKind = "090330";
-    private const string ElementNrGeboorteplaatsKind = "090320";
-    private const string ElementNrAdellijkeTitelPredicaatKind = "090220";
-    private const string ElementNrAdellijkeTitelPredicaat = "010220";
+    private const string ElementNrGeslacht = "010410";
     private const string ElementNrAanduidingNaamgebruik = "016110";
-    private const string ElementNrNationaliteit = "040510";
-    private const string ElementNrRedenOpnameNationaliteit = "046310";
-    private const string ElementNrDatumIngangGeldigheidNationaliteit = "048510";
+    private const string ElementNrVoorletters = "PANM01";
+    private const string ElementNrVolledigeNaam = "PANM02";
+
+    private const string ElementNrBurgerserviceNummerouder = "020120 030120";
+    private const string ElementNrVoornamenOuder = "020210 030210";
     private const string ElementNrAdellijkeTitelPredicaatOuder = "020220 030220";
+    private const string ElementNrVoorvoegselOuder = "020230 030230";
+    private const string ElementNrGeslachtsnaamOuder = "020240 030240";
     private const string ElementNrGeboortedatumOuder = "020310 030310";
     private const string ElementNrGeboorteplaatsOuder = "020320 030320";
     private const string ElementNrGeboortelandOuder = "020330 030330";
     private const string ElementNrGeslachtOuder = "020410 030410";
     private const string ElementNrDatumIngangFamilierechtelijkeBetrekking = "026210 036210";
-    private const string ElementNrOverlijdendatum = "060810";
-    private const string ElementNrOverlijdenLand = "060830";
-    private const string ElementNrOverlijdenPlaats = "060820";
+    private const string ElementNrVoorlettersOuder = "PAOU01";
+
+    private const string ElementNrNationaliteit = "040510";
+    private const string ElementNrRedenOpnameNationaliteit = "046310";
+    private const string ElementNrDatumIngangGeldigheidNationaliteit = "048510";
+    private const string ElementNrNationaliteitType = "PANT01";
+
+    private const string ElementNrBurgerservicenummerPartner = "050120";
+    private const string ElementNrVoornamenPartner = "050210";
     private const string ElementNrAdellijkeTitelPredicaatPartner = "050220";
+    private const string ElementNrVoorvoegselPartner = "050230";
+    private const string ElementNrGeslachtsnaamPartner = "050240";
     private const string ElementNrGeboortedatumPartner = "050310";
     private const string ElementNrGeboorteplaatsPartner = "050320";
     private const string ElementNrGeboortelandPartner = "050330";
@@ -63,14 +65,62 @@ public static class Constanten
     private const string ElementNrLandAangaanHuwelijkPartnerschap = "050630";
     private const string ElementNrDatumOntbindingHuwelijkPartnerschap = "050710";
     private const string ElementNrSoortVerbintenis = "051510";
-    private const string ElementNrEinddatumUitsluitingKiesrecht = "133820";
+    private const string ElementNrVoorlettersPartner = "PAHP01";
+
+    private const string ElementNrOverlijdendatum = "060810";
+    private const string ElementNrOverlijdenLand = "060830";
+    private const string ElementNrOverlijdenPlaats = "060820";
+
+    private const string ElementNrDatumEersteInschrijvingGba = "076810";
+
+    private const string ElementNrGemeenteVanInschrijving = "080910";
+    private const string ElementNrDatumInschrijvingInGemeente = "080920";
     private const string ElementNrFunctieAdres = "081010";
-    private const string ElementNrDatumVanVerblijfplaats = "PAVP01";
+    private const string ElementNrStraatnaam = "081110";
+    private const string ElementNrNaamOpenbareRuimte = "081115";
+    private const string ElementNrHuisnummer = "081120";
+    private const string ElementNrHuisletter = "081130";
+    private const string ElementNrHuisnummertoevoeging = "081140";
     private const string ElementNrAanduidingBijHuisnummer = "081150";
+    private const string ElementNrPostcode = "081160";
+    private const string ElementNrWoonplaats = "081170";
+    private const string ElementNrLocatiebeschrijving = "081210";
+    private const string ElementNrAdresseerbaarObjectIdentificatie = "081180";
+    private const string ElementNrNummeraanduidingIdentificatie = "081190";
+    private const string ElementNrVerblijfplaatsRegel1 = "081330";
+    private const string ElementNrVerblijfplaatsRegel2 = "081340";
+    private const string ElementNrVerblijfplaatsRegel3 = "081350";
+    private const string ElementNrLandVanwaarIngeschreven = "081410";
+    private const string ElementNrDatumVestigingInNederland = "081420";
     private const string ElementNrDatumIngangGeldigheidVerblijfplaats = "088510";
+    private const string ElementNrDatumVanVerblijfplaats = "PAVP01";
+    private const string ElementNrVerblijfplaatsType = "PAVP02";
+
+    private const string ElementNrIndicatieVestigingVanuitBuitenland = "PAVP05";
+    private const string ElementNrVanuitVerblijfplaatsOnbekend = "PAVP06";
+
+    private const string ElementNrVoornamenKind = "090210";
+    private const string ElementNrAdellijkeTitelPredicaatKind = "090220";
+    private const string ElementNrVoorvoegselKind = "090230";
+    private const string ElementNrGeslachtsnaamKind = "090240";
+    private const string ElementNrGeboortedatumKind = "090310";
+    private const string ElementNrGeboorteplaatsKind = "090320";
+    private const string ElementNrGeboortelandKind = "090330";
+    private const string ElementNrVoorlettersKind = "PAKD01";
+
     private const string ElementNrAanduidingVerblijfstitel = "103910";
     private const string ElementNrDatumEindeVerblijfstitel = "103920";
     private const string ElementNrDatumIngangVerblijfstitel = "103930";
+
+    private const string ElementNrIndicatieGezagMinderjarige = "113210";
+    private const string ElementNrGezag = "PAGZ01";
+
+    private const string ElementNrAanduidingEuropeesKiesrecht = "133110";
+    private const string ElementNrEinddatumUitsluitingEuropeesKiesrecht = "133130";
+
+    private const string ElementNrUitgeslotenVanKiesrecht = "133810";
+    private const string ElementNrEinddatumUitsluitingKiesrecht = "133820";
+
 
     private const string AdresseringBinnenlandBeperktElementen = $"{ElementNrAdresregel1} {ElementNrAdresregel2}";
     private const string AdresseringBinnenlandElementen = $"{ElementNrAanhef} {ElementNrAanspreekvorm} {ElementNrAanschrijfwijzeNaam} {ElementNrGebruikInLopendeTekst} {AdresseringBinnenlandBeperktElementen}";
@@ -86,10 +136,38 @@ public static class Constanten
     private const string AdresseringAdresregel2AutorisatieElementen = $"{ElementNrAdresregel2} {ElementNrAdressering}";
     private const string AdresseringLandAutorisatieElementen = $"{ElementNrVerblijfplaatsLand} {ElementNrAdressering}";
 
+    private const string NaamBeperktElementen = $"{ElementNrVoornamen} {ElementNrAdellijkeTitelPredicaat} {ElementNrVoorvoegsel} {ElementNrGeslachtsnaam} {ElementNrVoorletters} {ElementNrVolledigeNaam}";
+
+    private const string VerblijfplaatsBinnenlandVerblijfadresElementen = $"{ElementNrStraatnaam} {ElementNrNaamOpenbareRuimte} {ElementNrHuisnummer} {ElementNrHuisletter} {ElementNrHuisnummertoevoeging} {ElementNrAanduidingBijHuisnummer} {ElementNrPostcode} {ElementNrWoonplaats} {ElementNrLocatiebeschrijving}";
+    private const string VerblijfplaatsBinnenlandElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsBinnenlandVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats} {ElementNrDatumVanVerblijfplaats}";
+    private const string VerblijfplaatsVerblijfadresElementen = $"{VerblijfplaatsBinnenlandVerblijfadresElementen} {ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel1} {ElementNrVerblijfplaatsRegel2} {ElementNrVerblijfplaatsRegel3}";
+    private const string VerblijfplaatsElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats} {ElementNrDatumVanVerblijfplaats}";
+
+    private const string OuderGeboorteElementen = $"{ElementNrGeboortedatumOuder} {ElementNrGeboorteplaatsOuder} {ElementNrGeboortelandOuder}";
+    private const string OuderNaamElementen = $"{ElementNrVoornamenOuder} {ElementNrAdellijkeTitelPredicaatOuder} {ElementNrVoorvoegselOuder} {ElementNrGeslachtsnaamOuder} {ElementNrVoorlettersOuder}";
+
+    private const string PartnerGeboorteElementen = $"{ElementNrGeboortedatumPartner} {ElementNrGeboorteplaatsPartner} {ElementNrGeboortelandPartner}";
+    private const string PartnerNaamElementen = $"{ElementNrVoornamenPartner} {ElementNrAdellijkeTitelPredicaatPartner} {ElementNrVoorvoegselPartner} {ElementNrGeslachtsnaamPartner} {ElementNrVoorlettersPartner}";
+    private const string PartnerHuwelijkPartnerschapElementen = $"{ElementNrDatumAangaanHuwelijkPartnerschap} {ElementNrPlaatsAangaanHuwelijkPartnerschap} {ElementNrLandAangaanHuwelijkPartnerschap}";
+
     private static readonly Dictionary<string, string> _fieldElementNrDictionary = new()
     {
-        { "adresseerbaarObjectIdentificatie", "081180" },
+        #region zoek parameters
+        { "adresseerbaarObjectIdentificatie", ElementNrAdresseerbaarObjectIdentificatie },
+        { "nummeraanduidingIdentificatie", ElementNrNummeraanduidingIdentificatie },
+        { "postcode", ElementNrPostcode },
+        { "straat", ElementNrStraatnaam },
+        { "huisnummer", ElementNrHuisnummer },
+        { "huisletter", ElementNrHuisletter },
+        { "huisnummertoevoeging", ElementNrHuisnummertoevoeging },
 
+        { "geboortedatum", ElementNrGeboortedatum },
+        { "geslachtsnaam", ElementNrGeslachtsnaam },
+        { "voornamen", ElementNrVoornamen },
+        { "voorvoegsel", ElementNrVoorvoegsel },
+        #endregion
+
+        #region adressering
         { "adressering", $"{AdresseringElementen} {ElementNrAdressering}" },
         { "adressering-protocollering", AdresseringElementen },
         { "adressering-beperkt", $"{AdresseringBeperktElementen} {ElementNrAdressering}" },
@@ -135,9 +213,10 @@ public static class Constanten
         { "adresseringBinnenland.adresregel1-protocollering", ElementNrAdresregel1 },
         { "adresseringBinnenland.adresregel2", AdresseringAdresregel2AutorisatieElementen },
         { "adresseringBinnenland.adresregel2-protocollering", ElementNrAdresregel2 },
+        #endregion
 
         { "aNummer", "010110" },
-        { "burgerservicenummer", "010120" },
+        { "burgerservicenummer", ElementNrBurgerservicenummer },
         { "datumEersteInschrijvingGBA", ElementNrDatumEersteInschrijvingGba },
         { "datumEersteInschrijvingGBA.langFormaat", ElementNrDatumEersteInschrijvingGba },
         { "datumEersteInschrijvingGBA.type", ElementNrDatumEersteInschrijvingGba },
@@ -145,19 +224,15 @@ public static class Constanten
         { "datumEersteInschrijvingGBA.onbekend", ElementNrDatumEersteInschrijvingGba },
         { "datumEersteInschrijvingGBA.jaar", ElementNrDatumEersteInschrijvingGba },
         { "datumEersteInschrijvingGBA.maand", ElementNrDatumEersteInschrijvingGba },
-        { "geboortedatum", ElementNrGeboortedatum },
 
+        #region geslacht
         { "geslacht", ElementNrGeslacht },
         { "geslacht.code", ElementNrGeslacht },
         { "geslacht.omschrijving", ElementNrGeslacht },
+        #endregion
 
-        { "geslachtsnaam", "010240" },
-        { "voornamen", "010210" },
-        { "voorvoegsel", "010230" },
-
-        { "nummeraanduidingIdentificatie", "081190" },
-
-        { "europeesKiesrecht", "133110 133130" },
+        #region europees kiesrecht
+        { "europeesKiesrecht", $"{ElementNrAanduidingEuropeesKiesrecht} {ElementNrEinddatumUitsluitingEuropeesKiesrecht}" },
         { "europeesKiesrecht.aanduiding", ElementNrAanduidingEuropeesKiesrecht },
         { "europeesKiesrecht.aanduiding.code", ElementNrAanduidingEuropeesKiesrecht },
         { "europeesKiesrecht.aanduiding.omschrijving", ElementNrAanduidingEuropeesKiesrecht },
@@ -168,8 +243,10 @@ public static class Constanten
         { "europeesKiesrecht.einddatumUitsluiting.onbekend", ElementNrEinddatumUitsluitingEuropeesKiesrecht },
         { "europeesKiesrecht.einddatumUitsluiting.jaar", ElementNrEinddatumUitsluitingEuropeesKiesrecht },
         { "europeesKiesrecht.einddatumUitsluiting.maand", ElementNrEinddatumUitsluitingEuropeesKiesrecht },
+        #endregion
 
-        { "geboorte", "010310 010320 010330" },
+        #region geboorte
+        { "geboorte", $"{ElementNrGeboortedatum} {ElementNrGeboorteplaats} {ElementNrGeboorteland}" },
         { "geboorte-beperkt", ElementNrGeboortedatum },
         { "geboorte-beperkt-protocollering", ElementNrGeboortedatum },
         { "geboorte.datum", ElementNrGeboortedatum },
@@ -185,7 +262,9 @@ public static class Constanten
         { "geboorte.land", ElementNrGeboorteland },
         { "geboorte.land.code", ElementNrGeboorteland },
         { "geboorte.land.omschrijving", ElementNrGeboorteland },
+        #endregion
 
+        #region gemeente van inschrijving
         { "gemeenteVanInschrijving", ElementNrGemeenteVanInschrijving },
         { "gemeenteVanInschrijving.code", ElementNrGemeenteVanInschrijving },
         { "gemeenteVanInschrijving.omschrijving", ElementNrGemeenteVanInschrijving },
@@ -196,7 +275,9 @@ public static class Constanten
         { "datumInschrijvingInGemeente.onbekend", ElementNrDatumInschrijvingInGemeente },
         { "datumInschrijvingInGemeente.jaar", ElementNrDatumInschrijvingInGemeente },
         { "datumInschrijvingInGemeente.maand", ElementNrDatumInschrijvingInGemeente },
+        #endregion
 
+        #region gezag
         { "gezag", ElementNrGezag },
         { "gezag.type", ElementNrGezag },
         { "gezag.minderjarige", ElementNrGezag },
@@ -210,13 +291,17 @@ public static class Constanten
         { "gezag.derde.burgerservicenummer", ElementNrGezag },
         { "gezag.derden.burgerservicenummer", ElementNrGezag },
         { "gezag.toelichting", ElementNrGezag },
+        #endregion
 
+        #region indicatie gezag minderjarige
         { "indicatieGezagMinderjarige", ElementNrIndicatieGezagMinderjarige },
         { "indicatieGezagMinderjarige.code", ElementNrIndicatieGezagMinderjarige },
         { "indicatieGezagMinderjarige.omschrijving", ElementNrIndicatieGezagMinderjarige },
         { "indicatieCurateleRegister", "113310" },
+        #endregion
 
-        { "immigratie", "081410 081420 PAVP05 PAVP06" },
+        #region immigratie
+        { "immigratie", $"{ElementNrLandVanwaarIngeschreven} {ElementNrDatumVestigingInNederland} {ElementNrIndicatieVestigingVanuitBuitenland} {ElementNrVanuitVerblijfplaatsOnbekend}" },
         { "immigratie.datumVestigingInNederland", ElementNrDatumVestigingInNederland },
         { "immigratie.datumVestigingInNederland.langFormaat", ElementNrDatumVestigingInNederland },
         { "immigratie.datumVestigingInNederland.type", ElementNrDatumVestigingInNederland },
@@ -224,15 +309,17 @@ public static class Constanten
         { "immigratie.datumVestigingInNederland.onbekend", ElementNrDatumVestigingInNederland },
         { "immigratie.datumVestigingInNederland.jaar", ElementNrDatumVestigingInNederland },
         { "immigratie.datumVestigingInNederland.maand", ElementNrDatumVestigingInNederland },
-        { "immigratie.indicatieVestigingVanuitBuitenland", "PAVP05" },
+        { "immigratie.indicatieVestigingVanuitBuitenland", ElementNrIndicatieVestigingVanuitBuitenland },
         { "immigratie.landVanwaarIngeschreven", ElementNrLandVanwaarIngeschreven },
         { "immigratie.landVanwaarIngeschreven.code", ElementNrLandVanwaarIngeschreven },
         { "immigratie.landVanwaarIngeschreven.omschrijving", ElementNrLandVanwaarIngeschreven },
-        { "immigratie.vanuitVerblijfplaatsOnbekend", "PAVP06" },
+        { "immigratie.vanuitVerblijfplaatsOnbekend", ElementNrVanuitVerblijfplaatsOnbekend },
+        #endregion
 
-        { "kinderen", "090120 090210 090220 090230 090240 090310 090320 090330 PAKD01" },
+        #region kind
+        { "kinderen", $"090120 {ElementNrVoornamenKind} {ElementNrAdellijkeTitelPredicaatKind} {ElementNrVoorvoegselKind} {ElementNrGeslachtsnaamKind} {ElementNrGeboortedatumKind} {ElementNrGeboorteplaatsKind} {ElementNrGeboortelandKind} {ElementNrVoorlettersKind}" },
         { "kinderen.burgerservicenummer", "090120" },
-        { "kinderen.geboorte", "090310 090320 090330" },
+        { "kinderen.geboorte", $"{ElementNrGeboortedatumKind} {ElementNrGeboorteplaatsKind} {ElementNrGeboortelandKind}" },
         { "kinderen.geboorte.datum", ElementNrGeboortedatumKind },
         { "kinderen.geboorte.datum.langFormaat", ElementNrGeboortedatumKind },
         { "kinderen.geboorte.datum.type", ElementNrGeboortedatumKind },
@@ -246,38 +333,41 @@ public static class Constanten
         { "kinderen.geboorte.plaats", ElementNrGeboorteplaatsKind },
         { "kinderen.geboorte.plaats.code", ElementNrGeboorteplaatsKind },
         { "kinderen.geboorte.plaats.omschrijving", ElementNrGeboorteplaatsKind },
-        { "kinderen.naam", "090210 090220 090230 090240 PAKD01" },
+        { "kinderen.naam", $"{ElementNrVoornamenKind} {ElementNrAdellijkeTitelPredicaatKind} {ElementNrVoorvoegselKind} {ElementNrGeslachtsnaamKind} {ElementNrVoorlettersKind}" },
         { "kinderen.naam.adellijkeTitelPredicaat", ElementNrAdellijkeTitelPredicaatKind },
         { "kinderen.naam.adellijkeTitelPredicaat.code", ElementNrAdellijkeTitelPredicaatKind },
         { "kinderen.naam.adellijkeTitelPredicaat.omschrijving", ElementNrAdellijkeTitelPredicaatKind },
         { "kinderen.naam.adellijkeTitelPredicaat.soort", ElementNrAdellijkeTitelPredicaatKind },
-        { "kinderen.naam.geslachtsnaam", "090240" },
-        { "kinderen.naam.voorletters", "PAKD01" },
-        { "kinderen.naam.voornamen", "090210" },
-        { "kinderen.naam.voorvoegsel", "090230" },
+        { "kinderen.naam.geslachtsnaam", ElementNrGeslachtsnaamKind },
+        { "kinderen.naam.voorletters", ElementNrVoorlettersKind },
+        { "kinderen.naam.voornamen", ElementNrVoornamenKind },
+        { "kinderen.naam.voorvoegsel", ElementNrVoorvoegselKind },
+        #endregion
 
         { "leeftijd", "PAGL01" },
 
-        { "naam", "010210 010220 010230 010240 016110 PANM01 PANM02" },
-        { "naam-beperkt", "010210 010220 010230 010240 PANM01 PANM02" },
-        { "naam-beperkt-protocollering", "010210 010220 010230 010240 PANM01 PANM02" },
-        { "naam.voornamen", "010210" },
+        #region naam
+        { "naam", $"{NaamBeperktElementen} {ElementNrAanduidingNaamgebruik}" },
+        { "naam-beperkt-protocollering", NaamBeperktElementen },
+        { "naam.voornamen", ElementNrVoornamen },
         { "naam.adellijkeTitelPredicaat", ElementNrAdellijkeTitelPredicaat },
         { "naam.adellijkeTitelPredicaat.code", ElementNrAdellijkeTitelPredicaat },
         { "naam.adellijkeTitelPredicaat.omschrijving", ElementNrAdellijkeTitelPredicaat },
         { "naam.adellijkeTitelPredicaat.soort", ElementNrAdellijkeTitelPredicaat },
-        { "naam.voorvoegsel", "010230" },
-        { "naam.geslachtsnaam", "010240" },
+        { "naam.voorvoegsel", ElementNrVoorvoegsel },
+        { "naam.geslachtsnaam", ElementNrGeslachtsnaam },
         { "naam.aanduidingNaamgebruik", ElementNrAanduidingNaamgebruik },
         { "naam.aanduidingNaamgebruik.code", ElementNrAanduidingNaamgebruik },
         { "naam.aanduidingNaamgebruik.omschrijving", ElementNrAanduidingNaamgebruik },
-        { "naam.voorletters", "PANM01" },
-        { "naam.volledigeNaam", "PANM02" },
+        { "naam.voorletters", ElementNrVoorletters },
+        { "naam.volledigeNaam", ElementNrVolledigeNaam },
+        #endregion
 
-        { "nationaliteiten", "040510 046310 048510" },
-        { "nationaliteiten-protocollering", "040510 046310 048510 PANT01" },
+        #region nationaliteit
+        { "nationaliteiten", $"{ElementNrNationaliteit} {ElementNrRedenOpnameNationaliteit} {ElementNrDatumIngangGeldigheidNationaliteit}" },
+        { "nationaliteiten-protocollering", $"{ElementNrNationaliteit} {ElementNrRedenOpnameNationaliteit} {ElementNrDatumIngangGeldigheidNationaliteit} {ElementNrNationaliteitType}" },
         { "nationaliteiten.type", ElementNrNationaliteit },
-        { "nationaliteiten.type-protocollering", "PANT01" },
+        { "nationaliteiten.type-protocollering", ElementNrNationaliteitType },
         { "nationaliteiten.nationaliteit", ElementNrNationaliteit },
         { "nationaliteiten.nationaliteit.code", ElementNrNationaliteit },
         { "nationaliteiten.nationaliteit.omschrijving", ElementNrNationaliteit },
@@ -291,23 +381,22 @@ public static class Constanten
         { "nationaliteiten.datumIngangGeldigheid.onbekend", ElementNrDatumIngangGeldigheidNationaliteit },
         { "nationaliteiten.datumIngangGeldigheid.jaar", ElementNrDatumIngangGeldigheidNationaliteit },
         { "nationaliteiten.datumIngangGeldigheid.maand", ElementNrDatumIngangGeldigheidNationaliteit },
+        #endregion
 
-        { "ouders", "020120 020210 020220 020230 020240 020310 020320 020330 020410 026210 " +
-                    "030120 030210 030220 030230 030240 030310 030320 030330 030410 036210 PAOU01" },
+        #region ouder
+        { "ouders", $"{ElementNrBurgerserviceNummerouder} {OuderNaamElementen} {OuderGeboorteElementen} {ElementNrGeslachtOuder} {ElementNrDatumIngangFamilierechtelijkeBetrekking}" },
         { "ouders.ouderAanduiding", "" },
-        { "ouders.burgerservicenummer", "020120 030120" },
-        { "ouders.naam", "020210 020220 020230 020240 " +
-                         "030210 030220 030230 030240 PAOU01" },
-        { "ouders.naam.voornamen", "020210 030210" },
+        { "ouders.burgerservicenummer", ElementNrBurgerserviceNummerouder },
+        { "ouders.naam", OuderNaamElementen },
+        { "ouders.naam.voornamen", ElementNrVoornamenOuder },
         { "ouders.naam.adellijkeTitelPredicaat", ElementNrAdellijkeTitelPredicaatOuder },
         { "ouders.naam.adellijkeTitelPredicaat.code", ElementNrAdellijkeTitelPredicaatOuder },
         { "ouders.naam.adellijkeTitelPredicaat.omschrijving", ElementNrAdellijkeTitelPredicaatOuder },
         { "ouders.naam.adellijkeTitelPredicaat.soort", ElementNrAdellijkeTitelPredicaatOuder },
-        { "ouders.naam.voorvoegsel", "020230 030230" },
-        { "ouders.naam.geslachtsnaam", "020240 030240" },
-        { "ouders.naam.voorletters", "PAOU01" },
-        { "ouders.geboorte", "020310 020320 020330 " +
-                             "030310 030320 030330" },
+        { "ouders.naam.voorvoegsel", ElementNrVoorvoegselOuder },
+        { "ouders.naam.geslachtsnaam", ElementNrGeslachtsnaamOuder },
+        { "ouders.naam.voorletters", ElementNrVoorlettersOuder },
+        { "ouders.geboorte", OuderGeboorteElementen },
         { "ouders.geboorte.datum", ElementNrGeboortedatumOuder },
         { "ouders.geboorte.datum.type", ElementNrGeboortedatumOuder },
         { "ouders.geboorte.datum.datum", ElementNrGeboortedatumOuder },
@@ -331,8 +420,10 @@ public static class Constanten
         { "ouders.datumIngangFamilierechtelijkeBetrekking.jaar", ElementNrDatumIngangFamilierechtelijkeBetrekking },
         { "ouders.datumIngangFamilierechtelijkeBetrekking.maand", ElementNrDatumIngangFamilierechtelijkeBetrekking },
         { "ouders.datumIngangFamilierechtelijkeBetrekking.onbekend", ElementNrDatumIngangFamilierechtelijkeBetrekking },
+        #endregion
 
-        { "overlijden", "060810 060820 060830" },
+        #region overlijden
+        { "overlijden", $"{ElementNrOverlijdendatum} {ElementNrOverlijdenPlaats} {ElementNrOverlijdenLand}" },
         { "overlijden.datum", ElementNrOverlijdendatum },
         { "overlijden.datum.langFormaat", ElementNrOverlijdendatum },
         { "overlijden.datum.type", ElementNrOverlijdendatum },
@@ -346,19 +437,21 @@ public static class Constanten
         { "overlijden.plaats", ElementNrOverlijdenPlaats },
         { "overlijden.plaats.code", ElementNrOverlijdenPlaats },
         { "overlijden.plaats.omschrijving", ElementNrOverlijdenPlaats },
+        #endregion
 
-        { "partners", "050120 050210 050220 050230 050240 PAHP01 050310 050320 050330 050410 050610 050620 050630 050710 051510" },
-        { "partners.burgerservicenummer", "050120" },
-        { "partners.naam", "050210 050220 050230 050240 PAHP01" },
-        { "partners.naam.voornamen", "050210" },
+        #region partner
+        { "partners", $"{ElementNrBurgerservicenummerPartner} {PartnerNaamElementen} {PartnerGeboorteElementen} {ElementNrGeslachtPartner} {PartnerHuwelijkPartnerschapElementen} {ElementNrDatumOntbindingHuwelijkPartnerschap} {ElementNrSoortVerbintenis}" },
+        { "partners.burgerservicenummer", ElementNrBurgerservicenummerPartner },
+        { "partners.naam", PartnerNaamElementen },
+        { "partners.naam.voornamen", ElementNrVoornamenPartner },
         { "partners.naam.adellijkeTitelPredicaat", ElementNrAdellijkeTitelPredicaatPartner },
         { "partners.naam.adellijkeTitelPredicaat.code", ElementNrAdellijkeTitelPredicaatPartner },
         { "partners.naam.adellijkeTitelPredicaat.omschrijving", ElementNrAdellijkeTitelPredicaatPartner },
         { "partners.naam.adellijkeTitelPredicaat.soort", ElementNrAdellijkeTitelPredicaatPartner },
-        { "partners.naam.voorvoegsel", "050230" },
-        { "partners.naam.geslachtsnaam", "050240" },
-        { "partners.naam.voorletters", "PAHP01" },
-        { "partners.geboorte", "050310 050320 050330" },
+        { "partners.naam.voorvoegsel", ElementNrVoorvoegselPartner },
+        { "partners.naam.geslachtsnaam", ElementNrGeslachtsnaamPartner },
+        { "partners.naam.voorletters", ElementNrVoorlettersPartner },
+        { "partners.geboorte", PartnerGeboorteElementen },
         { "partners.geboorte.datum", ElementNrGeboortedatumPartner },
         { "partners.geboorte.datum.type", ElementNrGeboortedatumPartner },
         { "partners.geboorte.datum.datum", ElementNrGeboortedatumPartner },
@@ -375,7 +468,7 @@ public static class Constanten
         { "partners.geslacht", ElementNrGeslachtPartner },
         { "partners.geslacht.code", ElementNrGeslachtPartner },
         { "partners.geslacht.omschrijving", ElementNrGeslachtPartner },
-        { "partners.aangaanHuwelijkPartnerschap", "050610 050620 050630" },
+        { "partners.aangaanHuwelijkPartnerschap", PartnerHuwelijkPartnerschapElementen },
         { "partners.aangaanHuwelijkPartnerschap.datum", ElementNrDatumAangaanHuwelijkPartnerschap },
         { "partners.aangaanHuwelijkPartnerschap.datum.type", ElementNrDatumAangaanHuwelijkPartnerschap },
         { "partners.aangaanHuwelijkPartnerschap.datum.datum", ElementNrDatumAangaanHuwelijkPartnerschap },
@@ -400,15 +493,11 @@ public static class Constanten
         { "partners.soortVerbintenis", ElementNrSoortVerbintenis },
         { "partners.soortVerbintenis.code", ElementNrSoortVerbintenis },
         { "partners.soortVerbintenis.omschrijving", ElementNrSoortVerbintenis },
+        #endregion
 
-        { "postcode", "081160" },
-        { "straat", "081110" },
-        { "huisnummer", "081120" },
-        { "huisletter", "081130" },
-        { "huisnummertoevoeging", "081140" },
-
-        { "uitsluitingKiesrecht", "133810 133820" },
-        { "uitsluitingKiesrecht.uitgeslotenVanKiesrecht", "133810" },
+        #region uitsluiting kiesrecht
+        { "uitsluitingKiesrecht", $"{ElementNrUitgeslotenVanKiesrecht} {ElementNrEinddatumUitsluitingKiesrecht}" },
+        { "uitsluitingKiesrecht.uitgeslotenVanKiesrecht", ElementNrUitgeslotenVanKiesrecht },
         { "uitsluitingKiesrecht.einddatum", ElementNrEinddatumUitsluitingKiesrecht },
         { "uitsluitingKiesrecht.einddatum.langFormaat", ElementNrEinddatumUitsluitingKiesrecht },
         { "uitsluitingKiesrecht.einddatum.type", ElementNrEinddatumUitsluitingKiesrecht },
@@ -416,9 +505,11 @@ public static class Constanten
         { "uitsluitingKiesrecht.einddatum.onbekend", ElementNrEinddatumUitsluitingKiesrecht },
         { "uitsluitingKiesrecht.einddatum.jaar", ElementNrEinddatumUitsluitingKiesrecht },
         { "uitsluitingKiesrecht.einddatum.maand", ElementNrEinddatumUitsluitingKiesrecht },
+        #endregion
 
-        { "verblijfplaats.type", "081110 081210 081310" },
-        { "verblijfplaats.type-protocollering", "PAVP02" },
+        #region verblijfplaats
+        { "verblijfplaats.type", $"{ElementNrStraatnaam} {ElementNrLocatiebeschrijving} {ElementNrVerblijfplaatsLand}" },
+        { "verblijfplaats.type-protocollering", ElementNrVerblijfplaatsType },
         { "verblijfplaats.functieAdres", ElementNrFunctieAdres },
         { "verblijfplaats.functieAdres.code", ElementNrFunctieAdres },
         { "verblijfplaats.functieAdres.omschrijving", ElementNrFunctieAdres },
@@ -429,25 +520,25 @@ public static class Constanten
         { "verblijfplaats.datumVan.jaar", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaats.datumVan.maand", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaats.datumVan.onbekend", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.verblijfadres.korteStraatnaam", "081110" },
-        { "verblijfplaats.verblijfadres.officieleStraatnaam", "081115" },
-        { "verblijfplaats.verblijfadres.huisnummer", "081120" },
-        { "verblijfplaats.verblijfadres.huisletter", "081130" },
-        { "verblijfplaats.verblijfadres.huisnummertoevoeging", "081140" },
+        { "verblijfplaats.verblijfadres.korteStraatnaam", ElementNrStraatnaam },
+        { "verblijfplaats.verblijfadres.officieleStraatnaam", ElementNrNaamOpenbareRuimte },
+        { "verblijfplaats.verblijfadres.huisnummer", ElementNrHuisnummer },
+        { "verblijfplaats.verblijfadres.huisletter", ElementNrHuisletter },
+        { "verblijfplaats.verblijfadres.huisnummertoevoeging", ElementNrHuisnummertoevoeging },
         { "verblijfplaats.verblijfadres.aanduidingBijHuisnummer", ElementNrAanduidingBijHuisnummer },
         { "verblijfplaats.verblijfadres.aanduidingBijHuisnummer.code", ElementNrAanduidingBijHuisnummer },
         { "verblijfplaats.verblijfadres.aanduidingBijHuisnummer.omschrijving", ElementNrAanduidingBijHuisnummer },
-        { "verblijfplaats.verblijfadres.postcode", "081160" },
-        { "verblijfplaats.verblijfadres.woonplaats", "081170" },
-        { "verblijfplaats.verblijfadres.locatiebeschrijving", "081210" },
+        { "verblijfplaats.verblijfadres.postcode", ElementNrPostcode },
+        { "verblijfplaats.verblijfadres.woonplaats", ElementNrWoonplaats },
+        { "verblijfplaats.verblijfadres.locatiebeschrijving", ElementNrLocatiebeschrijving },
         { "verblijfplaats.verblijfadres.land", ElementNrVerblijfplaatsLand },
         { "verblijfplaats.verblijfadres.land.code", ElementNrVerblijfplaatsLand },
         { "verblijfplaats.verblijfadres.land.omschrijving", ElementNrVerblijfplaatsLand },
-        { "verblijfplaats.verblijfadres.regel1", "081330" },
-        { "verblijfplaats.verblijfadres.regel2", "081340" },
+        { "verblijfplaats.verblijfadres.regel1", ElementNrVerblijfplaatsRegel1 },
+        { "verblijfplaats.verblijfadres.regel2", ElementNrVerblijfplaatsRegel2 },
         { "verblijfplaats.verblijfadres.regel3", ElementNrVerblijfplaatsRegel3 },
-        { "verblijfplaats.adresseerbaarObjectIdentificatie", "081180" },
-        { "verblijfplaats.nummeraanduidingIdentificatie", "081190" },
+        { "verblijfplaats.adresseerbaarObjectIdentificatie", ElementNrAdresseerbaarObjectIdentificatie },
+        { "verblijfplaats.nummeraanduidingIdentificatie", ElementNrNummeraanduidingIdentificatie },
         { "verblijfplaats.datumIngangGeldigheid", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.datumIngangGeldigheid.type", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.datumIngangGeldigheid.datum", ElementNrDatumIngangGeldigheidVerblijfplaats },
@@ -455,12 +546,12 @@ public static class Constanten
         { "verblijfplaats.datumIngangGeldigheid.jaar", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.datumIngangGeldigheid.maand", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.datumIngangGeldigheid.onbekend", ElementNrDatumIngangGeldigheidVerblijfplaats },
-        { "verblijfplaats.verblijfadres", "081110 081115 081120 081130 081140 081150 081160 081170 081210 081310 081330 081340 081350" },
-        { "verblijfplaats", "081010 081110 081115 081120 081130 081140 081150 081160 081170 081180 081190 081210 081310 081330 081340 081350 088510 PAVP01" },
-        { "verblijfplaats-protocollering", "081010 081110 081115 081120 081130 081140 081150 081160 081170 081180 081190 081210 081310 081330 081340 081350 088510 PAVP01 PAVP02" },
+        { "verblijfplaats.verblijfadres", VerblijfplaatsVerblijfadresElementen },
+        { "verblijfplaats", VerblijfplaatsElementen },
+        { "verblijfplaats-protocollering", $"{VerblijfplaatsElementen} {ElementNrVerblijfplaatsType}" },
 
-        { "verblijfplaatsBinnenland.type", "081110 081210" },
-        { "verblijfplaatsBinnenland.type-protocollering", "PAVP02" },
+        { "verblijfplaatsBinnenland.type", $"{ElementNrStraatnaam} {ElementNrLocatiebeschrijving}" },
+        { "verblijfplaatsBinnenland.type-protocollering", ElementNrVerblijfplaatsType },
         { "verblijfplaatsBinnenland.functieAdres", ElementNrFunctieAdres },
         { "verblijfplaatsBinnenland.functieAdres.code", ElementNrFunctieAdres },
         { "verblijfplaatsBinnenland.functieAdres.omschrijving", ElementNrFunctieAdres },
@@ -471,19 +562,19 @@ public static class Constanten
         { "verblijfplaatsBinnenland.datumVan.jaar", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaatsBinnenland.datumVan.maand", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaatsBinnenland.datumVan.onbekend", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.verblijfadres.korteStraatnaam", "081110" },
-        { "verblijfplaatsBinnenland.verblijfadres.officieleStraatnaam", "081115" },
-        { "verblijfplaatsBinnenland.verblijfadres.huisnummer", "081120" },
-        { "verblijfplaatsBinnenland.verblijfadres.huisletter", "081130" },
-        { "verblijfplaatsBinnenland.verblijfadres.huisnummertoevoeging", "081140" },
+        { "verblijfplaatsBinnenland.verblijfadres.korteStraatnaam", ElementNrStraatnaam },
+        { "verblijfplaatsBinnenland.verblijfadres.officieleStraatnaam", ElementNrNaamOpenbareRuimte },
+        { "verblijfplaatsBinnenland.verblijfadres.huisnummer", ElementNrHuisnummer },
+        { "verblijfplaatsBinnenland.verblijfadres.huisletter", ElementNrHuisletter },
+        { "verblijfplaatsBinnenland.verblijfadres.huisnummertoevoeging", ElementNrHuisnummertoevoeging },
         { "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer", ElementNrAanduidingBijHuisnummer },
         { "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer.code", ElementNrAanduidingBijHuisnummer },
         { "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer.omschrijving", ElementNrAanduidingBijHuisnummer },
-        { "verblijfplaatsBinnenland.verblijfadres.postcode", "081160" },
-        { "verblijfplaatsBinnenland.verblijfadres.woonplaats", "081170" },
-        { "verblijfplaatsBinnenland.verblijfadres.locatiebeschrijving", "081210" },
-        { "verblijfplaatsBinnenland.adresseerbaarObjectIdentificatie", "081180" },
-        { "verblijfplaatsBinnenland.nummeraanduidingIdentificatie", "081190" },
+        { "verblijfplaatsBinnenland.verblijfadres.postcode", ElementNrPostcode },
+        { "verblijfplaatsBinnenland.verblijfadres.woonplaats", ElementNrWoonplaats },
+        { "verblijfplaatsBinnenland.verblijfadres.locatiebeschrijving", ElementNrLocatiebeschrijving },
+        { "verblijfplaatsBinnenland.adresseerbaarObjectIdentificatie", ElementNrAdresseerbaarObjectIdentificatie },
+        { "verblijfplaatsBinnenland.nummeraanduidingIdentificatie", ElementNrNummeraanduidingIdentificatie },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.type", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.datum", ElementNrDatumIngangGeldigheidVerblijfplaats },
@@ -491,11 +582,13 @@ public static class Constanten
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.jaar", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.maand", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.onbekend", ElementNrDatumIngangGeldigheidVerblijfplaats },
-        { "verblijfplaatsBinnenland.verblijfadres", "081110 081115 081120 081130 081140 081150 081160 081170 081210" },
-        { "verblijfplaatsBinnenland", "081010 081110 081115 081120 081130 081140 081150 081160 081170 081180 081190 081210 088510 PAVP01" },
-        { "verblijfplaatsBinnenland-protocollering", "081010 081110 081115 081120 081130 081140 081150 081160 081170 081180 081190 081210 088510 PAVP01 PAVP02" },
+        { "verblijfplaatsBinnenland.verblijfadres", VerblijfplaatsBinnenlandVerblijfadresElementen },
+        { "verblijfplaatsBinnenland", VerblijfplaatsBinnenlandElementen },
+        { "verblijfplaatsBinnenland-protocollering", $"{VerblijfplaatsBinnenlandElementen} {ElementNrVerblijfplaatsType}" },
+        #endregion
 
-        { "verblijfstitel", "103910 103920 103930" },
+        #region verblijfstitel
+        { "verblijfstitel", $"{ElementNrAanduidingVerblijfstitel} {ElementNrDatumEindeVerblijfstitel} {ElementNrDatumIngangVerblijfstitel}" },
         { "verblijfstitel.aanduiding", ElementNrAanduidingVerblijfstitel },
         { "verblijfstitel.aanduiding.code", ElementNrAanduidingVerblijfstitel },
         { "verblijfstitel.aanduiding.omschrijving", ElementNrAanduidingVerblijfstitel },
@@ -513,6 +606,7 @@ public static class Constanten
         { "verblijfstitel.datumIngang.onbekend", ElementNrDatumIngangVerblijfstitel },
         { "verblijfstitel.datumIngang.jaar", ElementNrDatumIngangVerblijfstitel },
         { "verblijfstitel.datumIngang.maand", ElementNrDatumIngangVerblijfstitel },
+        #endregion
 
     };
 }
