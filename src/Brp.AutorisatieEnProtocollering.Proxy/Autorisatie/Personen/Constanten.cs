@@ -348,6 +348,7 @@ public static class Constanten
 
         #region naam
         { "naam", $"{NaamBeperktElementen} {ElementNrAanduidingNaamgebruik}" },
+        { "naam-beperkt", NaamBeperktElementen },
         { "naam-beperkt-protocollering", NaamBeperktElementen },
         { "naam.voornamen", ElementNrVoornamen },
         { "naam.adellijkeTitelPredicaat", ElementNrAdellijkeTitelPredicaat },
