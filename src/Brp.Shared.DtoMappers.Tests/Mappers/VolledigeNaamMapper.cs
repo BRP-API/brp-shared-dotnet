@@ -35,6 +35,20 @@ public class VolledigeNaamMapper
     }
 
     [Fact]
+    public void VoorvoegselStandaardGeslachtsnaam()
+    {
+        var naam = new NaamBasis()
+        {
+            Voornamen = "Jan",
+            Voorvoegsel = "van den",
+            Geslachtsnaam = "."
+        };
+        Waardetabel? geslacht = null;
+
+        naam.VolledigeNaam(geslacht).Should().Be("Jan van den");
+    }
+
+    [Fact]
     public void Naamketen()
     {
         var naam = new NaamBasis()
