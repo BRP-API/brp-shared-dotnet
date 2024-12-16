@@ -2,32 +2,34 @@
 using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
-using Brp.Shared.Infrastructure.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Bewoningen;
 
 public class AutorisatieService : AbstractAutorisatieService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     public AutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
-        : base(serviceProvider)
+        : base(serviceProvider, httpContextAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
-        var autorisatieLog = _httpContextAccessor.HttpContext?.GetAutorisatieLog();
+        if (AfnemerIsGemeente(afnemerCode, gemeenteCode))
+        {
+            var input = JObject.Parse(requestBody);
 
-        if (!gemeenteCode.HasValue)
+            var adressen = GetAdressen(input.WaardeAdresseerbaarObjectIdentificatieParameter()!);
+            if (adressen.Any() && !AdressenLiggenInGemeente(adressen, gemeenteCode))
+            {
+                return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
+                                     detail: "Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen.",
+                                     code: "unauthorized");
+            }
+        }
+        else
         {
             var autorisatie = GetActueleAutorisatieFor(afnemerCode);
-            if (autorisatie != null && autorisatieLog != null)
-            {
-                autorisatieLog.Regel = autorisatie;
-            }
 
             if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
             {
@@ -42,23 +44,6 @@ public class AutorisatieService : AbstractAutorisatieService
                                      reason: "geen gemeente");
             }
         }
-        else
-        {
-            if(autorisatieLog != null)
-            {
-                autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
-            }
-
-            var input = JObject.Parse(requestBody);
-
-            var adressen = GetAdressen(input.WaardeAdresseerbaarObjectIdentificatieParameter()!);
-            if (adressen.Any() && !adressen.Any(a => a.GemeenteCode == gemeenteCode))
-            {
-                return NotAuthorized(title: "U bent niet geautoriseerd voor deze vraag.",
-                                     detail: "Je mag alleen bewoning van adresseerbare objecten binnen de eigen gemeente raadplegen.",
-                                     code: "unauthorized");
-            }
-        }
 
         return Authorized();
     }
@@ -70,5 +55,10 @@ public class AutorisatieService : AbstractAutorisatieService
         var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         return appDbContext.Adressen.Where(a => a.AdresseerbaarObjectIdentificatie == adresseerbaarObjectIdentificatie).ToList();
+    }
+
+    private static bool AdressenLiggenInGemeente(IEnumerable<Data.Adres> adressen, int? gemeenteCode)
+    {
+        return adressen.Any(a => a.GemeenteCode == gemeenteCode);
     }
 }

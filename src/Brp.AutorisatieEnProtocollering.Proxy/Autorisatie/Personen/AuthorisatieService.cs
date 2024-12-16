@@ -1,6 +1,5 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
-using Brp.Shared.Infrastructure.Logging;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
@@ -8,32 +7,19 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
 
 public class AuthorisatieService : AbstractAutorisatieService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     public AuthorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
-        : base(serviceProvider)
+        : base(serviceProvider, httpContextAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
     {
-        var autorisatieLog = _httpContextAccessor.HttpContext?.GetAutorisatieLog();
-
-        if (gemeenteCode.HasValue)
+        if (AfnemerIsGemeente(afnemerCode, gemeenteCode))
         {
-            if (autorisatieLog != null)
-            {
-                autorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
-            }
             return Authorized();
         }
 
         var autorisatie = GetActueleAutorisatieFor(afnemerCode);
-        if (autorisatie != null && autorisatieLog != null)
-        {
-            autorisatieLog.Regel = autorisatie;
-        }
 
         if (GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(autorisatie))
         {

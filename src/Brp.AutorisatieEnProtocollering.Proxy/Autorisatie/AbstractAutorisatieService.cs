@@ -1,5 +1,6 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Brp.Shared.Infrastructure.Logging;
 using Microsoft.FeatureManagement;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
@@ -7,13 +8,32 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 public abstract class AbstractAutorisatieService : IAuthorisation
 {
     protected readonly IServiceProvider _serviceProvider;
+    protected readonly IHttpContextAccessor _httpContextAccessor;
+    private AutorisatieLog? _autorisatieLog;
+    protected AutorisatieLog? AutorisatieLog => _autorisatieLog ??= _httpContextAccessor.HttpContext?.GetAutorisatieLog();
 
-    protected AbstractAutorisatieService(IServiceProvider serviceProvider)
+    protected AbstractAutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
     {
         _serviceProvider = serviceProvider;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public virtual AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody) => throw new NotImplementedException();
+
+    protected bool AfnemerIsGemeente(int afnemerCode, int? gemeenteCode)
+    {
+        if (!gemeenteCode.HasValue)
+        {
+            return false;
+        }
+
+        if(AutorisatieLog != null)
+        {
+            AutorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
+        }
+
+        return true;
+    }
 
     protected Data.Autorisatie? GetActueleAutorisatieFor(int afnemerCode)
     {
@@ -25,7 +45,7 @@ public abstract class AbstractAutorisatieService : IAuthorisation
 
         var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        return gebruikMeestRecenteAutorisatie
+        var retval = gebruikMeestRecenteAutorisatie
             ? appDbContext.Autorisaties
                           .Where(a => a.AfnemerCode == afnemerCode)
                           .OrderByDescending(a => a.TabelRegelStartDatum)
@@ -34,6 +54,13 @@ public abstract class AbstractAutorisatieService : IAuthorisation
                           .FirstOrDefault(a => a.AfnemerCode == afnemerCode &&
                                                a.TabelRegelStartDatum <= Vandaag() &&
                                                (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
+
+        if(AutorisatieLog != null && retval != null)
+        {
+            AutorisatieLog.Regel = retval;
+        }
+
+        return retval;
     }
 
     private static long Vandaag()
