@@ -106,7 +106,7 @@ jobs:
 
       - name: Valideer functionele specs
         run: |
-          ./scripts/specs-verify.sh
+          ./scripts/specs-verify.sh >> $GITHUB_STEP_SUMMARY
 
       - name: Stop containers
         if: always()
