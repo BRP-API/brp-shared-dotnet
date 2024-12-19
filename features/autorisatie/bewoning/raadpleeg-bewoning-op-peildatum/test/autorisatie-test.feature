@@ -31,7 +31,7 @@ Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en s
       | type                             | BewoningMetPeildatum |
       | peildatum                        | 2022-01-01           |
       | adresseerbaarObjectIdentificatie | 0800010000000001     |
-      Dan heeft de response 1 bewoning
+      Dan heeft de response 0 bewoningen
 
     @fout-case
     Scenario: Gemeente raadpleegt de bewoning van een adresseerbaar object buiten de gemeente waarvan de bewoner is nu wel ingeschreven in de gemeente

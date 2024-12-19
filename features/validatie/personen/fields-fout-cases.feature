@@ -261,6 +261,26 @@ Regel: De fields parameter bevat veld paden die verwijzen naar een bestaand veld
     | fields | fields[1] | Parameter bevat een niet bestaande veldnaam. |
 
   @fout-case
+  Scenario: De fields parameter bevat het pad naar een bestaand veld dat niet kan worden opgevraagd bij het gebruikte zoek personen operatie
+    Als personen wordt gezocht met de volgende parameters
+    | naam          | waarde                              |
+    | type          | ZoekMetGeslachtsnaamEnGeboortedatum |
+    | geslachtsnaam | Kierkegaard                         |
+    | geboortedatum | 1956-11-15                          |
+    | fields        | burgerservicenummer,gezag           |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+    | title    | Een of meerdere parameters zijn niet correct.               |
+    | status   | 400                                                         |
+    | detail   | De foutieve parameter(s) zijn: fields[1].                   |
+    | code     | paramsValidation                                            |
+    | instance | /haalcentraal/api/brp/personen                              |
+    En heeft de response invalidParams met de volgende gegevens
+    | code   | name      | reason                                       |
+    | fields | fields[1] | Parameter bevat een niet bestaande veldnaam. |
+
+  @fout-case
   Abstract Scenario: Automatisch geleverd veld <fields> mag niet worden gevraagd bij raadplegen
     Als personen wordt gezocht met de volgende parameters
     | naam                | waarde                          |

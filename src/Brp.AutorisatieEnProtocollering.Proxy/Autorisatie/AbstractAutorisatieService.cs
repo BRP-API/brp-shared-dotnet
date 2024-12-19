@@ -1,20 +1,39 @@
 ﻿using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Brp.Shared.Infrastructure.Logging;
 using Microsoft.FeatureManagement;
-using System.Text.RegularExpressions;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 
 public abstract class AbstractAutorisatieService : IAuthorisation
 {
     protected readonly IServiceProvider _serviceProvider;
+    protected readonly IHttpContextAccessor _httpContextAccessor;
+    private AutorisatieLog? _autorisatieLog;
+    protected AutorisatieLog? AutorisatieLog => _autorisatieLog ??= _httpContextAccessor.HttpContext?.GetAutorisatieLog();
 
-    protected AbstractAutorisatieService(IServiceProvider serviceProvider)
+    protected AbstractAutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
     {
         _serviceProvider = serviceProvider;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public virtual AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody) => throw new NotImplementedException();
+
+    protected bool AfnemerIsGemeente(int afnemerCode, int? gemeenteCode)
+    {
+        if (!gemeenteCode.HasValue)
+        {
+            return false;
+        }
+
+        if(AutorisatieLog != null)
+        {
+            AutorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
+        }
+
+        return true;
+    }
 
     protected Data.Autorisatie? GetActueleAutorisatieFor(int afnemerCode)
     {
@@ -26,7 +45,7 @@ public abstract class AbstractAutorisatieService : IAuthorisation
 
         var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        return gebruikMeestRecenteAutorisatie
+        var retval = gebruikMeestRecenteAutorisatie
             ? appDbContext.Autorisaties
                           .Where(a => a.AfnemerCode == afnemerCode)
                           .OrderByDescending(a => a.TabelRegelStartDatum)
@@ -35,6 +54,13 @@ public abstract class AbstractAutorisatieService : IAuthorisation
                           .FirstOrDefault(a => a.AfnemerCode == afnemerCode &&
                                                a.TabelRegelStartDatum <= Vandaag() &&
                                                (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
+
+        if(AutorisatieLog != null && retval != null)
+        {
+            AutorisatieLog.Regel = retval;
+        }
+
+        return retval;
     }
 
     private static long Vandaag()
@@ -42,19 +68,13 @@ public abstract class AbstractAutorisatieService : IAuthorisation
         return int.Parse(DateTime.Today.ToString("yyyyMMdd"));
     }
 
-    protected static IEnumerable<string> BepaalNietGeautoriseerdeElementNamen(IEnumerable<string> geautoriseerdeElementen,
+    protected virtual IEnumerable<string> BepaalNietGeautoriseerdeElementNamen(IEnumerable<string> geautoriseerdeElementen,
                                                                               IEnumerable<(string Name, string[] Value)> gevraagdeElementen)
     {
         var retval = new List<string>();
 
         foreach (var (Name, Value) in gevraagdeElementen)
         {
-            if (Value.Length == 0 && Name == "ouders.ouderAanduiding" &&
-                !IsGeautoriseerdVoorOuderAanduidingVraag(geautoriseerdeElementen))
-            {
-                retval.Add(Name);
-            }
-         
             foreach (var gevraagdElementNr in Value)
             {
                 if (!geautoriseerdeElementen.Any(x => gevraagdElementNr == x.PrefixWithZero()))
@@ -65,30 +85,6 @@ public abstract class AbstractAutorisatieService : IAuthorisation
         }
 
         return retval.Distinct();
-    }
-
-    private static bool IsGeautoriseerdVoorOuderAanduidingVraag(IEnumerable<string> geautoriseerdeElementen)
-    {
-        var ouder1Regex = new Regex(@"^(02(01|02|03|04|62)\d{2}|PAOU01)$");
-        var ouder2Regex = new Regex(@"^(03(01|02|03|04|62)\d{2}|PAOU01)$");
-
-        var isGeautoriseerdVoorOuder1 = false;
-        var isGeautoriseerdVoorOuder2 = false;
-
-        foreach (var elementNr in geautoriseerdeElementen)
-        {
-            var prefixedElementNr = elementNr.PrefixWithZero();
-            if (ouder1Regex.IsMatch(prefixedElementNr))
-            {
-                isGeautoriseerdVoorOuder1 = true;
-            }
-            if (ouder2Regex.IsMatch(prefixedElementNr))
-            {
-                isGeautoriseerdVoorOuder2 = true;
-            }
-        }
-
-        return isGeautoriseerdVoorOuder1 && isGeautoriseerdVoorOuder2;
     }
 
     protected static bool GeenAutorisatieOfNietGeautoriseerdVoorAdHocGegevensverstrekking(Data.Autorisatie? autorisatie)
