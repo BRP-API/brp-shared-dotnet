@@ -431,6 +431,85 @@ Deze paragraaf bevat voorbeeld log regels van de Autorisatie en Protocollering m
 }
 ```
 
+### Voorbeeld logregel voor de gezag api
+
+```
+{
+    "@timestamp": "2025-01-06T16:04:45.530961543Z",
+    "ecs.version": "8.11",
+    "message": "HTTP POST /api/v1/opvragenBevoegdheidTotGezag responded 200 in 399 ms",
+    "log.logger": "nl.rijksoverheid.mev.logging.LoggingFilter",
+    "process.thread.name": "http-nio-8080-exec-3",
+    "log.level": "INFO",
+    "host.architecture": "amd64",
+    "service.type": "brp-api",
+    "host.os.type": "Linux",
+    "service.name": "brp-api-gezag",
+    "service.version": "1.7.0-20241220123107",
+    "host.os.kernel": "6.10.4-linuxkit",
+    "process.pid": "1",
+    "event.dataset": "brp-api-gezag",
+    "event.timezone": "GMT",
+    "event.duration": "399441958",
+	  "metadata": {
+  		"request.body": {
+  			"burgerservicenummer": [
+  				"999970124"
+  			]
+  		},
+  		"request.headers": {
+  			"content-length": "44",
+  			"postman-token": "9ae18a93-e3e7-4c7b-9f9a-bbdf22fec9cc",
+  			"host": "localhost:5003",
+  			"content-type": "application/json",
+  			"connection": "keep-alive",
+  			"accept-encoding": "gzip, deflate, br",
+  			"user-agent": "PostmanRuntime/7.43.0",
+  			"accept": "*/*"
+  		},
+  		"gezag_resultaten": [
+  			{
+  				"plId": 1645,
+  				"type": "GezagNietVanToepassing*",
+  				"toelichting": "Ingezeten - meerderjarig - soort gezag is NVT - gezag is niet van toepassing",
+  				"route": "2m"
+  			}
+  		],
+  		"pl_ids": [
+  			1645,
+  			1645,
+  			1646,
+  			1648,
+  			1667,
+  			1645,
+  			1668,
+  			1649,
+  			1645,
+  			1647,
+  			1645,
+  			1646
+  		],
+  		"response.headers": {
+  			"Keep-Alive": "timeout=60",
+  			"Connection": "keep-alive",
+  			"Content-Length": "529",
+  			"Date": "Mon, 06 Jan 2025 16:04:45 GMT",
+  			"Content-Type": "application/json"
+  		}
+  	},
+    "url.path": "/api/v1/opvragenBevoegdheidTotGezag",
+    "event.category": "api",
+    "event.end": "2025-01-06T16:04:45.528811876Z",
+    "request.method": "POST",
+    "response.mime_type": "application/json",
+    "event.start": "2025-01-06T16:04:45.129369918Z",
+    "event.kind": "event",
+    "request.mime_type": "application/json",
+    "response.status_code": "200",
+    "labels.log_type": "secure"
+}
+```
+
 ### Voorbeeld logregel bij een request waar een onverwachte fout is opgetreden
 
 - informatie over de exceptie wordt weggeschreven in het error veld
