@@ -6,7 +6,7 @@ voorstel
 
 ## Context
 
-Om makkelijk te kunnen monitoren of de microservices van de BRP API goed functioneren en goed blijft functioneren, is het noodzakelijk dat de BRP API microservices gegevens hiervoor vastlegt. Een best practice om dit te realiseren is om de benodigde gegevens te loggen als gestructureerde data in json formaat (structured logging).
+Om makkelijk te kunnen monitoren of de microservices van de BRP API goed functioneren en goed blijven functioneren, is het noodzakelijk dat de BRP API microservices gegevens hiervoor vastlegt. Een best practice om dit te realiseren is om de benodigde gegevens te loggen als gestructureerde data in json formaat (structured logging).
 
 De logs van de BRP APIs zullen worden verwerkt met behulp van producten uit de ELK-suite. Om de log gegevens makkelijker te kunnen verwerken en beter te kunnen analyseren, te visualiseren en te correleren is het noodzakelijk dat de logs van de BRP API microservices zich conformeren aan één formaat. De [Elastic Common Schema](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html) is hiervoor ontwikkeld en wordt beschouwd als het standaard formaat voor het verwerken van logs met behulp van de ELK-suite.
 
@@ -19,13 +19,13 @@ Om log regels gestructureerd conform het Elastic Common Schema te formatteren, m
 
 Het gebruik van deze libraries maakt het mogelijk om met een beperkte hoeveelheid custom code (voornamelijk code om Serilog en de ECS Text Formatter te configureren) gestructureerd te kunnen loggen conform de Elastic Common Schema specificatie. Voorbeelden van log regels die zijn gegenereerd door Serilog volgens de Elastic Common Schema zijn te vinden in de [Voorbeeld log regels](#voorbeeld-log-regels) paragraaf. De log regels en de velden in een log regel zijn, met uitzondering van de request.body.content, response.body.content en brp velden, automatisch gegenereerd en gevuld door Serilog met de Elastic Common Schema Serilog Text Formatter. 
 
-Met Serilog kunnen .NET objecten als JSON objecten worden toegevoegd aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar log regels én in log regels kan worden gezocht op basis van de veld namen en waarden binnen zo'n destructured object in plaats van door de inhoud van de log regels te parsen. Het brp veld is het destructured object waarin de BRP API microservices hun log gegevens vastleggen.
+Met Serilog kunnen .NET objecten als JSON objecten worden toegevoegd aan een log regel (= destructuring) in plaats van geserialiseerd als tekst. Het grote voordeel hiervan is dat er naar log regels én in log regels kan worden gezocht op basis van de veld namen en waarden binnen zo'n destructured object in plaats van door de inhoud van de log regels te parsen.
 
 ### Afspraken
 
 - Voor elke request/response wordt ten hoogste één log regel gegenereerd
-- Een health check request/response wordt niet gelogd
 - De volgende log levels worden gehanteerd voor een log regel:
+  - verbose voor een health check response
   - information voor een 2xx response
   - warning voor een 4xx response
   - error voor een 5xx response
@@ -33,6 +33,36 @@ Met Serilog kunnen .NET objecten als JSON objecten worden toegevoegd aan een log
 - Er worden twee log stromen gebruikt:
   - secured. Log regels binnen deze stroom mogen privacy gevoelige informatie bevatten zodat issues die optreden in een specifieke situatie kunnen worden opgelost zonder de situatie opnieuw te moeten reproduceren 
   - unsecured. Log regels binnen deze stroom mogen geen privacy gevoelige informatie bevatten. De inhoud van privacy gevoelige velden moeten worden gemaskeerd
+
+Om te voorkomen dat in elke BRP API microservice, geïmplementeerd in .NET, deze afspraken opnieuw wordt geïmplementeerd, zijn er helper classes geïmplementeerd die kunnen worden hergebruikt om conform de gemaakte afspraken loggen. Deze helper classes zijn te vinden zijn in de Logging map van het Brp.Shared.Infrastructure library project.
+
+## Custom log regel velden
+
+Custom log regel velden worden door de [Elastic Common Schema Serilog Text Formatter](https://github.com/elastic/ecs-dotnet/tree/main/src/Elastic.CommonSchema.Serilog) weggeschreven onder het **labels** veld (string) of onder het **metadata** veld (object).
+
+In de volgende paragrafen wordt een overzicht gegeven van de labels en metadata velden.
+
+### labels velden
+
+| naam      | type      | omschrijving |
+| --------- | --------- | ------------ |
+| log_type  | string    | waarde die aangeeft of velden met privacy gevoelige gegevens (PII) zijn gemaskeerd.<br>- secure. Velden met PII gegevens zijn niet gemaskeerd<br>- insecure. Velden met PII gegevens zijn gemaskeerd |
+
+### metadata velden
+
+| naam                             | type   | omschrijving |
+| -------------------------------- | ------ | ------------ |
+| autorisatie.gemeente             | string | bij gemeente als afnemer bevat dit veld de melding: afnemer: [afnemer code] is gemeente '[gemeente code]' |
+| autorisatie.regel                | object | autorisatie gegevens die zijn gebruikt om de afnemer te autoriseren |
+| autorisatie.niet_geautoriseerd   | string | de reden waarom de afnemer niet is geautoriseerd |
+| autorisatie.niet_geauthentiseerd | string | de melding 'Forbidden for unknown reason' als de afnemer om onbekende reden niet kan worden geauthenticeerd |
+| autorisatie.exceptie             | object | het exceptie object dat wordt gegooid als de afnemer niet kan worden geauthentiseerd |
+| autorisatie.claims               | lijst  | de claims die met de request zijn meegestuurd |
+| protocollering                   | lijst  | de pl_id van de personen van wie gegevens zijn geleverd in de response |
+| request.body                     | object | de input parameters die meegestuurd met de request |
+| request.headers                  | lijst  | de headers die zijn meegestuurd met de request |
+| response.body                    | object | het problem details object dat wordt meegestuurd in de response wanneer de request niet kan worden afgehandeld |
+| response.headers                 | lijst  | de headers die zijn meegestuurd met de response |
 
 ## Voorbeeld log regels
 
