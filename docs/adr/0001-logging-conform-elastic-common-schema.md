@@ -44,25 +44,26 @@ In de volgende paragrafen wordt een overzicht gegeven van de labels en metadata 
 
 ### labels velden
 
-| naam      | type      | omschrijving |
-| --------- | --------- | ------------ |
-| log_type  | string    | waarde die aangeeft of velden met privacy gevoelige gegevens (PII) zijn gemaskeerd.<br>- secure. Velden met PII gegevens zijn niet gemaskeerd<br>- insecure. Velden met PII gegevens zijn gemaskeerd |
+| naam      | type      | omschrijving | gelogd door |
+| --------- | --------- | ------------ | ----------- |
+| log_type  | string    | waarde die aangeeft of velden met privacy gevoelige gegevens (PII) zijn gemaskeerd.<br>- secure. Velden met PII gegevens zijn niet gemaskeerd<br>- insecure. Velden met PII gegevens zijn gemaskeerd | alle services |
 
 ### metadata velden
 
-| naam                             | type   | omschrijving |
-| -------------------------------- | ------ | ------------ |
-| autorisatie.gemeente             | string | bij gemeente als afnemer bevat dit veld de melding: afnemer: [afnemer code] is gemeente '[gemeente code]' |
-| autorisatie.regel                | object | autorisatie gegevens die zijn gebruikt om de afnemer te autoriseren |
-| autorisatie.niet_geautoriseerd   | string | de reden waarom de afnemer niet is geautoriseerd |
-| autorisatie.niet_geauthentiseerd | string | de melding 'Forbidden for unknown reason' als de afnemer om onbekende reden niet kan worden geauthenticeerd |
-| autorisatie.exceptie             | object | het exceptie object dat wordt gegooid als de afnemer niet kan worden geauthentiseerd |
-| autorisatie.claims               | lijst  | de claims die met de request zijn meegestuurd |
-| protocollering                   | lijst  | de pl_id van de personen van wie gegevens zijn geleverd in de response |
-| request.body                     | object | de input parameters die meegestuurd met de request |
-| request.headers                  | lijst  | de headers die zijn meegestuurd met de request |
-| response.body                    | object | het problem details object dat wordt meegestuurd in de response wanneer de request niet kan worden afgehandeld |
-| response.headers                 | lijst  | de headers die zijn meegestuurd met de response |
+| naam                             | type   | omschrijving | gelogd door |
+| -------------------------------- | ------ | ------------ | ----------- |
+| autorisatie                      | object | bevat de volgende velden:<br>- gemeente<br>- regel<br>- niet_geautoriseerd<br>- niet_geauthenticeerd<br>- exceptie<br>- claims | Autorisatie & Protocollering |
+| autorisatie.gemeente             | string | bij gemeente als afnemer bevat dit veld de melding: afnemer: [afnemer code] is gemeente '[gemeente code]' | |
+| autorisatie.regel                | object | autorisatie gegevens die zijn gebruikt om de afnemer te autoriseren | |
+| autorisatie.niet_geautoriseerd   | string | de reden waarom de afnemer niet is geautoriseerd | |
+| autorisatie.niet_geauthentiseerd | string | de melding 'Forbidden for unknown reason' als de afnemer om onbekende reden niet kan worden geauthenticeerd | |
+| autorisatie.exceptie             | object | het exceptie object dat wordt gegooid als de afnemer niet kan worden geauthentiseerd | |
+| autorisatie.claims               | lijst  | de claims die met de request zijn meegestuurd | |
+| protocollering                   | lijst  | de pl_id van de personen van wie gegevens zijn geleverd in de response | Autorisatie & Protocollering |
+| request.body                     | object | de input parameters die meegestuurd met de request | alle services |
+| request.headers                  | lijst  | de headers die zijn meegestuurd met de request | alle services |
+| response.body                    | object | het problem details object dat wordt meegestuurd in de response wanneer de request niet kan worden afgehandeld | alle services |
+| response.headers                 | lijst  | de headers die zijn meegestuurd met de response | alle services |
 
 ## Voorbeeld log regels
 
