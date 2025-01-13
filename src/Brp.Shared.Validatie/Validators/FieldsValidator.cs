@@ -6,6 +6,8 @@ namespace Brp.Shared.Validatie.Validators;
 
 public class FieldsValidator : AbstractValidator<JObject>
 {
+    private const string ParameterNaam = "fields";
+
     const string RequiredErrorMessage = "required||Parameter is verplicht.";
     const string NotArrayErrorMessage = "array||Parameter is geen array.";
     const string MinItemsErrorMessage = "minItems||Array bevat minder dan {0} items.";
@@ -17,25 +19,25 @@ public class FieldsValidator : AbstractValidator<JObject>
 
     public FieldsValidator(IEnumerable<string> fieldNames, IEnumerable<string> notAllowedFieldNames, int maxNumberFields)
     {
-        RuleFor(x => x.GetValue("fields"))
+        RuleFor(x => x.GetValue(ParameterNaam))
             .Cascade(CascadeMode.Stop)
-            .NotNull().OverridePropertyName("fields").WithMessage(RequiredErrorMessage)
+            .NotNull().OverridePropertyName(ParameterNaam).WithMessage(RequiredErrorMessage)
             .When(x => x != null)
-                .Must(x => x!.Type == JTokenType.Array).OverridePropertyName("fields").WithMessage(NotArrayErrorMessage)
+                .Must(x => x!.Type == JTokenType.Array).OverridePropertyName(ParameterNaam).WithMessage(NotArrayErrorMessage)
         ;
 
-        When(x => x.GetValue("fields") != null &&
-                  x.GetValue("fields")!.Type == JTokenType.Array, () =>
+        When(x => x.GetValue(ParameterNaam) != null &&
+                  x.GetValue(ParameterNaam)!.Type == JTokenType.Array, () =>
         {
-            RuleFor(x => x.Value<JArray>("fields"))
+            RuleFor(x => x.Value<JArray>(ParameterNaam))
                 .Cascade(CascadeMode.Stop)
-                .Must(x => x!.Count > 0).OverridePropertyName("fields").WithMessage(string.Format(MinItemsErrorMessage, 1))
-                .Must(x => x!.Count <= maxNumberFields).OverridePropertyName("fields").WithMessage(string.Format(MaxItemsErrorMessage, maxNumberFields));
+                .Must(x => x!.Count > 0).OverridePropertyName(ParameterNaam).WithMessage(string.Format(MinItemsErrorMessage, 1))
+                .Must(x => x!.Count <= maxNumberFields).OverridePropertyName(ParameterNaam).WithMessage(string.Format(MaxItemsErrorMessage, maxNumberFields));
 
-            RuleForEach(x => x.Value<JArray>("fields")!.Select(y => (string?)y))
+            RuleForEach(x => x.Value<JArray>(ParameterNaam)!.Select(y => (string?)y))
                 .SetValidator(new FieldValidator(fieldNames, notAllowedFieldNames))
-                .When(x => x.Value<JArray>("fields")!.Count > 0 && x.Value<JArray>("fields")!.Count <= maxNumberFields)
-                .OverridePropertyName("fields");
+                .When(x => x.Value<JArray>(ParameterNaam)!.Count > 0 && x.Value<JArray>(ParameterNaam)!.Count <= maxNumberFields)
+                .OverridePropertyName(ParameterNaam);
         });
     }
 

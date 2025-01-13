@@ -5,6 +5,8 @@ namespace Brp.Shared.Validatie.Validators;
 
 public class VoornamenValidator : AbstractValidator<JObject>
 {
+    private const string ParameterNaam = "voornamen";
+
     const string RequiredErrorMessage = "required||Parameter is verplicht.";
     const string VoornamenPattern = @"^[a-zA-Z0-9À-ž \.\-\']{1,199}\*{0,1}$";
     const string VoornamenPatternErrorMessage = $"pattern||Waarde voldoet niet aan patroon {VoornamenPattern}.";
@@ -15,19 +17,19 @@ public class VoornamenValidator : AbstractValidator<JObject>
     {
         if (isVerplichtVeld)
         {
-            RuleFor(x => x.Value<string>("voornamen"))
+            RuleFor(x => x.Value<string>(ParameterNaam))
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage(RequiredErrorMessage)
                 .Matches(VoornamenVerplichtPattern).WithMessage(VoornamenVerplichtPatternErrorMessage)
-                .OverridePropertyName("voornamen");
+                .OverridePropertyName(ParameterNaam);
 
         }
         else
         {
-            RuleFor(x => x.Value<string>("voornamen"))
+            RuleFor(x => x.Value<string>(ParameterNaam))
                 .Cascade(CascadeMode.Stop)
                 .Matches(VoornamenPattern).WithMessage(VoornamenPatternErrorMessage)
-                .OverridePropertyName("voornamen");
+                .OverridePropertyName(ParameterNaam);
         }
     }
 }
