@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Brp.Shared.Infrastructure\Brp.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\Brp.Shared.Validatie\Brp.Shared.Validatie.csproj" />
   </ItemGroup>
   
 </Project>
