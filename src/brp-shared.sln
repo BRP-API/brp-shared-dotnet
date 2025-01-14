@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brp.Shared.DtoMappers.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brp.Shared.Validatie", "Brp.Shared.Validatie\Brp.Shared.Validatie.csproj", "{690CC6EB-29E3-4F80-88C4-721A9C57CFBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brp.Shared.Validatie.Tests", "Brp.Shared.Validatie.Tests\Brp.Shared.Validatie.Tests.csproj", "{CBF839F1-04EB-44A5-8B8F-E7E5D217A430}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{690CC6EB-29E3-4F80-88C4-721A9C57CFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690CC6EB-29E3-4F80-88C4-721A9C57CFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690CC6EB-29E3-4F80-88C4-721A9C57CFBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF839F1-04EB-44A5-8B8F-E7E5D217A430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF839F1-04EB-44A5-8B8F-E7E5D217A430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF839F1-04EB-44A5-8B8F-E7E5D217A430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF839F1-04EB-44A5-8B8F-E7E5D217A430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{2464F3AF-1A3A-434B-AFE4-12D370889855} = {61531A29-A03B-46F6-97BD-F5357290157F}
 		{6BC31C2B-C32E-43FC-AE8B-D565CC7C2E5A} = {61531A29-A03B-46F6-97BD-F5357290157F}
 		{690CC6EB-29E3-4F80-88C4-721A9C57CFBA} = {61531A29-A03B-46F6-97BD-F5357290157F}
+		{CBF839F1-04EB-44A5-8B8F-E7E5D217A430} = {61531A29-A03B-46F6-97BD-F5357290157F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8E938E-00E6-4134-AEEA-28DF2EB5F12A}
