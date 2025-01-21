@@ -16,6 +16,8 @@
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="4.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.29" />
     <PackageReference Include="Ocelot" Version="23.4.2" />
+     <!-- Include transitive dependencies explicitly to prevent high severity vulnerabilities -->
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
