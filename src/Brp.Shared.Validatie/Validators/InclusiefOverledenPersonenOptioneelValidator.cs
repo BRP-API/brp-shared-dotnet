@@ -10,7 +10,7 @@ public class InclusiefOverledenPersonenOptioneelValidator : AbstractValidator<JO
     public InclusiefOverledenPersonenOptioneelValidator()
     {
         RuleFor(x => x.Value<string>(ParameterNaam))
-            .Must(y => bool.TryParse(y, out var inclusiefOverledenPersonen)).WithMessage("boolean||Waarde is geen boolean.")
+            .Must(y => bool.TryParse(y, out var _)).WithMessage("boolean||Waarde is geen boolean.")
             .OverridePropertyName(ParameterNaam)
             .When(x => x.Properties().Any(p => p.Name == ParameterNaam));
     }
