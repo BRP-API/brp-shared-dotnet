@@ -4,7 +4,7 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
 
 public static class BuilderExtensions
 {
-    public static void SetupRequestValidation(this WebApplicationBuilder builder)
+    public static void SetupProtocollering(this WebApplicationBuilder builder)
     {
         builder.Services.AddKeyedTransient<IProtocollering, Bewoningen.ProtocolleringService>("bewoningen");
         builder.Services.AddKeyedTransient<IProtocollering, Personen.ProtocolleringService>("personen");
