@@ -12,4 +12,16 @@ public static class AutomapperUnderTestFactory
         });
         return config.CreateMapper();
     }
+
+    public static IMapper CreateSut<T1, T2>()
+        where T1 : Profile, new()
+        where T2 : Profile, new()
+    {
+        MapperConfiguration config = new(cfg =>
+        {
+            cfg.AddProfile<T1>();
+            cfg.AddProfile<T2>();
+        });
+        return config.CreateMapper();
+    }
 }
