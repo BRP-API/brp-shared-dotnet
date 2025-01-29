@@ -16,7 +16,7 @@ public class ZoekMetPostcodeEnHuisnummerQueryValidator : AbstractValidator<JObje
         Include(new NietGespecificeerdeParametersValidator(GespecificeerdeParameterNamen));
         Include(new FieldsValidator(Constanten.PersoonBeperktFields, Constanten.NotAllowedPersoonFields, 130));
         Include(new GeboortedatumOptioneelValidator());
-        Include(new GeslachtsnaamOptioneelValidator());
+        Include(new GeslachtsnaamValidator(isVerplichtVeld: false));
     }
 
     private readonly List<string> GespecificeerdeParameterNamen = new()
