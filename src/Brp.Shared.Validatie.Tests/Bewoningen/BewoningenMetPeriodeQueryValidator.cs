@@ -8,6 +8,23 @@ public class BewoningenMetPeriodeQueryValidator
     private static Validatie.Bewoningen.BewoningMetPeriodeQueryValidator CreateSut() => new();
 
     [Fact]
+    public void ShouldFailWhenRequiredPropertiesAreMissing()
+    {
+        var input = JObject.Parse("{}");
+
+        var result = CreateSut().Validate(input);
+
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().HaveCount(3);
+        result.Errors[0].ErrorMessage.Should().Be("required||Parameter is verplicht.");
+        result.Errors[0].PropertyName.Should().Be("adresseerbaarObjectIdentificatie");
+        result.Errors[1].ErrorMessage.Should().Be("required||Parameter is verplicht.");
+        result.Errors[1].PropertyName.Should().Be("datumTot");
+        result.Errors[2].ErrorMessage.Should().Be("required||Parameter is verplicht.");
+        result.Errors[2].PropertyName.Should().Be("datumVan");
+    }
+
+    [Fact]
     public void ShouldFailWhenAdresseerbaarObjectIdentificatiePropertyIsMissing()
     {
         var input = JObject.Parse("{\"datumVan\": \"2021-12-01\", \"datumTot\": \"2022-12-01\"}");

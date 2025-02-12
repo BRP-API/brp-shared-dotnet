@@ -353,6 +353,7 @@ Regel: De geboortedatum is een datum string geformatteerd volgens de [ISO 8601 d
     | geboortedatum |
     | 19830526      |
     | 26 mei 1983   |
+    | 2023-02-30    |
 
     @fout-case
     Abstract Scenario: <titel>
