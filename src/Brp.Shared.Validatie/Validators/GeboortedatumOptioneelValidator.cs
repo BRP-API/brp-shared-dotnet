@@ -12,6 +12,8 @@ public class GeboortedatumOptioneelValidator : AbstractValidator<JObject>
 
     public GeboortedatumOptioneelValidator()
     {
+        Include(new DatumValidator(ParameterNaam, false));
+
         RuleFor(x => x.Value<string>(ParameterNaam))
             .Cascade(CascadeMode.Stop)
             .Matches(DatePattern).WithMessage(DateErrorMessage)
