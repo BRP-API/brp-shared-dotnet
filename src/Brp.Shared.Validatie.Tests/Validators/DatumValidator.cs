@@ -8,7 +8,7 @@ public class DatumValidator
     private static Validatie.Validators.DatumValidator CreateSut(string parameterNaam, bool isVerplichtVeld) => new(parameterNaam, isVerplichtVeld);
 
     [Fact]
-    public void ShouldFailWhenDatumPropertyIsMissing()
+    public void ShouldFailWhenDatumPropertyIsRequiredAndMissing()
     {
         var input = JObject.Parse("{}");
 
@@ -21,7 +21,17 @@ public class DatumValidator
     }
 
     [Fact]
-    public void ShouldFailWhenDatumPropertyNameDoesNotMatch()
+    public void ShouldSucceedWhenDatumPropertyIsOptionalAndMissing()
+    {
+        var input = JObject.Parse("{}");
+
+        var result = CreateSut("geboortedatum", false).Validate(input);
+
+        result.IsValid.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ShouldFailWhenDatumPropertyNameAreNotEqual()
     {
         var input = JObject.Parse("{\"datumvan\": \"\"}");
 
@@ -33,29 +43,37 @@ public class DatumValidator
         result.Errors[0].PropertyName.Should().Be("datumVan");
     }
 
-    [Fact]
-    public void ShouldFailWhenDatumPropertyIsEmpty()
+    [InlineData(true, "required||Parameter is verplicht.")]
+    [InlineData(false, "date||Waarde is geen geldige datum.")]
+    [Theory]
+    public void ShouldFailWhenDatumPropertyIsEmpty(bool isVerplichtVeld, string message)
     {
         var input = JObject.Parse("{\"datumVan\": \"\"}");
 
-        var result = CreateSut("datumVan", true).Validate(input);
+        var result = CreateSut("datumVan", isVerplichtVeld).Validate(input);
 
         result.IsValid.Should().BeFalse();
         result.Errors.Should().ContainSingle();
-        result.Errors[0].ErrorMessage.Should().Be("required||Parameter is verplicht.");
+        result.Errors[0].ErrorMessage.Should().Be(message);
+        result.Errors[0].PropertyName.Should().Be("datumVan");
     }
 
-    [InlineData("2021-13-01")] // ongeldig maand
-    [InlineData("2021-12-32")] // ongeldig dag
-    [InlineData("2021-02-29")] // geen schrikkeljaar
-    [InlineData("not-a-date")] // geen datum
-    [InlineData("2021/12/01")] // ongeldig formaat
+    [InlineData(true, "2021-13-01")] // ongeldig maand
+    [InlineData(true, "2021-12-32")] // ongeldig dag
+    [InlineData(true, "2021-02-29")] // geen schrikkeljaar
+    [InlineData(true, "not-a-date")] // geen datum
+    [InlineData(true, "2021/12/01")] // ongeldig formaat
+    [InlineData(false, "2021-13-01")] // ongeldig maand
+    [InlineData(false, "2021-12-32")] // ongeldig dag
+    [InlineData(false, "2021-02-29")] // geen schrikkeljaar
+    [InlineData(false, "not-a-date")] // geen datum
+    [InlineData(false, "2021/12/01")] // ongeldig formaat
     [Theory]
-    public void ShouldFailWhenDatumPropertyDoesNotMatchPatternOrIsNotAValidDate(string value)
+    public void ShouldFailWhenDatumPropertyDoesNotMatchPatternOrIsNotAValidDate(bool isVerplichtVeld, string value)
     {
         var input = JObject.Parse($"{{\"datum\": \"{value}\"}}");
 
-        var result = CreateSut("datum", true).Validate(input);
+        var result = CreateSut("datum", isVerplichtVeld).Validate(input);
 
         result.IsValid.Should().BeFalse();
         result.Errors.Should().ContainSingle();
