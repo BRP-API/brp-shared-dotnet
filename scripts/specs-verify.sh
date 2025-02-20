@@ -20,9 +20,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 --tags "not @skip-verify" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/step-definitions/test-result-zonder-dependency-integratie-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 # personen endpoint
 
 echo "#### personen input validatie"
@@ -34,9 +31,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/input-validatie/test
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### personen autorisatie validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/autorisatie/test-result.json \
@@ -46,9 +40,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/autorisatie/test-res
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/personen/autorisatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### personen protocollering validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-result.json \
@@ -57,9 +48,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-
                 features/protocollering/personen \
                 --world-parameters "$PARAMS" \
                 > /dev/null
-
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/personen/protocollering/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
 
 # reisdocumenten endpoint
 
@@ -72,9 +60,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/input-validati
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### reisdocumenten autorisatie validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result.json \
@@ -84,9 +69,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/autorisatie/te
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### reisdocumenten protocollering validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/protocollering/test-result.json \
@@ -95,9 +77,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/protocollering
                 features/protocollering/reisdocumenten \
                 --world-parameters "$PARAMS" \
                 > /dev/null
-
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/reisdocumenten/protocollering/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
 
 # verblijfplaatshistorie endpoint
 
@@ -110,9 +89,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/input-
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### verblijfplaatshistorie autorisatie validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result.json \
@@ -122,9 +98,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/autori
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### verblijfplaatshistorie protocollering validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result.json \
@@ -133,9 +106,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/protoc
                 features/protocollering/verblijfplaatshistorie \
                 --world-parameters "$PARAMS" \
                 > /dev/null
-
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
 
 # bewoningen endpoint
 
@@ -148,9 +118,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/input-validatie/te
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/bewoningen/input-validatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### bewoningen autorisatie validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/autorisatie/test-result.json \
@@ -160,9 +127,6 @@ npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/autorisatie/test-r
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/bewoningen/autorisatie/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt
-
 echo "#### bewoningen protocollering validatie"
 
 npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/protocollering/test-result.json \
@@ -171,6 +135,3 @@ npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/protocollering/tes
                 features/protocollering/bewoning \
                 --world-parameters "$PARAMS" \
                 > /dev/null
-
-node ./scripts/generate-step-summary.js ./test-reports/cucumber-js/bewoningen/protocollering/test-result-summary.txt ./test-reports/cucumber-js/step-summary.txt
-cat ./test-reports/cucumber-js/step-summary.txt

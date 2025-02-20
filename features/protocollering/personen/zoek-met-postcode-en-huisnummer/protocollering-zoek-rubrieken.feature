@@ -37,10 +37,12 @@ Functionaliteit: Protocollering zoekrubrieken ZoekMetPostcodeEnHuisnummer
       | <zoek_rubrieken>       |
 
       Voorbeelden:
-      | optionele parameter     | waarde | zoek_rubrieken         |
-      | huisletter              | b      | 081120, 081130, 081160 |
-      | huisnummertoevoeging    | 2      | 081120, 081140, 081160 |
-      | gemeenteVanInschrijving | 0599   | 080910, 081120, 081160 |
+      | optionele parameter     | waarde     | zoek_rubrieken         |
+      | huisletter              | b          | 081120, 081130, 081160 |
+      | huisnummertoevoeging    | 2          | 081120, 081140, 081160 |
+      | gemeenteVanInschrijving | 0599       | 080910, 081120, 081160 |
+      | geslachtsnaam           | Jansen     | 010240, 081120, 081160 |
+      | geboortedatum           | 1990-01-02 | 010310, 081120, 081160 |
 
 
   Regel: Gebruik van de parameter inclusiefOverledenPersonen wordt niet vastgelegd in veld 'request_zoek_rubrieken'.
