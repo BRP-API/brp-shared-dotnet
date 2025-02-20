@@ -69,6 +69,34 @@ Regel: Een adresseerbaarObjectIdentificatie is een string bestaande uit exact 16
     | 12345678901234567                 | De opgegeven adresseerbaarObjectIdentificatie is een string met meer dan 16 cijfers   |
     | <script>1234567890123456</script> | De opgegeven adresseerbaarObjectIdentificatie bevat niet-cijfer karakters             |
 
+Regel: Een gemeenteVanInschrijving waarde bestaat uit 4 cijfers
+
+  @fout-case
+  Abstract Scenario: <titel>
+    Als personen wordt gezocht met de volgende parameters
+    | naam                             | waarde                                  |
+    | type                             | ZoekMetAdresseerbaarObjectIdentificatie |
+    | adresseerbaarObjectIdentificatie | 0599010000219679                        |
+    | fields                           | burgerservicenummer                     |
+    | gemeenteVanInschrijving          | <gemeente code>                         |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+    | title    | Een of meerdere parameters zijn niet correct.               |
+    | status   | 400                                                         |
+    | detail   | De foutieve parameter(s) zijn: gemeenteVanInschrijving.     |
+    | code     | paramsValidation                                            |
+    | instance | /haalcentraal/api/brp/personen                              |
+    En heeft de response invalidParams met de volgende gegevens
+    | code    | name                    | reason                                      |
+    | pattern | gemeenteVanInschrijving | Waarde voldoet niet aan patroon ^[0-9]{4}$. |
+
+    Voorbeelden:
+    | titel                                                                    | gemeente code                          |
+    | De opgegeven gemeenteVanInschrijving waarde is minder dan 4 cijfers lang | 123                                    |
+    | De opgegeven gemeenteVanInschrijving waarde is meer dan 4 cijfers lang   | 12345                                  |
+    | De opgegeven gemeenteVanInschrijving waarde bevat ongeldige karakters    | <script>alert('hello world');</script> |
+
 Regel: inclusiefOverledenPersonen is een boolean (true of false waarde)
 
   @fout-case
