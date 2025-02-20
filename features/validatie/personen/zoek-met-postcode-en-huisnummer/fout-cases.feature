@@ -381,4 +381,5 @@ Regel: Een gemeenteVanInschrijving waarde bestaat uit 4 cijfers
     | titel                                                                    | gemeente code                          |
     | De opgegeven gemeenteVanInschrijving waarde is minder dan 4 cijfers lang | 123                                    |
     | De opgegeven gemeenteVanInschrijving waarde is meer dan 4 cijfers lang   | 12345                                  |
+    | De opgegeven gemeenteVanInschrijving waarde bevat letters                | Goes                                   |
     | De opgegeven gemeenteVanInschrijving waarde bevat ongeldige karakters    | <script>alert('hello world');</script> |
