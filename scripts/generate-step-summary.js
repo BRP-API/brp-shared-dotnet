@@ -1,31 +1,26 @@
 const fs = require('fs');
 const path = require('path');
+const { processFile } = require('./process-cucumber-file');
 
-function processFile(inputPath, outputPath) {
-    const content = fs.readFileSync(inputPath, 'utf8');
-    const lines = content.split('\n');
-    const results = [];
-    let footerLines = [];
+const outputFile = path.join(__dirname, './../test-reports/cucumber-js/step-summary.txt');
+fs.writeFileSync(outputFile, '', 'utf8');
 
-    if (lines.length >= 4) {
-        footerLines = lines.slice(-4);
-    }
+const fileMap = new Map([
+    ["./../test-reports/cucumber-js/step-definitions/test-result-zonder-dependency-integratie-summary.txt", "docs (zonder integratie)"],
+    ["./../test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt", "personen (input validatie)"],
+    ["./../test-reports/cucumber-js/personen/autorisatie/test-result-summary.txt", "personen (autorisatie)"],
+    ["./../test-reports/cucumber-js/personen/protocollering/test-result-summary.txt", "personen (protocollering)"],
+    ["./../test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt", "reisdocumenten (input validatie)"],
+    ["./../test-reports/cucumber-js/reisdocumenten/autorisatie/test-result-summary.txt", "reisdocumenten (autorisatie)"],
+    ["./../test-reports/cucumber-js/reisdocumenten/protocollering/test-result-summary.txt", "reisdocumenten (protocollering"],
+    ["./../test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result-summary.txt", "verblijfplaatshistorie (input validatie)"],
+    ["./../test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result-summary.txt", "verblijfplaatshistorie (autorisatie)"],
+    ["./../test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result-summary.txt", "verblijfplaatshistorie (protocollering)"],
+    ["./../test-reports/cucumber-js/bewoningen/input-validatie/test-result-summary.txt", "bewoningen (input validatie)"],
+    ["./../test-reports/cucumber-js/bewoningen/autorisatie/test-result-summary.txt", "bewoningen (autorisatie)"],
+    ["./../test-reports/cucumber-js/bewoningen/protocollering/test-result-summary.txt", "bewoningen (protocollering)"]
+]);
 
-    lines.forEach((line) => {
-        const match = line.match(/^\d+\) Scenario: .*# (.+:\d+)/);
-        if (match) {
-            results.push((results.length + 1) + ": " + match[1]);
-        }
-    });
-
-    let finalOutput = footerLines.join('\n') + '\n\n';
-    if (results.length > 0) {
-        finalOutput += `<details>\n<summary>Bestandsnamen en regelnummers</summary>\n\n`;
-        finalOutput += results.join('\n') + '\n';
-        finalOutput += `\n</details>\n`;
-    }
-
-    fs.writeFileSync(outputPath, finalOutput, 'utf8');
-}
-
-processFile(process.argv[2], process.argv[3]);
+fileMap.forEach((caption, filePath) => {
+    processFile(path.join(__dirname, filePath), outputFile, caption);
+});

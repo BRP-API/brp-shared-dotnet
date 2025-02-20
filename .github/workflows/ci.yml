@@ -105,8 +105,7 @@ jobs:
         shell: bash
 
       - name: Valideer functionele specs
-        run: |
-          ./scripts/specs-verify.sh >> $GITHUB_STEP_SUMMARY
+        uses: ./.github/actions/valideer-functionele-specs
 
       - name: Stop containers
         if: always()
@@ -125,6 +124,17 @@ jobs:
           path: |
             test-reports
             test-data/logs
+      - name: Push test rapportage naar brp-api.github.io repo
+        if: false
+        uses: tech-thinker/push-to-repo@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
+        with:
+          source-directory: test-reports/cucumber-js/reports
+          destination-repository-name: brp-api.github.io
+          destination-github-username: BRP-API
+          target-branch: test-reports/autorisatie-en-protocollering
+          commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
 
       - name: Login to GitHub Container Registry
         if: always()
