@@ -164,25 +164,26 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
   @fout-case
   Abstract Scenario: <titel>
     Als personen wordt gezocht met de volgende parameters
-    | naam                    | waarde                          |
-    | type                    | RaadpleegMetBurgerservicenummer |
-    | burgerservicenummer     | 999999321                       |
-    | <parameter>             | <waarde>                        |
-    | fields                  | burgerservicenummer             |
+    | naam                | waarde                          |
+    | type                | RaadpleegMetBurgerservicenummer |
+    | burgerservicenummer | 999999321                       |
+    | <parameter>         | <waarde>                        |
+    | fields              | burgerservicenummer             |
     Dan heeft de response de volgende gegevens
     | naam     | waarde                                                      |
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
     | status   | 400                                                         |
-    | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
+    | detail   | De foutieve parameter(s) zijn: <encoded parameter>.         |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/brp/personen                              |
     En heeft de response invalidParams met de volgende gegevens
-    | code         | name        | reason                      |
-    | unknownParam | <parameter> | Parameter is niet verwacht. |
+    | code         | name                | reason                      |
+    | unknownParam | <encoded parameter> | Parameter is niet verwacht. |
 
     Voorbeelden:
-    | titel                                     | parameter              | waarde     |
-    | zoeken met parameter uit ander zoektype   | voornamen              | Pietje     |
-    | typfout in naam optionele parameter       | gemeenteVanInschijving | 0363       |
-    | zoeken met niet gespecificeerde parameter | bestaatNiet            | een waarde |
+    | titel                                          | parameter                              | encoded parameter                                          | waarde     |
+    | zoeken met parameter uit ander zoektype        | voornamen                              | voornamen                                                  | Pietje     |
+    | typfout in naam optionele parameter            | gemeenteVanInschijving                 | gemeenteVanInschijving                                     | 0363       |
+    | zoeken met niet gespecificeerde parameter      | bestaatNiet                            | bestaatNiet                                                | een waarde |
+    | zoeken met parameter met javascript in de naam | <script>alert('hello world');</script> | &lt;script&gt;alert(&#39;hello world&#39;);&lt;/script&gt; | een waarde |
