@@ -260,6 +260,35 @@ Regel: inclusiefOverledenPersonen is een boolean
     |                              |
     | geen boolean                 |
 
+Regel: Een gemeenteVanInschrijving waarde bestaat uit 4 cijfers
+
+  @fout-case
+  Abstract Scenario: <titel>
+    Als personen wordt gezocht met de volgende parameters
+    | naam                    | waarde                                           |
+    | type                    | ZoekMetStraatHuisnummerEnGemeenteVanInschrijving |
+    | straat                  | Afrikanerplein                                   |
+    | huisnummer              | 1                                                |
+    | fields                  | burgerservicenummer                              |
+    | gemeenteVanInschrijving | <gemeente code>                                  |
+    Dan heeft de response de volgende gegevens
+    | naam     | waarde                                                      |
+    | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+    | title    | Een of meerdere parameters zijn niet correct.               |
+    | status   | 400                                                         |
+    | detail   | De foutieve parameter(s) zijn: gemeenteVanInschrijving.     |
+    | code     | paramsValidation                                            |
+    | instance | /haalcentraal/api/brp/personen                              |
+    En heeft de response invalidParams met de volgende gegevens
+    | code    | name                    | reason                                      |
+    | pattern | gemeenteVanInschrijving | Waarde voldoet niet aan patroon ^[0-9]{4}$. |
+
+    Voorbeelden:
+    | titel                                                                    | gemeente code                          |
+    | De opgegeven gemeenteVanInschrijving waarde is minder dan 4 cijfers lang | 123                                    |
+    | De opgegeven gemeenteVanInschrijving waarde is meer dan 4 cijfers lang   | 12345                                  |
+    | De opgegeven gemeenteVanInschrijving waarde bevat ongeldige karakters    | <script>alert('hello world');</script> |
+
 Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden gebruikt 
 
   @fout-case
@@ -277,15 +306,16 @@ Regel: Alleen gespecificeerde parameters bij het opgegeven zoektype mogen worden
     | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
     | title    | Een of meerdere parameters zijn niet correct.               |
     | status   | 400                                                         |
-    | detail   | De foutieve parameter(s) zijn: <parameter>.                 |
+    | detail   | De foutieve parameter(s) zijn: <encoded parameter>.         |
     | code     | paramsValidation                                            |
     | instance | /haalcentraal/api/brp/personen                              |
     En heeft de response invalidParams met de volgende gegevens
-    | code         | name        | reason                      |
-    | unknownParam | <parameter> | Parameter is niet verwacht. |
+    | code         | name                | reason                      |
+    | unknownParam | <encoded parameter> | Parameter is niet verwacht. |
 
     Voorbeelden:
-    | titel                                     | parameter   | waarde     |
-    | zoeken met parameter uit ander zoektype   | voornamen   | Pietje     |
-    | typfout in naam optionele parameter       | huisleter   | A          |
-    | zoeken met niet gespecificeerde parameter | bestaatNiet | een waarde |
+    | titel                                          | parameter                              | encoded parameter                                          | waarde     |
+    | zoeken met parameter uit ander zoektype        | voornamen                              | voornamen                                                  | Pietje     |
+    | typfout in naam optionele parameter            | huisleter                              | gemeenteVanInschijving                                     | A          |
+    | zoeken met niet gespecificeerde parameter      | bestaatNiet                            | bestaatNiet                                                | een waarde |
+    | zoeken met parameter met javascript in de naam | <script>alert('hello world');</script> | &lt;script&gt;alert(&#39;hello world&#39;);&lt;/script&gt; | een waarde |

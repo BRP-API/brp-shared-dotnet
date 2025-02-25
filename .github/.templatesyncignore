@@ -1,4 +1,5 @@
 .github/workflows/ci.yml
 .github/workflows/lint-oas.yml
 scripts/generate-cucumber-reports.js
+scripts/generate-step-summary.js
 scripts/specs-verify.sh
