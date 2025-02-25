@@ -42,7 +42,7 @@ Regel: nummeraanduidingIdentificatie is een verplichte parameter
     | code     | name                          | reason                  |
     | required | nummeraanduidingIdentificatie | Parameter is verplicht. |
 
-Regel: Een nummeraanduidingIdentificatie is een string bestaande uit exact 16 cijfers
+Regel: Een nummeraanduidingIdentificatie is een string bestaande uit exact 16 cijfers, 16 nullen niet inbegrepen
 
   @fout-case
   Abstract Scenario: <titel>
@@ -60,14 +60,15 @@ Regel: Een nummeraanduidingIdentificatie is een string bestaande uit exact 16 ci
     | code     | paramsValidation                                              |
     | instance | /haalcentraal/api/brp/personen                                |
     En heeft de response invalidParams met de volgende gegevens
-    | code    | name                          | reason                                       |
-    | pattern | nummeraanduidingIdentificatie | Waarde voldoet niet aan patroon ^[0-9]{16}$. |
+    | code    | name                          | reason                                                |
+    | pattern | nummeraanduidingIdentificatie | Waarde voldoet niet aan patroon ^(?!0{16})[0-9]{16}$. |
 
     Voorbeelden:
     | nummeraanduidingIdentificatie     | titel                                                                              |
     | 123456789012345                   | De opgegeven nummeraanduidingIdentificatie is een string met minder dan 16 cijfers |
     | 12345678901234567                 | De opgegeven nummeraanduidingIdentificatie is een string met meer dan 16 cijfers   |
     | <script>1234567890123456</script> | De opgegeven nummeraanduidingIdentificatie bevat niet-cijfer karakters             |
+    | 0000000000000000                  | de opgegeven nummeraanduidingIdentificatie is een string bestaande uit 16 nullen   |
 
 Regel: Een gemeenteVanInschrijving waarde bestaat uit 4 cijfers
 

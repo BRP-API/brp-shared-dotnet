@@ -42,7 +42,7 @@ Regel: adresseerbaarObjectIdentificatie is een verplichte parameter
     | code     | name                             | reason                  |
     | required | adresseerbaarObjectIdentificatie | Parameter is verplicht. |
 
-Regel: Een adresseerbaarObjectIdentificatie is een string bestaande uit exact 16 cijfers
+Regel: Een adresseerbaarObjectIdentificatie is een string bestaande uit exact 16 cijfers, 16 nullen niet inbegrepen
 
   @fout-case
   Abstract Scenario: <titel>
@@ -68,6 +68,7 @@ Regel: Een adresseerbaarObjectIdentificatie is een string bestaande uit exact 16
     | 123456789012345                   | De opgegeven adresseerbaarObjectIdentificatie is een string met minder dan 16 cijfers |
     | 12345678901234567                 | De opgegeven adresseerbaarObjectIdentificatie is een string met meer dan 16 cijfers   |
     | <script>1234567890123456</script> | De opgegeven adresseerbaarObjectIdentificatie bevat niet-cijfer karakters             |
+    | 0000000000000000                  | de opgegeven adresseerbaarObjectIdentificatie is een string bestaande uit 16 nullen   |
 
 Regel: Een gemeenteVanInschrijving waarde bestaat uit 4 cijfers
 
