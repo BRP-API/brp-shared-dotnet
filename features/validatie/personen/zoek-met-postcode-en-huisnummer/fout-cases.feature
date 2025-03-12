@@ -353,3 +353,63 @@ Regel: De geboortedatum is een datum string geformatteerd volgens de [ISO 8601 d
     | geboortedatum |
     | 19830526      |
     | 26 mei 1983   |
+    | 2023-02-30    |
+
+    @fout-case
+    Abstract Scenario: <titel>
+      Als personen wordt gezocht met de volgende parameters
+        | naam          | waarde                      |
+        | type          | ZoekMetPostcodeEnHuisnummer |
+        | postcode      |                      2628HJ |
+        | huisnummer    |                           2 |
+        | geslachtsnaam | <geslachtsnaam>             |
+        | fields        | burgerservicenummer         |
+      Dan heeft de response de volgende gegevens
+        | naam     | waarde                                                      |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+        | title    | Een of meerdere parameters zijn niet correct.               |
+        | status   |                                                         400 |
+        | detail   | De foutieve parameter(s) zijn: geslachtsnaam.               |
+        | code     | paramsValidation                                            |
+        | instance | /haalcentraal/api/brp/personen                              |
+      En heeft de response invalidParams met de volgende gegevens
+        | code    | name          | reason                                                                                                      |
+        | pattern | geslachtsnaam | Waarde voldoet niet aan patroon ^[a-zA-Z0-9À-ž \\.\\-\\']{1,200}$\|^[a-zA-Z0-9À-ž \\.\\-\\']{3,199}\\*{1}$. |
+
+      Voorbeelden:
+        | titel                                                     | geslachtsnaam                                                                                                                                                                                                       |
+        | De opgegeven geslachtsnaam is meer dan 200 karakters lang | abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ |
+        | De opgegeven geslachtsnaam bevat ongeldige karakters      | <script>alert('hello world');</script>                                                                                                                                                                              |
+
+  Regel: Een geslachtsnaam met wildcard is een string bestaande uit minimaal 3 en maximaal 199 karakters, eindigend met de "*" karakter. De overige karakters kunnen zijn:
+      - kleine letters (a-z)
+      - hoofdletters (A-Z)
+      - diakrieten (À-ž)
+      - spatie ( ), punt (.), min (-) en de enkele aanhalingsteken (')
+
+    @fout-case
+    Abstract Scenario: De "*" wildcard karakter staat niet aan het eind in de geslachtsnaam parameter
+      Als personen wordt gezocht met de volgende parameters
+        | naam          | waarde                      |
+        | type          | ZoekMetPostcodeEnHuisnummer |
+        | postcode      |                      2628HJ |
+        | huisnummer    |                           2 |
+        | geslachtsnaam | <geslachtsnaam filter>      |
+        | fields        | burgerservicenummer         |
+      Dan heeft de response de volgende gegevens
+        | naam     | waarde                                                      |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1 |
+        | title    | Een of meerdere parameters zijn niet correct.               |
+        | status   |                                                         400 |
+        | detail   | De foutieve parameter(s) zijn: geslachtsnaam.               |
+        | code     | paramsValidation                                            |
+        | instance | /haalcentraal/api/brp/personen                              |
+      En heeft de response invalidParams met de volgende gegevens
+        | code    | name          | reason                                                                                                      |
+        | pattern | geslachtsnaam | Waarde voldoet niet aan patroon ^[a-zA-Z0-9À-ž \\.\\-\\']{1,200}$\|^[a-zA-Z0-9À-ž \\.\\-\\']{3,199}\\*{1}$. |
+
+      Voorbeelden:
+        | geslachtsnaam filter |
+        | *sen                 |
+        | *SEN                 |
+        | Jan*sen              |
