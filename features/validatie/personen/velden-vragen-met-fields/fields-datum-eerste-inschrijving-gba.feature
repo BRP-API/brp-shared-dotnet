@@ -1,16 +1,21 @@
 # language: nl
 @input-validatie
-Functionaliteit: datumEersteInschrijvingGBA veld vragen met fields
+Functionaliteit: geldige fields waarden voor het vragen van het datumEersteInschrijvingGBA veld
 
-  Regel: bij het vragen van datumEersteInschrijvingGBA of bestaande/niet-bestaande velden van datumEersteInschrijvingGBA wordt alle velden van datumEersteInschrijvingGBA geleverd
+  Regel: het volledige en exacte pad (hoofdletter gevoelig) van een veld moet worden opgegeven als fields waarde om het betreffende veld te vragen
+
+    Abstract Scenario: het datumEersteInschrijvingGBA veld wordt gevraagd met fields waarde 'datumEersteInschrijvingGBA'
+      Als het 'datumEersteInschrijvingGBA' veld wordt gevraagd van personen gezocht met burgerservicenummer
+      Dan heeft de response geen foutmelding
+
+  Regel: alle velden van datumEersteInschrijvingGBA wordt geleverd als bestaande/niet-bestaande sub-velden hiervan wordt gevraagd
 
     Abstract Scenario: het datumEersteInschrijvingGBA veld wordt gevraagd met fields waarde '<fields>'
       Als het '<fields>' veld wordt gevraagd van personen gezocht met burgerservicenummer
-      Dan heeft de response 0 personen
+      Dan heeft de response geen foutmelding
 
       Voorbeelden:
         | fields                                  |
-        | datumEersteInschrijvingGBA              |
         | datumEersteInschrijvingGBA.langFormaat  |
         | datumEersteInschrijvingGBA.type         |
         | datumEersteInschrijvingGBA.datum        |

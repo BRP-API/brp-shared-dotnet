@@ -1,16 +1,21 @@
 # language: nl
 @input-validatie
-Functionaliteit: datumInschrijvinginGemeente veld vragen met fields
+Functionaliteit: geldige fields waarden voor het vragen van het datumInschrijvinginGemeente veld
 
-  Regel: bij het vragen van datumInschrijvingInGemeente of bestaande/niet-bestaande velden van datumInschrijvingInGemeente wordt alle velden van datumInschrijvingInGemeente geleverd
+  Regel: het volledige en exacte pad (hoofdletter gevoelig) van een veld moet worden opgegeven als fields waarde om het betreffende veld te vragen
+
+    Abstract Scenario: het datumInschrijvingInGemeente veld wordt gevraagd met fields waarde 'datumInschrijvingInGemeente'
+      Als het 'datumInschrijvingInGemeente' veld wordt gevraagd van personen gezocht met burgerservicenummer
+      Dan heeft de response geen foutmelding
+
+  Regel: alle velden van datumInschrijvingInGemeente wordt geleverd als bestaande/niet-bestaande sub-velden hiervan wordt gevraagd
 
     Abstract Scenario: het datumInschrijvingInGemeente veld wordt gevraagd met fields waarde '<fields>'
       Als het '<fields>' veld wordt gevraagd van personen gezocht met burgerservicenummer
-      Dan heeft de response 0 personen
+      Dan heeft de response geen foutmelding
 
       Voorbeelden:
         | fields                                   |
-        | datumInschrijvingInGemeente              |
         | datumInschrijvingInGemeente.langFormaat  |
         | datumInschrijvingInGemeente.type         |
         | datumInschrijvingInGemeente.datum        |
