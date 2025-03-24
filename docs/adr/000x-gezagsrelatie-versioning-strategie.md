@@ -61,3 +61,7 @@ sequenceDiagram
     Info->>AP:response met<br>nieuwe gezag
     AP->>consumer:response met<br>nieuwe gezag
 ```
+
+Om het gedrag van de BRP API met en zonder de 'accept-gezag-version' header te testen is aan de World class (features/step_definitions/world.js) de boolean property 'addAcceptGezagVersionHeader' toegevoeg. Standaard (waarde = false) wordt er bij elke request geen 'accept-gezag-version' header meegestuurd. Ook zijn er in cucumber.js de twee Cucumber profielen, testOud en testNieuw, gedefinieerd om het uitvoeren van de nieuwe/deprecated features/scenarios samen met de niet-gewijzigde features/scenarios te vereenvoudigen.
+Voor het uitvoeren van alle nieuwe (2.7.0) features/scenarios en de niet-gewijzigde features/scenarios ziet de cucumber aanroep er als volgt uit: `npx cucumber-js features -p testNieuw` en voor het uitvoeren van alle deprecated features/scenarios en de niet-gewijzigde features/scenarios ziet de cucumber aanroep er als volgt uit: `npx cucumber-js features -p testOud`.
+Hiervoor moeten de nieuwe features/scenarios worden getagd met `@2.7.0` en de de deprecated features/scenarios met `@deprecated`.
