@@ -7,9 +7,3 @@ if [ "$MODE" = "ci" ]; then
 else
     docker compose -f .docker/db.yml up -d
 fi
-
-docker compose \
-    -f .docker/identityserver.yml \
-    -f .docker/referentie-api.yml \
-    -f .docker/autorisatie-protocollering-proxy.yml \
-    up -d
