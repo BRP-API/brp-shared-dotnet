@@ -6,6 +6,9 @@ on:
       - src/**
       - features/**
       - .github/workflows/ci.yml
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       publishType:
