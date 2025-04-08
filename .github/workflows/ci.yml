@@ -9,6 +9,10 @@ on:
   pull_request:
     branches:
       - main
+  #  trigger when the 'repo-sync' workflow creates a pull request
+  repository_dispatch:
+    types: 
+      - create-pull-request
   workflow_dispatch:
     inputs:
       publishType:
