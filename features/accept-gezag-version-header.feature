@@ -12,7 +12,7 @@ Functionaliteit: toevoegen van de accept-gezag-version header aan een gezag bevr
       |                 0599 |                         0599010000219679 |
 
   Scenario: een gezag bevraging wordt gedaan door een nieuwe afnemer
-    Gegeven een nieuwe afnemer is geautoriseerd voor het vragen van 'gezag'
+    Gegeven een nieuwe afnemer met indicatie '000008' is geautoriseerd voor het vragen van 'gezag'
     Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode>
     Dan bevat de request naar de gezag API de header 'accept-gezag-version' met waarde '2'
 
@@ -22,7 +22,7 @@ Functionaliteit: toevoegen van de accept-gezag-version header aan een gezag bevr
       | adresseerbaar object identificatie van 'A1' |
 
   Scenario: een gezag bevraging wordt gedaan door een bestaande afnemer
-    Gegeven een bestaande afnemer is geautoriseerd voor het vragen van gezag
+    Gegeven een bestaande afnemer met indicatie '000008' is geautoriseerd voor het vragen van 'gezag'
     Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode>
     Dan bevat de request naar de gezag API geen 'accept-gezag-version' header
 
@@ -32,7 +32,7 @@ Functionaliteit: toevoegen van de accept-gezag-version header aan een gezag bevr
       | adresseerbaar object identificatie van 'A1' |
 
   Scenario: een gezag bevraging met 'accept-gezag-version' header wordt gedaan door een bestaande afnemer
-    Gegeven een bestaande afnemer is geautoriseerd voor het vragen van gezag
+    Gegeven een bestaande afnemer met indicatie '000008' is geautoriseerd voor het vragen van 'gezag'
     Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode> en headers
       | accept-gezag-version |
       |                    2 |
