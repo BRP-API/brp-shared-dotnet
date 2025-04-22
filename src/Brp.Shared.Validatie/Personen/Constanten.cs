@@ -9,8 +9,9 @@ internal static class Constanten
         "adressering.adresregel2",
         "adressering.adresregel3",
         "adressering.land",
-        "adressering.land.code",
-        "adressering.land.omschrijving",
+        "adressering.land.*",
+        // "adressering.land.code",
+        // "adressering.land.omschrijving",
 
         "adressering.indicatieVastgesteldVerblijftNietOpAdres",
 
