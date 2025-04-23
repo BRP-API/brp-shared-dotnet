@@ -815,48 +815,128 @@ internal static class Constanten
         .Concat(FieldsGezag)
         .ToArray();
 
-       internal static readonly string[] PersoonFields =
+    internal static readonly string[] PersoonFields =
+     FieldsInOnderzoekPersoon
+     .Concat(FieldsInOnderzoekGemeente)
+     .Concat(FieldsInOnderzoekGezag)
+     .Concat(FieldsAdressering)
+     .Concat(FieldsAdresseringBinnenland)
+     .Concat(FieldsDatumEersteInschrijvingGba)
+     .Concat(FieldsDatumInschrijvingInGemeente)
+     .Concat(FieldsEuropeesKiesrecht)
+     .Concat(FieldsGeboorte)
+     .Concat(FieldsGeheimhouding)
+     .Concat(FieldsGemeenteVanInschrijving)
+     .Concat(FieldsGeslacht)
+     .Concat(FieldsGezag)
+     .Concat(FieldsIdentiteit)
+     .Concat(FieldsImmigratie)
+     .Concat(FieldsIndicatieCurateleRegister)
+     .Concat(FieldsIndicatieGezagMinderjarige)
+     .Concat(FieldsKind)
+     .Concat(FieldsLeeftijd)
+     .Concat(FieldsNaam)
+     .Concat(FieldsNationaliteit)
+     .Concat(FieldsOpschortingBijhouding)
+     .Concat(FieldsOuder)
+     .Concat(FieldsOverlijden)
+     .Concat(FieldsPartner)
+     .Concat(FieldsRni)
+     .Concat(FieldsUitsluitingKiesrecht)
+     .Concat(FieldsVerblijfplaats)
+     .Concat(FieldsVerblijfplaatsBinnenland)
+     .Concat(FieldsVerblijfstitel)
+     .Concat(FieldsVerificatie)
+     .ToArray();
+
+
+    internal static readonly string[] InOnderzoekFields =
         FieldsInOnderzoekPersoon
-        .Concat(FieldsInOnderzoekGemeente)
         .Concat(FieldsInOnderzoekGezag)
-        .Concat(FieldsAdressering)
-        .Concat(FieldsAdresseringBinnenland)
-        .Concat(FieldsDatumEersteInschrijvingGba)
-        .Concat(FieldsDatumInschrijvingInGemeente)
-        .Concat(FieldsEuropeesKiesrecht)
-        .Concat(FieldsGeboorte)
-        .Concat(FieldsGeheimhouding)
-        .Concat(FieldsGemeenteVanInschrijving)
-        .Concat(FieldsGeslacht)
-        .Concat(FieldsGezag)
-        .Concat(FieldsIdentiteit)
-        .Concat(FieldsImmigratie)
-        .Concat(FieldsIndicatieCurateleRegister)
-        .Concat(FieldsIndicatieGezagMinderjarige)
-        .Concat(FieldsKind)
-        .Concat(FieldsLeeftijd)
-        .Concat(FieldsNaam)
-        .Concat(FieldsNationaliteit)
-        .Concat(FieldsOpschortingBijhouding)
-        .Concat(FieldsOuder)
-        .Concat(FieldsOverlijden)
-        .Concat(FieldsPartner)
-        .Concat(FieldsRni)
-        .Concat(FieldsUitsluitingKiesrecht)
-        .Concat(FieldsVerblijfplaats)
-        .Concat(FieldsVerblijfplaatsBinnenland)
-        .Concat(FieldsVerblijfstitel)
-        .Concat(FieldsVerificatie)
+        .Concat(FieldsInOnderzoekGemeente)
+        .Concat(new[]
+        {
+            "inOnderzoek",
+            "inOnderzoek.*",
+
+            "adressering.inOnderzoek",
+            "adressering.inOnderzoek.*",
+            "geboorte.inOnderzoek",
+            "geboorte.inOnderzoek.*",
+            "naam.inOnderzoek",
+            "naam.inOnderzoek.*",
+            "nationaliteiten.inOnderzoek",
+            "nationaliteiten.inOnderzoek.*",
+            "immigratie.inOnderzoek",
+            "immigratie.inOnderzoek.*",
+
+            "kinderen.inOnderzoek",
+            "kinderen.inOnderzoek.*",
+            "kinderen.geboorte.inOnderzoek",
+            "kinderen.geboorte.inOnderzoek.*",
+            "kinderen.naam.inOnderzoek",
+            "kinderen.naam.inOnderzoek.*",
+            
+            "ouders.inOnderzoek",
+            "ouders.inOnderzoek.*",
+            "ouders.geboorte.inOnderzoek",
+            "ouders.geboorte.inOnderzoek.*",
+            "ouders.naam.inOnderzoek",
+            "ouders.naam.inOnderzoek.*",
+
+            "overlijden.inOnderzoek",
+            "overlijden.inOnderzoek.*",
+
+            "partners.inOnderzoek",
+            "partners.inOnderzoek.*",
+            "partners.aangaanHuwelijkPartnerschap.inOnderzoek",
+            "partners.aangaanHuwelijkPartnerschap.inOnderzoek.*",
+            "partners.geboorte.inOnderzoek",
+            "partners.geboorte.inOnderzoek.*",
+            "partners.naam.inOnderzoek",
+            "partners.naam.inOnderzoek.*",
+            "partners.ontbindingHuwelijkPartnerschap.inOnderzoek",
+            "partners.ontbindingHuwelijkPartnerschap.inOnderzoek.*",
+
+            "verblijfplaats.inOnderzoek",
+            "verblijfplaats.inOnderzoek.*",
+
+            "verblijfplaats.verblijfadres.inOnderzoek",
+            "verblijfplaats.verblijfadres.inOnderzoek.*",
+
+            "verblijfstitel.inOnderzoek",
+            "verblijfstitel.inOnderzoek.*",
+
+            "verblijfplaatsBinnenland.inOnderzoek",
+            "verblijfplaatsBinnenland.inOnderzoek.*",
+
+            "verblijfplaatsBinnenland.verblijfadres.inOnderzoek",
+            "verblijfplaatsBinnenland.verblijfadres.inOnderzoek.*",
+
+            "adresseringBinnenland.inOnderzoek",
+            "adresseringBinnenland.inOnderzoek.*",
+        })
         .ToArray();
 
-    internal static readonly string[] NotAllowedPersoonFields = new[]
-    {
-        "opschortingBijhouding",
-        "geheimhoudingPersoonsgegevens",
-        "inOnderzoek",
-        "verificatie",
-        "rni",
-        "indicatieVastgesteldVerblijftNietOpAdres",
-        "gezag.*",
-    };
+    internal static readonly string[] NotAllowedPersoonFields =
+        InOnderzoekFields
+        .Concat(FieldsVerificatie)
+        .Concat(new[]
+        {
+            "opschortingBijhouding",
+            "opschortingBijhouding.*",
+            "geheimhoudingPersoonsgegevens",
+            "rni",
+            "rni.deelnemer",                                                                      
+            "rni.deelnemer.code",                                                                   
+            "rni.omschrijvingVerdrag",                                                              
+            "rni.categorie",
+            "indicatieVastgesteldVerblijftNietOpAdres",
+            "adressering.indicatieVastgesteldVerblijftNietOpAdres",
+            "verblijfplaats.indicatieVastgesteldVerblijftNietOpAdres",
+            "adresseringBinnenland.indicatieVastgesteldVerblijftNietOpAdres",
+            "verblijfplaatsBinnenland.indicatieVastgesteldVerblijftNietOpAdres",
+            "gezag.*",
+        })
+        .ToArray();
 }
