@@ -170,18 +170,6 @@ internal static class Constanten
     internal static readonly string[] FieldsGezag = new[]
     {
         "gezag",
-        "gezag.type",
-        "gezag.minderjarige",
-        "gezag.ouders",
-        "gezag.ouder",
-        "gezag.derde",
-        "gezag.derden",
-        "gezag.minderjarige.burgerservicenummer",
-        "gezag.ouders.burgerservicenummer",
-        "gezag.ouder.burgerservicenummer",
-        "gezag.derde.burgerservicenummer",
-        "gezag.derden.burgerservicenummer",
-        "gezag.toelichting",
     };
 
     internal static readonly string[] FieldsBeperktIdentiteit = new[]
@@ -869,12 +857,6 @@ internal static class Constanten
         "verificatie",
         "rni",
         "indicatieVastgesteldVerblijftNietOpAdres",
-        "gezag.type",
-        "gezag.minderjarige",
-        "gezag.ouders",
-        "gezag.ouder",
-        "gezag.derden",
-        "gezag.derde",
-        "gezag.toelichting",
+        "gezag.*",
     };
 }
