@@ -14,11 +14,13 @@ public class AutorisatieEnProtocolleringMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly IServiceProvider _serviceProvider;
+    private readonly IConfiguration _configuration;
 
-    public AutorisatieEnProtocolleringMiddleware(RequestDelegate next, IServiceProvider serviceProvider)
+    public AutorisatieEnProtocolleringMiddleware(RequestDelegate next, IServiceProvider serviceProvider, IConfiguration configuration)
     {
         _next = next;
         _serviceProvider = serviceProvider;
+        _configuration = configuration;
     }
 
     public async Task Invoke(HttpContext httpContext)
@@ -39,6 +41,8 @@ public class AutorisatieEnProtocolleringMiddleware
         {
             return;
         }
+
+        SetAcceptGezagVersionHeaderVoorNieuweAfnemer(httpContext);
 
         var orgBodyStream = httpContext.Response.Body;
 
@@ -127,5 +131,20 @@ public class AutorisatieEnProtocolleringMiddleware
 
         return (isValidAfnemerId ? afnemerId : 0,
                 isValidGemeenteCode ? gemeenteCode : null);
+    }
+
+    private static string? GetOin(HttpContext httpContext) => httpContext.User.Claims.FirstOrDefault(c => c.Type == "OIN")?.Value;
+
+    private void SetAcceptGezagVersionHeaderVoorNieuweAfnemer(HttpContext httpContext)
+    {
+        var bestaandeGezagConsumers = _configuration.GetSection("BestaandeGezagConsumers").Get<string[]>() ?? Array.Empty<string>();
+        var oin = GetOin(httpContext);
+
+        if (!string.IsNullOrWhiteSpace(oin) &&
+            !bestaandeGezagConsumers.Contains(oin) &&
+            !httpContext.Request.Headers.ContainsKey("accept-gezag-version"))
+        {
+            httpContext.Response.Headers.Add("accept-gezag-version", "2.0");
+        }
     }
 }
