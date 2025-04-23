@@ -21,6 +21,16 @@ Functionaliteit: toevoegen van de accept-gezag-version header aan een gezag bevr
       | burgerservicenummer '000000012'             |
       | adresseerbaar object identificatie van 'A1' |
 
+  Scenario: een gezag bevraging wordt gedaan door een nieuwe afnemer en de afnemer is een gemeente
+    Gegeven de gemeente met gemeentecode '0800' is een nieuwe afnemer voor 'gezag'
+    Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode>
+    Dan bevat de request naar de gezag API de header 'accept-gezag-version' met waarde '2'
+
+    Voorbeelden:
+      | zoek methode                                |
+      | burgerservicenummer '000000012'             |
+      | adresseerbaar object identificatie van 'A1' |
+
   Scenario: een gezag bevraging wordt gedaan door een bestaande afnemer
     Gegeven een bestaande afnemer met indicatie '000008' is geautoriseerd voor het vragen van 'gezag'
     Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode>
@@ -31,8 +41,30 @@ Functionaliteit: toevoegen van de accept-gezag-version header aan een gezag bevr
       | burgerservicenummer '000000012'             |
       | adresseerbaar object identificatie van 'A1' |
 
+  Scenario: een gezag bevraging wordt gedaan door een bestaande afnemer en de afnemer is een gemeente
+    Gegeven de gemeente met gemeentecode '00518' is een bestaande afnemer voor 'gezag'
+    Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode>
+    Dan bevat de request naar de gezag API geen 'accept-gezag-version' header
+
+    Voorbeelden:
+      | zoek methode                                |
+      | burgerservicenummer '000000012'             |
+      | adresseerbaar object identificatie van 'A1' |
+
   Scenario: een gezag bevraging met 'accept-gezag-version' header wordt gedaan door een bestaande afnemer
     Gegeven een bestaande afnemer met indicatie '000008' is geautoriseerd voor het vragen van 'gezag'
+    Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode> en headers
+      | accept-gezag-version |
+      |                    2 |
+    Dan bevat de request naar de gezag API de header 'accept-gezag-version' met waarde '2'
+
+    Voorbeelden:
+      | zoek methode                                |
+      | burgerservicenummer '000000012'             |
+      | adresseerbaar object identificatie van 'A1' |
+
+  Scenario: een gezag bevraging met 'accept-gezag-version' header wordt gedaan door een bestaande afnemer en de afnemer is een gemeente
+    Gegeven de gemeente met gemeentecode '00518' is een bestaande afnemer voor 'gezag'
     Als 'gezag' wordt gevraagd van personen gezocht met <zoek methode> en headers
       | accept-gezag-version |
       |                    2 |
