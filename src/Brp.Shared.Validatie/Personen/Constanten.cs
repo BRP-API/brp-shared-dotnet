@@ -10,8 +10,6 @@ internal static class Constanten
         "adressering.adresregel3",
         "adressering.land",
         "adressering.land.*",
-        // "adressering.land.code",
-        // "adressering.land.omschrijving",
 
         "adressering.indicatieVastgesteldVerblijftNietOpAdres",
 
@@ -21,12 +19,7 @@ internal static class Constanten
         "adressering.inOnderzoek.adresregel3",
         "adressering.inOnderzoek.land",
         "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.type",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.datum",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.langFormaat",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.onbekend",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.jaar",
-        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.maand",
+        "adressering.inOnderzoek.datumIngangOnderzoekVerblijfplaats.*",
     };
 
     internal static readonly string[] FieldsAdressering =
@@ -44,20 +37,10 @@ internal static class Constanten
             "adressering.inOnderzoek.gebruikInLopendeTekst",
 
             "adressering.inOnderzoek.datumIngangOnderzoekPersoon",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.type",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.datum",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.langFormaat",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.onbekend",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.jaar",
-            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.maand",
+            "adressering.inOnderzoek.datumIngangOnderzoekPersoon.*",
 
             "adressering.inOnderzoek.datumIngangOnderzoekPartner",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.type",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.datum",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.langFormaat",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.onbekend",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.jaar",
-            "adressering.inOnderzoek.datumIngangOnderzoekPartner.maand",
+            "adressering.inOnderzoek.datumIngangOnderzoekPartner.*",
         })
         .ToArray();
 
@@ -74,27 +57,16 @@ internal static class Constanten
         "adresseringBinnenland.inOnderzoek.aanschrijfwijze",
         "adresseringBinnenland.inOnderzoek.adresregel1",
         "adresseringBinnenland.inOnderzoek.adresregel2",
+
         "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.type",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.datum",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.langFormaat",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.onbekend",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.jaar",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.maand",
+        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekVerblijfplaats.*",
+
         "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.langFormaat",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.type",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.datum",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.onbekend",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.jaar",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.maand",
+        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.*",
+
         "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.langFormaat",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.type",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.datum",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.onbekend",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.jaar",
-        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.maand",
+        "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.*",
+
         "adresseringBinnenland.inOnderzoek.gebruikInLopendeTekst",
     };
 
@@ -111,44 +83,25 @@ internal static class Constanten
             "adresseringBinnenland.inOnderzoek.aanhef",
             "adresseringBinnenland.inOnderzoek.aanschrijfwijze",
             "adresseringBinnenland.inOnderzoek.gebruikInLopendeTekst",
+
             "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.type",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.datum",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.langFormaat",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.onbekend",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.jaar",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.maand",
+            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPersoon.*",
+
             "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.type",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.datum",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.langFormaat",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.onbekend",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.jaar",
-            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.maand",
+            "adresseringBinnenland.inOnderzoek.datumIngangOnderzoekPartner.*",
         })
         .ToArray();
 
     internal static readonly string[] FieldsDatumEersteInschrijvingGba = new[]
     {
         "datumEersteInschrijvingGBA",
-        "datumEersteInschrijvingGBA.type",
-        "datumEersteInschrijvingGBA.datum",
-        "datumEersteInschrijvingGBA.langFormaat",
-        "datumEersteInschrijvingGBA.onbekend",
-        "datumEersteInschrijvingGBA.jaar",
-        "datumEersteInschrijvingGBA.maand",
+        "datumEersteInschrijvingGBA.*",
     };
 
     internal static readonly string[] FieldsDatumInschrijvingInGemeente = new[]
     {
         "datumInschrijvingInGemeente",
-        "datumInschrijvingInGemeente.type",
-        "datumInschrijvingInGemeente.datum",
-        "datumInschrijvingInGemeente.langFormaat",
-        "datumInschrijvingInGemeente.onbekend",
-        "datumInschrijvingInGemeente.jaar",
-        "datumInschrijvingInGemeente.maand",
-
+        "datumInschrijvingInGemeente.*",
         "inOnderzoek.datumInschrijvingInGemeente",
     };
 
@@ -156,27 +109,16 @@ internal static class Constanten
     {
         "europeesKiesrecht",
         "europeesKiesrecht.aanduiding",
-        "europeesKiesrecht.aanduiding.code",
-        "europeesKiesrecht.aanduiding.omschrijving",
+        "europeesKiesrecht.aanduiding.*",
         "europeesKiesrecht.einddatumUitsluiting",
-        "europeesKiesrecht.einddatumUitsluiting.type",
-        "europeesKiesrecht.einddatumUitsluiting.datum",
-        "europeesKiesrecht.einddatumUitsluiting.langFormaat",
-        "europeesKiesrecht.einddatumUitsluiting.onbekend",
-        "europeesKiesrecht.einddatumUitsluiting.jaar",
-        "europeesKiesrecht.einddatumUitsluiting.maand",
+        "europeesKiesrecht.einddatumUitsluiting.*",
     };
 
     internal static readonly string[] FieldsBeperktGeboorte = new[]
     {
         "geboorte",
         "geboorte.datum",
-        "geboorte.datum.type",
-        "geboorte.datum.datum",
-        "geboorte.datum.langFormaat",
-        "geboorte.datum.onbekend",
-        "geboorte.datum.jaar",
-        "geboorte.datum.maand",
+        "geboorte.datum.*",
 
         "geboorte.inOnderzoek",
         "geboorte.inOnderzoek.datum",
@@ -194,11 +136,10 @@ internal static class Constanten
         .Concat(new[]
         {
             "geboorte.land",
-            "geboorte.land.code",
-            "geboorte.land.omschrijving",
+            "geboorte.land.*",
+
             "geboorte.plaats",
-            "geboorte.plaats.code",
-            "geboorte.plaats.omschrijving",
+            "geboorte.plaats.*",
 
             "geboorte.inOnderzoek.land",
             "geboorte.inOnderzoek.plaats",
@@ -213,8 +154,7 @@ internal static class Constanten
     internal static readonly string[] FieldsGemeenteVanInschrijving = new[]
     {
         "gemeenteVanInschrijving",
-        "gemeenteVanInschrijving.code",
-        "gemeenteVanInschrijving.omschrijving",
+        "gemeenteVanInschrijving.*",
 
         "inOnderzoek.gemeenteVanInschrijving",
     };
@@ -222,8 +162,7 @@ internal static class Constanten
     internal static readonly string[] FieldsGeslacht = new[]
     {
         "geslacht",
-        "geslacht.code",
-        "geslacht.omschrijving",
+        "geslacht.*",
 
         "inOnderzoek.geslacht",
     };
@@ -242,7 +181,7 @@ internal static class Constanten
         "gezag.ouder.burgerservicenummer",
         "gezag.derde.burgerservicenummer",
         "gezag.derden.burgerservicenummer",
-        "gezag.toelichting"
+        "gezag.toelichting",
     };
 
     internal static readonly string[] FieldsBeperktIdentiteit = new[]
@@ -264,16 +203,10 @@ internal static class Constanten
     {
         "immigratie",
         "immigratie.datumVestigingInNederland",
-        "immigratie.datumVestigingInNederland.type",
-        "immigratie.datumVestigingInNederland.datum",
-        "immigratie.datumVestigingInNederland.langFormaat",
-        "immigratie.datumVestigingInNederland.onbekend",
-        "immigratie.datumVestigingInNederland.jaar",
-        "immigratie.datumVestigingInNederland.maand",
+        "immigratie.datumVestigingInNederland.*",
         "immigratie.indicatieVestigingVanuitBuitenland",
         "immigratie.landVanwaarIngeschreven",
-        "immigratie.landVanwaarIngeschreven.code",
-        "immigratie.landVanwaarIngeschreven.omschrijving",
+        "immigratie.landVanwaarIngeschreven.*",
         "immigratie.vanuitVerblijfplaatsOnbekend",
 
         "immigratie.inOnderzoek",
@@ -300,8 +233,7 @@ internal static class Constanten
     internal static readonly string[] FieldsIndicatieGezagMinderjarige = new[]
     {
         "indicatieGezagMinderjarige",
-        "indicatieGezagMinderjarige.code",
-        "indicatieGezagMinderjarige.omschrijving",
+        "indicatieGezagMinderjarige.*",
 
         "inOnderzoek.indicatieGezagMinderjarige",
     };
@@ -357,9 +289,7 @@ internal static class Constanten
 
         "kinderen.naam",
         "kinderen.naam.adellijkeTitelPredicaat",
-        "kinderen.naam.adellijkeTitelPredicaat.soort",
-        "kinderen.naam.adellijkeTitelPredicaat.code",
-        "kinderen.naam.adellijkeTitelPredicaat.omschrijving",
+        "kinderen.naam.adellijkeTitelPredicaat.*",
         "kinderen.naam.geslachtsnaam",
         "kinderen.naam.voorletters",
         "kinderen.naam.voornamen",
@@ -381,18 +311,11 @@ internal static class Constanten
 
         "kinderen.geboorte",
         "kinderen.geboorte.datum",
-        "kinderen.geboorte.datum.type",
-        "kinderen.geboorte.datum.datum",
-        "kinderen.geboorte.datum.langFormaat",
-        "kinderen.geboorte.datum.onbekend",
-        "kinderen.geboorte.datum.jaar",
-        "kinderen.geboorte.datum.maand",
+        "kinderen.geboorte.datum.*",
         "kinderen.geboorte.land",
-        "kinderen.geboorte.land.code",
-        "kinderen.geboorte.land.omschrijving",
+        "kinderen.geboorte.land.*",
         "kinderen.geboorte.plaats",
-        "kinderen.geboorte.plaats.code",
-        "kinderen.geboorte.plaats.omschrijving",
+        "kinderen.geboorte.plaats.*",
 
         "kinderen.geboorte.inOnderzoek",
         "kinderen.geboorte.inOnderzoek.datum",
@@ -419,9 +342,7 @@ internal static class Constanten
         "naam",
 
         "naam.adellijkeTitelPredicaat",
-        "naam.adellijkeTitelPredicaat.soort",
-        "naam.adellijkeTitelPredicaat.code",
-        "naam.adellijkeTitelPredicaat.omschrijving",
+        "naam.adellijkeTitelPredicaat.*",
 
         "naam.geslachtsnaam",
 
@@ -454,8 +375,7 @@ internal static class Constanten
         .Concat(new[]
         {
             "naam.aanduidingNaamgebruik",
-            "naam.aanduidingNaamgebruik.code",
-            "naam.aanduidingNaamgebruik.omschrijving",
+            "naam.aanduidingNaamgebruik.*",
 
             "naam.inOnderzoek.aanduidingNaamgebruik",
         })
@@ -466,18 +386,11 @@ internal static class Constanten
         "nationaliteiten",
         "nationaliteiten.type",
         "nationaliteiten.datumIngangGeldigheid",
-        "nationaliteiten.datumIngangGeldigheid.type",
-        "nationaliteiten.datumIngangGeldigheid.datum",
-        "nationaliteiten.datumIngangGeldigheid.langFormaat",
-        "nationaliteiten.datumIngangGeldigheid.onbekend",
-        "nationaliteiten.datumIngangGeldigheid.jaar",
-        "nationaliteiten.datumIngangGeldigheid.maand",
+        "nationaliteiten.datumIngangGeldigheid.*",
         "nationaliteiten.nationaliteit",
-        "nationaliteiten.nationaliteit.code",
-        "nationaliteiten.nationaliteit.omschrijving",
+        "nationaliteiten.nationaliteit.*",
         "nationaliteiten.redenOpname",
-        "nationaliteiten.redenOpname.code",
-        "nationaliteiten.redenOpname.omschrijving",
+        "nationaliteiten.redenOpname.*",
 
         "nationaliteiten.inOnderzoek",
         "nationaliteiten.inOnderzoek.type",
@@ -513,12 +426,10 @@ internal static class Constanten
         "partners.burgerservicenummer",
 
         "partners.geslacht",
-        "partners.geslacht.code",
-        "partners.geslacht.omschrijving",
+        "partners.geslacht.*",
 
         "partners.soortVerbintenis",
-        "partners.soortVerbintenis.code",
-        "partners.soortVerbintenis.omschrijving",
+        "partners.soortVerbintenis.*",
 
         "partners.inOnderzoek",
         "partners.inOnderzoek.burgerservicenummer",
@@ -534,18 +445,11 @@ internal static class Constanten
 
         "partners.aangaanHuwelijkPartnerschap",
         "partners.aangaanHuwelijkPartnerschap.datum",
-        "partners.aangaanHuwelijkPartnerschap.datum.type",
-        "partners.aangaanHuwelijkPartnerschap.datum.datum",
-        "partners.aangaanHuwelijkPartnerschap.datum.langFormaat",
-        "partners.aangaanHuwelijkPartnerschap.datum.onbekend",
-        "partners.aangaanHuwelijkPartnerschap.datum.jaar",
-        "partners.aangaanHuwelijkPartnerschap.datum.maand",
+        "partners.aangaanHuwelijkPartnerschap.datum.*",
         "partners.aangaanHuwelijkPartnerschap.land",
-        "partners.aangaanHuwelijkPartnerschap.land.code",
-        "partners.aangaanHuwelijkPartnerschap.land.omschrijving",
+        "partners.aangaanHuwelijkPartnerschap.land.*",
         "partners.aangaanHuwelijkPartnerschap.plaats",
-        "partners.aangaanHuwelijkPartnerschap.plaats.code",
-        "partners.aangaanHuwelijkPartnerschap.plaats.omschrijving",
+        "partners.aangaanHuwelijkPartnerschap.plaats.*",
 
         "partners.aangaanHuwelijkPartnerschap.inOnderzoek",
         "partners.aangaanHuwelijkPartnerschap.inOnderzoek.datum",
@@ -561,18 +465,11 @@ internal static class Constanten
 
         "partners.geboorte",
         "partners.geboorte.datum",
-        "partners.geboorte.datum.type",
-        "partners.geboorte.datum.datum",
-        "partners.geboorte.datum.langFormaat",
-        "partners.geboorte.datum.onbekend",
-        "partners.geboorte.datum.jaar",
-        "partners.geboorte.datum.maand",
+        "partners.geboorte.datum.*",
         "partners.geboorte.land",
-        "partners.geboorte.land.code",
-        "partners.geboorte.land.omschrijving",
+        "partners.geboorte.land.*",
         "partners.geboorte.plaats",
-        "partners.geboorte.plaats.code",
-        "partners.geboorte.plaats.omschrijving",
+        "partners.geboorte.plaats.*",
 
         "partners.geboorte.inOnderzoek",
         "partners.geboorte.inOnderzoek.datum",
@@ -588,9 +485,7 @@ internal static class Constanten
 
         "partners.naam",
         "partners.naam.adellijkeTitelPredicaat",
-        "partners.naam.adellijkeTitelPredicaat.soort",
-        "partners.naam.adellijkeTitelPredicaat.code",
-        "partners.naam.adellijkeTitelPredicaat.omschrijving",
+        "partners.naam.adellijkeTitelPredicaat.*",
         "partners.naam.geslachtsnaam",
         "partners.naam.voorletters",
         "partners.naam.voornamen",
@@ -612,12 +507,7 @@ internal static class Constanten
 
         "partners.ontbindingHuwelijkPartnerschap",
         "partners.ontbindingHuwelijkPartnerschap.datum",
-        "partners.ontbindingHuwelijkPartnerschap.datum.type",
-        "partners.ontbindingHuwelijkPartnerschap.datum.datum",
-        "partners.ontbindingHuwelijkPartnerschap.datum.langFormaat",
-        "partners.ontbindingHuwelijkPartnerschap.datum.onbekend",
-        "partners.ontbindingHuwelijkPartnerschap.datum.jaar",
-        "partners.ontbindingHuwelijkPartnerschap.datum.maand",
+        "partners.ontbindingHuwelijkPartnerschap.datum.*",
 
         "partners.ontbindingHuwelijkPartnerschap.inOnderzoek",
         "partners.ontbindingHuwelijkPartnerschap.inOnderzoek.datum",
@@ -636,16 +526,10 @@ internal static class Constanten
         "ouders.burgerservicenummer",
 
         "ouders.datumIngangFamilierechtelijkeBetrekking",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.type",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.datum",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.langFormaat",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.onbekend",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.jaar",
-        "ouders.datumIngangFamilierechtelijkeBetrekking.maand",
+        "ouders.datumIngangFamilierechtelijkeBetrekking.*",
 
         "ouders.geslacht",
-        "ouders.geslacht.code",
-        "ouders.geslacht.omschrijving",
+        "ouders.geslacht.*",
 
         "ouders.ouderAanduiding",
 
@@ -663,18 +547,11 @@ internal static class Constanten
 
         "ouders.geboorte",
         "ouders.geboorte.datum",
-        "ouders.geboorte.datum.type",
-        "ouders.geboorte.datum.datum",
-        "ouders.geboorte.datum.langFormaat",
-        "ouders.geboorte.datum.onbekend",
-        "ouders.geboorte.datum.jaar",
-        "ouders.geboorte.datum.maand",
+        "ouders.geboorte.datum.*",
         "ouders.geboorte.land",
-        "ouders.geboorte.land.code",
-        "ouders.geboorte.land.omschrijving",
+        "ouders.geboorte.land.*",
         "ouders.geboorte.plaats",
-        "ouders.geboorte.plaats.code",
-        "ouders.geboorte.plaats.omschrijving",
+        "ouders.geboorte.plaats.*",
 
         "ouders.geboorte.inOnderzoek",
         "ouders.geboorte.inOnderzoek.datum",
@@ -690,9 +567,7 @@ internal static class Constanten
 
         "ouders.naam",
         "ouders.naam.adellijkeTitelPredicaat",
-        "ouders.naam.adellijkeTitelPredicaat.soort",
-        "ouders.naam.adellijkeTitelPredicaat.code",
-        "ouders.naam.adellijkeTitelPredicaat.omschrijving",
+        "ouders.naam.adellijkeTitelPredicaat.*",
         "ouders.naam.geslachtsnaam",
         "ouders.naam.voorletters",
         "ouders.naam.voornamen",
@@ -718,18 +593,11 @@ internal static class Constanten
     {
         "overlijden",
         "overlijden.datum",
-        "overlijden.datum.type",
-        "overlijden.datum.datum",
-        "overlijden.datum.langFormaat",
-        "overlijden.datum.onbekend",
-        "overlijden.datum.jaar",
-        "overlijden.datum.maand",
+        "overlijden.datum.*",
         "overlijden.land",
-        "overlijden.land.code",
-        "overlijden.land.omschrijving",
+        "overlijden.land.*",
         "overlijden.plaats",
-        "overlijden.plaats.code",
-        "overlijden.plaats.omschrijving",
+        "overlijden.plaats.*",
 
         "overlijden.inOnderzoek",
         "overlijden.inOnderzoek.datum",
@@ -759,31 +627,16 @@ internal static class Constanten
         "uitsluitingKiesrecht",
         "uitsluitingKiesrecht.uitgeslotenVanKiesrecht",
         "uitsluitingKiesrecht.einddatum",
-        "uitsluitingKiesrecht.einddatum.type",
-        "uitsluitingKiesrecht.einddatum.datum",
-        "uitsluitingKiesrecht.einddatum.langFormaat",
-        "uitsluitingKiesrecht.einddatum.onbekend",
-        "uitsluitingKiesrecht.einddatum.jaar",
-        "uitsluitingKiesrecht.einddatum.maand",
+        "uitsluitingKiesrecht.einddatum.*",
     };
 
     internal static readonly string[] FieldsVerblijfplaats = new[]
     {
         "verblijfplaats",
         "verblijfplaats.datumIngangGeldigheid",
-        "verblijfplaats.datumIngangGeldigheid.type",
-        "verblijfplaats.datumIngangGeldigheid.datum",
-        "verblijfplaats.datumIngangGeldigheid.langFormaat",
-        "verblijfplaats.datumIngangGeldigheid.onbekend",
-        "verblijfplaats.datumIngangGeldigheid.jaar",
-        "verblijfplaats.datumIngangGeldigheid.maand",
+        "verblijfplaats.datumIngangGeldigheid.*",
         "verblijfplaats.datumVan",
-        "verblijfplaats.datumVan.type",
-        "verblijfplaats.datumVan.datum",
-        "verblijfplaats.datumVan.langFormaat",
-        "verblijfplaats.datumVan.onbekend",
-        "verblijfplaats.datumVan.jaar",
-        "verblijfplaats.datumVan.maand",
+        "verblijfplaats.datumVan.*",
         "verblijfplaats.type",
 
         "verblijfplaats.inOnderzoek",
@@ -803,8 +656,7 @@ internal static class Constanten
         "verblijfplaats.verblijfadres.regel2",
         "verblijfplaats.verblijfadres.regel3",
         "verblijfplaats.verblijfadres.land",
-        "verblijfplaats.verblijfadres.land.code",
-        "verblijfplaats.verblijfadres.land.omschrijving",
+        "verblijfplaats.verblijfadres.land.*",
 
         "verblijfplaats.verblijfadres.inOnderzoek",
         "verblijfplaats.verblijfadres.inOnderzoek.regel1",
@@ -820,8 +672,7 @@ internal static class Constanten
         "verblijfplaats.verblijfadres.inOnderzoek.datumIngangOnderzoek.maand",
 
         "verblijfplaats.verblijfadres.aanduidingBijHuisnummer",
-        "verblijfplaats.verblijfadres.aanduidingBijHuisnummer.code",
-        "verblijfplaats.verblijfadres.aanduidingBijHuisnummer.omschrijving",
+        "verblijfplaats.verblijfadres.aanduidingBijHuisnummer.*",
         "verblijfplaats.verblijfadres.huisletter",
         "verblijfplaats.verblijfadres.huisnummer",
         "verblijfplaats.verblijfadres.huisnummertoevoeging",
@@ -840,8 +691,7 @@ internal static class Constanten
         "verblijfplaats.verblijfadres.inOnderzoek.woonplaats",
 
         "verblijfplaats.functieAdres",
-        "verblijfplaats.functieAdres.code",
-        "verblijfplaats.functieAdres.omschrijving",
+        "verblijfplaats.functieAdres.*",
         "verblijfplaats.adresseerbaarObjectIdentificatie",
         "verblijfplaats.nummeraanduidingIdentificatie",
 
@@ -863,23 +713,12 @@ internal static class Constanten
         "verblijfplaatsBinnenland.nummeraanduidingIdentificatie",
 
         "verblijfplaatsBinnenland.datumIngangGeldigheid",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.type",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.datum",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.langFormaat",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.jaar",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.maand",
-        "verblijfplaatsBinnenland.datumIngangGeldigheid.onbekend",
+        "verblijfplaatsBinnenland.datumIngangGeldigheid.*",
         "verblijfplaatsBinnenland.datumVan",
-        "verblijfplaatsBinnenland.datumVan.type",
-        "verblijfplaatsBinnenland.datumVan.datum",
-        "verblijfplaatsBinnenland.datumVan.langFormaat",
-        "verblijfplaatsBinnenland.datumVan.jaar",
-        "verblijfplaatsBinnenland.datumVan.maand",
-        "verblijfplaatsBinnenland.datumVan.onbekend",
+        "verblijfplaatsBinnenland.datumVan.*",
 
         "verblijfplaatsBinnenland.functieAdres",
-        "verblijfplaatsBinnenland.functieAdres.code",
-        "verblijfplaatsBinnenland.functieAdres.omschrijving",
+        "verblijfplaatsBinnenland.functieAdres.*",
 
         "verblijfplaatsBinnenland.indicatieVastgesteldVerblijftNietOpAdres",
         "verblijfplaatsBinnenland.inOnderzoek.adresseerbaarObjectIdentificatie",
@@ -901,8 +740,7 @@ internal static class Constanten
 
         "verblijfplaatsBinnenland.verblijfadres",
         "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer",
-        "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer.code",
-        "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer.omschrijving",
+        "verblijfplaatsBinnenland.verblijfadres.aanduidingBijHuisnummer.*",
         "verblijfplaatsBinnenland.verblijfadres.huisletter",
         "verblijfplaatsBinnenland.verblijfadres.huisnummer",
         "verblijfplaatsBinnenland.verblijfadres.huisnummertoevoeging",
@@ -937,22 +775,11 @@ internal static class Constanten
     {
         "verblijfstitel",
         "verblijfstitel.aanduiding",
-        "verblijfstitel.aanduiding.code",
-        "verblijfstitel.aanduiding.omschrijving",
+        "verblijfstitel.aanduiding.*",
         "verblijfstitel.datumEinde",
-        "verblijfstitel.datumEinde.type",
-        "verblijfstitel.datumEinde.datum",
-        "verblijfstitel.datumEinde.langFormaat",
-        "verblijfstitel.datumEinde.onbekend",
-        "verblijfstitel.datumEinde.jaar",
-        "verblijfstitel.datumEinde.maand",
+        "verblijfstitel.datumEinde.*",
         "verblijfstitel.datumIngang",
-        "verblijfstitel.datumIngang.type",
-        "verblijfstitel.datumIngang.datum",
-        "verblijfstitel.datumIngang.langFormaat",
-        "verblijfstitel.datumIngang.onbekend",
-        "verblijfstitel.datumIngang.jaar",
-        "verblijfstitel.datumIngang.maand",
+        "verblijfstitel.datumIngang.*",
 
         "verblijfstitel.inOnderzoek",
         "verblijfstitel.inOnderzoek.aanduiding",
@@ -1000,7 +827,7 @@ internal static class Constanten
         .Concat(FieldsGezag)
         .ToArray();
 
-    internal static readonly string[] PersoonFields =
+       internal static readonly string[] PersoonFields =
         FieldsInOnderzoekPersoon
         .Concat(FieldsInOnderzoekGemeente)
         .Concat(FieldsInOnderzoekGezag)
@@ -1041,6 +868,13 @@ internal static class Constanten
         "inOnderzoek",
         "verificatie",
         "rni",
-        "indicatieVastgesteldVerblijftNietOpAdres"
+        "indicatieVastgesteldVerblijftNietOpAdres",
+        "gezag.type",
+        "gezag.minderjarige",
+        "gezag.ouders",
+        "gezag.ouder",
+        "gezag.derden",
+        "gezag.derde",
+        "gezag.toelichting",
     };
 }
