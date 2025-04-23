@@ -83,6 +83,15 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-
                 --world-parameters "$PARAMS" \
                 > /dev/null
 
+echo "#### accept-gezag-version validatie"
+
+npx cucumber-js -f json:./test-reports/cucumber-js/personen/accept-gezag-version-header/test-result.json \
+                -f summary:./test-reports/cucumber-js/personen/accept-gezag-version-header/test-result-summary.txt \
+                -f summary \
+                features/accept-gezag-version-header.feature \
+                -p AenP \
+                > /dev/null
+
 # reisdocumenten endpoint
 
 echo "#### reisdocumenten input validatie"
