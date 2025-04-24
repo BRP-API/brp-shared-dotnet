@@ -50,13 +50,11 @@ public class FieldsValidator : AbstractValidator<JObject>
                 .Cascade(CascadeMode.Stop)
                 .Must(x => x != null).WithMessage(RequiredErrorMessage)
                 .Matches(FieldPattern).WithMessage(FieldPatternErrorMessage)
-                .Must(x => IsAllowedField(x, notAllowedFieldNames)).WithMessage(FieldAllowedErrorMessage)
+                .Must(x => !x.ContainsAny(notAllowedFieldNames)).WithMessage(FieldAllowedErrorMessage)
                 .Must(x => IsExistingField(x, fieldNames)).WithMessage(FieldExistErrorMessage);
         }
 
         private static bool IsExistingField(string? field, IEnumerable<string> fieldNames) => MatchesExactOrWildcard(field, fieldNames);
-        
-        private static bool IsAllowedField(string? field, IEnumerable<string> notAllowedFieldNames) => !MatchesExactOrWildcard(field, notAllowedFieldNames);
         
         private static bool MatchesExactOrWildcard(string? x, IEnumerable<string> p) => x != null && p.Any(f => f.Equals(x) || f.EndsWith(Wildcard) && x.StartsWith(f[..^1]));
     }
