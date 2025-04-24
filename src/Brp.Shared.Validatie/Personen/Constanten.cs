@@ -857,6 +857,6 @@ internal static class Constanten
         "verificatie",
         "rni",
         "indicatieVastgesteldVerblijftNietOpAdres",
-        "gezag."
+        "gezag.",
     };
 }

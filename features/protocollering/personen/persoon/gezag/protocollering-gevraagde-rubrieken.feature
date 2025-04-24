@@ -24,18 +24,6 @@ Functionaliteit: protocollering van de gevraagde gegevens voor gezag
       Voorbeelden:
       | fields                                     |
       | gezag                                      |
-      | gezag.type                                 |
-      | gezag.minderjarige                         |
-      | gezag.ouders                               |
-      | gezag.ouder                                |
-      | gezag.derde                                |
-      | gezag.derden                               |
-      | gezag.minderjarige.burgerservicenummer     |
-      | gezag.ouders.burgerservicenummer           |
-      | gezag.ouder.burgerservicenummer            |
-      | gezag.derde.burgerservicenummer            |
-      | gezag.derden.burgerservicenummer           |
-      | gezag.ouders,gezag.ouder                   |
 
     Abstract Scenario: Gezag vragen levert <testsitatie> en wordt geprotocolleerd als gevraagde rubrieken 'PAGZ01'
       Gegeven de persoon met burgerservicenummer '<burgerservicenummer>' heeft de volgende gegevens
