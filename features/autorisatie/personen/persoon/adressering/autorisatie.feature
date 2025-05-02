@@ -153,3 +153,64 @@ Functionaliteit: autorisatie adressering Persoon
       | adresseringBinnenland             |
       | adresseringBinnenland.adresregel1 |
       | adresseringBinnenland.adresregel2 |
+
+  Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'adressering binnenland' (PA.AD.03) mag alle velden van adresseringBinnenland opvragen
+
+    Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'adressering binnenland'
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      | 10120 PAAD03                    | N                        | 20201128                |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+      Als personen wordt gezocht met de volgende parameters
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | <fields>                        |
+      Dan heeft de response 0 personen
+
+      Voorbeelden:
+      | fields                                      |
+      | adresseringBinnenland                       |
+      | adresseringBinnenland.aanhef                |
+      | adresseringBinnenland.aanschrijfwijze       |
+      | adresseringBinnenland.gebruikInLopendeTekst |
+      | adresseringBinnenland.adresregel1           |
+      | adresseringBinnenland.adresregel2           |
+
+    @fout-case
+    Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'adressering binnenland'
+      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60)        | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      | 10120 PAAD03 <aanvullende autorisatie> | N                        | 20201128                |
+      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+      Als personen wordt gezocht met de volgende parameters
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer | 000000024                       |
+      | fields              | <fields>                        |
+      Dan heeft de response de volgende gegevens
+      | naam     | waarde                                                                              |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
+      | status   | 403                                                                                 |
+      | code     | unauthorizedField                                                                   |
+
+      Voorbeelden:
+      | fields                                      | aanvullende autorisatie | omschrijving autorisatie                             |
+      | adressering                                 |                         |                                                      |
+      | adressering.aanhef                          |                         |                                                      |
+      | adressering.aanschrijfwijze                 |                         |                                                      |
+      | adressering.gebruikInLopendeTekst           |                         |                                                      |
+      | adressering.adresregel1                     |                         |                                                      |
+      | adressering.adresregel2                     |                         |                                                      |
+      | adressering.adresregel3                     |                         |                                                      |
+      | adressering.land                            |                         |                                                      |
+      | adressering                                 | 81310                   | adressering binnenland plus land                     |
+      | adressering                                 | 81310 81330 81340 81350 | adressering binnenland plus land en alle adresregels |
+      | adressering.land                            | 81310                   | adressering binnenland plus land                     |
+      | adressering.adresregel3                     | 81310 81350             | adressering binnenland plus land en adresregel 3     |
