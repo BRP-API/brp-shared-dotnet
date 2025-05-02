@@ -96,7 +96,7 @@ Functionaliteit: autorisatie adressering Persoon
       | adresseringBinnenland.adresregel1           |
       | adresseringBinnenland.adresregel2           |
 
-    Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (PA.AD.02) mag alle naamgebruik velden van adressering opvragen
+  Regel: Een afnemer geautoriseerd voor de virtuele rubriek 'elektronische adressering' (PA.AD.02) mag alle naamgebruik velden van adressering opvragen
 
     Abstract Scenario: Afnemer vraagt om <fields> en is geautoriseerd voor de virtuele rubriek 'elektronische adressering'
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
