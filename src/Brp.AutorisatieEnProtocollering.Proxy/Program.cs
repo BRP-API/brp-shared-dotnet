@@ -47,7 +47,7 @@ try
     builder.Services.AddHealthChecks()
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
-                    .AddIdentityServer(new Uri(builder.Configuration["OAuth:Authority"]), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+                    .AddOpenIdConnectServer(new Uri(builder.Configuration["OAuth:Authority"]), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
 
     var app = builder.Build();
 
