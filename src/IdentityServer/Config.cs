@@ -11,7 +11,8 @@ public static class Config
 
     public static IEnumerable<ApiScope> ApiScopes =>
         [
-            new("000000099000000080000", "BRP")
+            new("000000099000000080000", "BRP"),
+            new("000000099000000090000", "BRP")
         ];
 
     public static IEnumerable<Client> Clients =>
