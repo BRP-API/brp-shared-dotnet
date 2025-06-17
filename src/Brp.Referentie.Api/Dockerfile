@@ -10,9 +10,9 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
 RUN apk add --no-cache icu-libs
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
-
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
+ARG TARGETARCH
 WORKDIR /src
 
 COPY ["Brp.Referentie.Api/Brp.Referentie.Api.csproj", "Brp.Referentie.Api/"]
@@ -22,11 +22,12 @@ RUN dotnet restore "./Brp.Referentie.Api/./Brp.Referentie.Api.csproj"
 
 COPY . .
 WORKDIR "/src/Brp.Referentie.Api"
-RUN dotnet build "./Brp.Referentie.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
+RUN dotnet build "./Brp.Referentie.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/build --arch "$TARGETARCH"
 
-FROM build AS publish
+FROM --platform=$BUILDPLATFORM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Brp.Referentie.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
+ARG TARGETARCH
+RUN dotnet publish "./Brp.Referentie.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false --arch "$TARGETARCH"
 
 FROM base AS final
 

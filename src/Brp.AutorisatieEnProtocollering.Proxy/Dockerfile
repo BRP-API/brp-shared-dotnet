@@ -10,9 +10,9 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
 RUN apk add --no-cache icu-libs
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
-
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
+ARG TARGETARCH
 WORKDIR /src
 
 COPY ["Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnProtocollering.Proxy.csproj", "Brp.AutorisatieEnProtocollering.Proxy/"]
@@ -23,11 +23,12 @@ RUN dotnet restore "./Brp.AutorisatieEnProtocollering.Proxy/Brp.AutorisatieEnPro
 
 COPY . .
 WORKDIR "/src/Brp.AutorisatieEnProtocollering.Proxy"
-RUN dotnet build "./Brp.AutorisatieEnProtocollering.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
+RUN dotnet build "./Brp.AutorisatieEnProtocollering.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/build --arch "$TARGETARCH"
 
-FROM build AS publish
+FROM --platform=$BUILDPLATFORM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Brp.AutorisatieEnProtocollering.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
+ARG TARGETARCH
+RUN dotnet publish "./Brp.AutorisatieEnProtocollering.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false --arch "$TARGETARCH"
 
 FROM base AS final
 WORKDIR /app
