@@ -23,6 +23,11 @@ on:
           - authz-en-prot
           - authn-mock
 
+permissions:
+  contents: read
+  actions: write
+  packages: write
+
 env:
   NODE_VERSION: '20'
   DOTNET_SOLUTION_FILE_PATH: src/brp-shared.sln
