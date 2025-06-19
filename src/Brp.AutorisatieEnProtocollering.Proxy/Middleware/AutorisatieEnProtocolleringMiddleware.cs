@@ -144,7 +144,7 @@ public class AutorisatieEnProtocolleringMiddleware
             !bestaandeGezagConsumers.Contains(oin) &&
             !httpContext.Request.Headers.ContainsKey("accept-gezag-version"))
         {
-            httpContext.Response.Headers.Add("accept-gezag-version", "2.0");
+            httpContext.Request.Headers.Add("accept-gezag-version", "2");
         }
     }
 }
