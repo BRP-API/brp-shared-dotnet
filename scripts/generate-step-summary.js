@@ -12,19 +12,10 @@ const fileMap = new Map([
     ["./../test-reports/cucumber-js/step-definitions/test-result-data-api-summary.txt", "docs data api context"],
     ["./../test-reports/cucumber-js/step-definitions/test-result-gezag-api-summary.txt", "docs gezag api context"],
     ["./../test-reports/cucumber-js/step-definitions/test-result-gezag-api-deprecated-summary.txt", "docs gezag api deprecated context"],
-    ["./../test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt", "personen (input validatie)"],
-    ["./../test-reports/cucumber-js/personen/autorisatie/test-result-summary.txt", "personen (autorisatie)"],
-    ["./../test-reports/cucumber-js/personen/protocollering/test-result-summary.txt", "personen (protocollering)"],
-    ["./../test-reports/cucumber-js/personen/accept-gezag-version-header/test-result-summary.txt", "personen (accept gezag version header)"],
-    ["./../test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt", "reisdocumenten (input validatie)"],
-    ["./../test-reports/cucumber-js/reisdocumenten/autorisatie/test-result-summary.txt", "reisdocumenten (autorisatie)"],
-    ["./../test-reports/cucumber-js/reisdocumenten/protocollering/test-result-summary.txt", "reisdocumenten (protocollering)"],
-    ["./../test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result-summary.txt", "verblijfplaatshistorie (input validatie)"],
-    ["./../test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result-summary.txt", "verblijfplaatshistorie (autorisatie)"],
-    ["./../test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result-summary.txt", "verblijfplaatshistorie (protocollering)"],
-    ["./../test-reports/cucumber-js/bewoningen/input-validatie/test-result-summary.txt", "bewoningen (input validatie)"],
-    ["./../test-reports/cucumber-js/bewoningen/autorisatie/test-result-summary.txt", "bewoningen (autorisatie)"],
-    ["./../test-reports/cucumber-js/bewoningen/protocollering/test-result-summary.txt", "bewoningen (protocollering)"]
+    ["./../test-reports/cucumber-js/personen/test-result-summary.txt", "personen"],
+    ["./../test-reports/cucumber-js/reisdocumenten/test-result-summary.txt", "reisdocumenten"],
+    ["./../test-reports/cucumber-js/verblijfplaatshistorie/test-result-summary.txt", "verblijfplaatshistorie"],
+    ["./../test-reports/cucumber-js/bewoningen/test-result-summary.txt", "bewoningen"]
 ]);
 
 fileMap.forEach((caption, filePath) => {
