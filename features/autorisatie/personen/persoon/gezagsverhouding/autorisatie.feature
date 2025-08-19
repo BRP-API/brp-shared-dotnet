@@ -55,7 +55,6 @@ Functionaliteit: autorisatie gegevens van gezagsverhouding van Persoon
       | indicatieGezagMinderjarige              |               113210 |           113310 |
       | indicatieGezagMinderjarige.code         |               113210 |           113310 |
       | indicatieGezagMinderjarige.omschrijving |               113210 |           113310 |
-      | indicatieCurateleRegister               |               113310 |           113210 |
 
   Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
     Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
