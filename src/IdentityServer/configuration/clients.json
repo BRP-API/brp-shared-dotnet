@@ -70,6 +70,52 @@
         }
       ],
       "ClientClaimsPrefix": ""
+    },
+    {
+      "ClientId": "client met gemeentecode (eigen gemeente, bestaand gezag afnemer)",
+      "ClientSecrets": [
+        {
+          "Value": "K7gNU3sdo\u002BOL0wNhqoVWhr3g6s1xYv72ol/pe/Unols="
+        }
+      ],
+      "AllowedGrantTypes": [ "client_credentials" ],
+      "AllowedScopes": [ "000000099000000090000" ],
+      "Claims": [
+        {
+          "Type": "claims",
+          "Value": "OIN=000000099000000090000"
+        },
+        {
+          "Type": "claims",
+          "Value": "afnemerID=000009"
+        },
+        {
+          "Type": "claims",
+          "Value": "gemeenteCode=0900"
+        }
+      ],
+      "ClientClaimsPrefix": ""
+    },
+    {
+      "ClientId": "client zonder gemeentecode (bestaand gezag afnemer)",
+      "ClientSecrets": [
+        {
+          "Value": "K7gNU3sdo\u002BOL0wNhqoVWhr3g6s1xYv72ol/pe/Unols="
+        }
+      ],
+      "AllowedGrantTypes": [ "client_credentials" ],
+      "AllowedScopes": [ "000000099000000090000" ],
+      "Claims": [
+        {
+          "Type": "claims",
+          "Value": "OIN=000000099000000090000"
+        },
+        {
+          "Type": "claims",
+          "Value": "afnemerID=000009"
+        }
+      ],
+      "ClientClaimsPrefix": ""
     }
   ]
 }

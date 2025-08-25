@@ -59,7 +59,7 @@ public class AuthorisatieService : AbstractAutorisatieService
     private static IEnumerable<(string Name, string[] Value)> BepaalElementNrVanFields(JObject input)
     {
         var zoekType = input.WaardeTypeParameter();
-        var gevraagdeFields = input.WaardeFieldsParameter();
+        var gevraagdeFields = input.WaardeFieldsParameter().RewriteDatumEnTabelwaardeFieldWaarden();
 
         return gevraagdeFields.ToKeyStringArray(Constanten.FieldElementNrDictionary, zoekType!, BepaalKeyVoor);
     }

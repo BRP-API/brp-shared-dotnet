@@ -1,54 +1,78 @@
 # language: nl
-
 @autorisatie
 Functionaliteit: autorisatie gegevens van gezagsverhouding van Persoon
 
-    @fout-case
-    Abstract Scenario: Afnemer vraagt om veld <fields> waarvoor deze niet geautoriseerd is
-      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+  @fout-case
+  Abstract Scenario: Afnemer vraagt om veld <fields> waarvoor deze niet geautoriseerd is
+    Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
-      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
-      Als personen wordt gezocht met de volgende parameters
+      |        10120 <ad hoc rubrieken> | N                        |                20201128 |
+    En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+    Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
+      | burgerservicenummer |                       000000024 |
       | fields              | <fields>                        |
-      Dan heeft de response de volgende gegevens
+    Dan heeft de response de volgende gegevens
       | naam     | waarde                                                                              |
       | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                         |
       | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.             |
       | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <fields> |
-      | status   | 403                                                                                 |
+      | status   |                                                                                 403 |
       | code     | unauthorizedField                                                                   |
       | instance | /haalcentraal/api/brp/personen                                                      |
 
-      Voorbeelden:
-      | fields                                  | missende autorisatie | ad hoc rubrieken |
-      | indicatieGezagMinderjarige              | 113210               | 113310           |
-      | indicatieGezagMinderjarige.code         | 113210               | 113310           |
-      | indicatieGezagMinderjarige.omschrijving | 113210               | 113310           |
-      | indicatieCurateleRegister               | 113310               | 113210           |
+    Voorbeelden:
+      | fields                    | missende autorisatie | ad hoc rubrieken |
+      | indicatieCurateleRegister |               113310 |           113210 |
 
-    Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
-      Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+  @fout-case
+  Abstract Scenario: Afnemer vraagt om veld <fields> waarvoor deze niet geautoriseerd is
+    Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
       | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
-      En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
-      Als personen wordt gezocht met de volgende parameters
+      |        10120 <ad hoc rubrieken> | N                        |                20201128 |
+    En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+    Als personen wordt gezocht met de volgende parameters
       | naam                | waarde                          |
       | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
+      | burgerservicenummer |                       000000024 |
       | fields              | <fields>                        |
-      Dan heeft de response 0 personen
+    Dan heeft de response de volgende gegevens
+      | naam     | waarde                                                                                                |
+      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                           |
+      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                               |
+      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: indicatieGezagMinderjarige |
+      | status   |                                                                                                   403 |
+      | code     | unauthorizedField                                                                                     |
+      | instance | /haalcentraal/api/brp/personen                                                                        |
 
-      Voorbeelden:
+    Voorbeelden:
+      | fields                                  | missende autorisatie | ad hoc rubrieken |
+      | indicatieGezagMinderjarige              |               113210 |           113310 |
+      | indicatieGezagMinderjarige.code         |               113210 |           113310 |
+      | indicatieGezagMinderjarige.omschrijving |               113210 |           113310 |
+
+  Abstract Scenario: Afnemer vraagt <fields>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
+    Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
+      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+      |        10120 <ad hoc rubrieken> | N                        |                20201128 |
+    En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+      | naam      | waarde |
+      | afnemerID | 000008 |
+    Als personen wordt gezocht met de volgende parameters
+      | naam                | waarde                          |
+      | type                | RaadpleegMetBurgerservicenummer |
+      | burgerservicenummer |                       000000024 |
+      | fields              | <fields>                        |
+    Dan heeft de response 0 personen
+
+    Voorbeelden:
       | fields                                  | ad hoc rubrieken |
-      | indicatieGezagMinderjarige              | 113210           |
-      | indicatieGezagMinderjarige.code         | 113210           |
-      | indicatieGezagMinderjarige.omschrijving | 113210           |
-      | indicatieCurateleRegister               | 113310           |
+      | indicatieGezagMinderjarige              |           113210 |
+      | indicatieGezagMinderjarige.code         |           113210 |
+      | indicatieGezagMinderjarige.omschrijving |           113210 |
+      | indicatieCurateleRegister               |           113310 |
