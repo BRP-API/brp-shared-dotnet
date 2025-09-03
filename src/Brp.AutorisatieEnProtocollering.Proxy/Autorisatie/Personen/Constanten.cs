@@ -94,6 +94,8 @@ public static class Constanten
     private const string ElementNrDatumVestigingInNederland = "081420";
     private const string ElementNrDatumIngangGeldigheidVerblijfplaats = "088510";
     private const string ElementNrDatumVanVerblijfplaats = "PAVP01";
+    private const string ElementNrDatumAanvangAdreshouding = "081030";
+    private const string ElementNrDatumAanvangAdresBuitenland = "081320";
     private const string ElementNrVerblijfplaatsType = "PAVP02";
 
     private const string ElementNrIndicatieVestigingVanuitBuitenland = "PAVP05";
@@ -139,9 +141,9 @@ public static class Constanten
     private const string NaamBeperktElementen = $"{ElementNrVoornamen} {ElementNrAdellijkeTitelPredicaat} {ElementNrVoorvoegsel} {ElementNrGeslachtsnaam} {ElementNrVoorletters} {ElementNrVolledigeNaam}";
 
     private const string VerblijfplaatsBinnenlandVerblijfadresElementen = $"{ElementNrStraatnaam} {ElementNrNaamOpenbareRuimte} {ElementNrHuisnummer} {ElementNrHuisletter} {ElementNrHuisnummertoevoeging} {ElementNrAanduidingBijHuisnummer} {ElementNrPostcode} {ElementNrWoonplaats} {ElementNrLocatiebeschrijving}";
-    private const string VerblijfplaatsBinnenlandElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsBinnenlandVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats} {ElementNrDatumVanVerblijfplaats}";
+    private const string VerblijfplaatsBinnenlandElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsBinnenlandVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats}";
     private const string VerblijfplaatsVerblijfadresElementen = $"{VerblijfplaatsBinnenlandVerblijfadresElementen} {ElementNrVerblijfplaatsLand} {ElementNrVerblijfplaatsRegel1} {ElementNrVerblijfplaatsRegel2} {ElementNrVerblijfplaatsRegel3}";
-    private const string VerblijfplaatsElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats} {ElementNrDatumVanVerblijfplaats}";
+    private const string VerblijfplaatsElementen = $"{ElementNrFunctieAdres} {VerblijfplaatsVerblijfadresElementen} {ElementNrAdresseerbaarObjectIdentificatie} {ElementNrNummeraanduidingIdentificatie} {ElementNrDatumIngangGeldigheidVerblijfplaats}";
 
     private const string OuderGeboorteElementen = $"{ElementNrGeboortedatumOuder} {ElementNrGeboorteplaatsOuder} {ElementNrGeboortelandOuder}";
     private const string OuderNaamElementen = $"{ElementNrVoornamenOuder} {ElementNrAdellijkeTitelPredicaatOuder} {ElementNrVoorvoegselOuder} {ElementNrGeslachtsnaamOuder} {ElementNrVoorlettersOuder}";
@@ -514,13 +516,20 @@ public static class Constanten
         { "verblijfplaats.functieAdres", ElementNrFunctieAdres },
         { "verblijfplaats.functieAdres.code", ElementNrFunctieAdres },
         { "verblijfplaats.functieAdres.omschrijving", ElementNrFunctieAdres },
-        { "verblijfplaats.datumVan", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.type", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.datum", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.langFormaat", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.jaar", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.maand", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaats.datumVan.onbekend", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.type", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.datum", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.langFormaat", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.jaar", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.maand", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan.onbekend", $"{ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats.datumVan-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.type-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.datum-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.langFormaat-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.jaar-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.maand-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaats.datumVan.onbekend-protocollering", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaats.verblijfadres.korteStraatnaam", ElementNrStraatnaam },
         { "verblijfplaats.verblijfadres.officieleStraatnaam", ElementNrNaamOpenbareRuimte },
         { "verblijfplaats.verblijfadres.huisnummer", ElementNrHuisnummer },
@@ -548,21 +557,28 @@ public static class Constanten
         { "verblijfplaats.datumIngangGeldigheid.maand", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.datumIngangGeldigheid.onbekend", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaats.verblijfadres", VerblijfplaatsVerblijfadresElementen },
-        { "verblijfplaats", VerblijfplaatsElementen },
-        { "verblijfplaats-protocollering", $"{VerblijfplaatsElementen} {ElementNrVerblijfplaatsType}" },
+        { "verblijfplaats", $"{VerblijfplaatsElementen} {ElementNrDatumAanvangAdreshouding} {ElementNrDatumAanvangAdresBuitenland}" },
+        { "verblijfplaats-protocollering", $"{VerblijfplaatsElementen} {ElementNrVerblijfplaatsType} {ElementNrDatumVanVerblijfplaats}" },
 
         { "verblijfplaatsBinnenland.type", $"{ElementNrStraatnaam} {ElementNrLocatiebeschrijving}" },
         { "verblijfplaatsBinnenland.type-protocollering", ElementNrVerblijfplaatsType },
         { "verblijfplaatsBinnenland.functieAdres", ElementNrFunctieAdres },
         { "verblijfplaatsBinnenland.functieAdres.code", ElementNrFunctieAdres },
         { "verblijfplaatsBinnenland.functieAdres.omschrijving", ElementNrFunctieAdres },
-        { "verblijfplaatsBinnenland.datumVan", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.type", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.datum", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.langFormaat", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.jaar", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.maand", ElementNrDatumVanVerblijfplaats },
-        { "verblijfplaatsBinnenland.datumVan.onbekend", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.type", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.datum", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.langFormaat", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.jaar", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.maand", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan.onbekend", ElementNrDatumAanvangAdreshouding },
+        { "verblijfplaatsBinnenland.datumVan-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.type-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.datum-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.langFormaat-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.jaar-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.maand-protocollering", ElementNrDatumVanVerblijfplaats },
+        { "verblijfplaatsBinnenland.datumVan.onbekend-protocollering", ElementNrDatumVanVerblijfplaats },
         { "verblijfplaatsBinnenland.verblijfadres.korteStraatnaam", ElementNrStraatnaam },
         { "verblijfplaatsBinnenland.verblijfadres.officieleStraatnaam", ElementNrNaamOpenbareRuimte },
         { "verblijfplaatsBinnenland.verblijfadres.huisnummer", ElementNrHuisnummer },
@@ -584,8 +600,8 @@ public static class Constanten
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.maand", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.datumIngangGeldigheid.onbekend", ElementNrDatumIngangGeldigheidVerblijfplaats },
         { "verblijfplaatsBinnenland.verblijfadres", VerblijfplaatsBinnenlandVerblijfadresElementen },
-        { "verblijfplaatsBinnenland", VerblijfplaatsBinnenlandElementen },
-        { "verblijfplaatsBinnenland-protocollering", $"{VerblijfplaatsBinnenlandElementen} {ElementNrVerblijfplaatsType}" },
+        { "verblijfplaatsBinnenland", $"{VerblijfplaatsBinnenlandElementen} {ElementNrDatumAanvangAdreshouding}" },
+        { "verblijfplaatsBinnenland-protocollering", $"{VerblijfplaatsBinnenlandElementen} {ElementNrVerblijfplaatsType} {ElementNrDatumVanVerblijfplaats}" },
         #endregion
 
         #region verblijfstitel
