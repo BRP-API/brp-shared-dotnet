@@ -1,5 +1,4 @@
 # language: nl
-
 @autorisatie
 Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
@@ -8,16 +7,16 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
     Abstract Scenario: Afnemer vraagt <gevraagd veld>, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |        10120 <ad hoc rubrieken> | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                              |
-      | type                | RaadpleegMetBurgerservicenummer     |
-      | burgerservicenummer | 000000024                           |
-      | fields              | burgerservicenummer,<gevraagd veld> |
+        | naam                | waarde                              |
+        | type                | RaadpleegMetBurgerservicenummer     |
+        | burgerservicenummer |                           000000024 |
+        | fields              | burgerservicenummer,<gevraagd veld> |
       Dan heeft de response 0 personen
 
       Voorbeelden:
@@ -56,24 +55,24 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     @fout-case
     Abstract Scenario: Afnemer vraagt <gevraagd veld> (<missende autorisatie>), waarvoor deze niet geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | <ad hoc rubrieken>              | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        | <ad hoc rubrieken>              | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                                             |
-      | type                | RaadpleegMetBurgerservicenummer                    |
-      | burgerservicenummer | 000000024                                          |
-      | fields              | burgerservicenummer,verblijfplaats.<gevraagd veld> |
+        | naam                | waarde                                             |
+        | type                | RaadpleegMetBurgerservicenummer                    |
+        | burgerservicenummer |                                          000000024 |
+        | fields              | burgerservicenummer,verblijfplaats.<gevraagd veld> |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                                    |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                               |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                   |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.<gevraagd veld> |
-      | status   | 403                                                                                                       |
-      | code     | unauthorizedField                                                                                         |
-      | instance | /haalcentraal/api/brp/personen                                                                            |
+        | naam     | waarde                                                                                                    |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                               |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                   |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.<gevraagd veld> |
+        | status   |                                                                                                       403 |
+        | code     | unauthorizedField                                                                                         |
+        | instance | /haalcentraal/api/brp/personen                                                                            |
 
       Voorbeelden:
       | gevraagd veld                                      | ad hoc rubrieken                                                                                                        | missende autorisatie |
@@ -110,24 +109,24 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     @fout-case
     Abstract Scenario: Afnemer vraagt om groep verblijfadres en is niet geautoriseerd voor <ontbrekende autorisatie veld> (<missende autorisatie>)
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | <ad hoc rubrieken>              | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        | <ad hoc rubrieken>              | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                                           |
-      | type                | RaadpleegMetBurgerservicenummer                  |
-      | burgerservicenummer | 000000024                                        |
-      | fields              | burgerservicenummer,verblijfplaats.verblijfadres |
+        | naam                | waarde                                           |
+        | type                | RaadpleegMetBurgerservicenummer                  |
+        | burgerservicenummer |                                        000000024 |
+        | fields              | burgerservicenummer,verblijfplaats.verblijfadres |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                                  |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                             |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                 |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.verblijfadres |
-      | status   | 403                                                                                                     |
-      | code     | unauthorizedField                                                                                       |
-      | instance | /haalcentraal/api/brp/personen                                                                          |
+        | naam     | waarde                                                                                                  |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                             |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                 |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.verblijfadres |
+        | status   |                                                                                                     403 |
+        | code     | unauthorizedField                                                                                       |
+        | instance | /haalcentraal/api/brp/personen                                                                          |
 
       Voorbeelden:
       | ontbrekende autorisatie veld                    | ad hoc rubrieken                                                                                                        | missende autorisatie |
@@ -152,24 +151,24 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     @fout-case
     Abstract Scenario: Afnemer vraagt om groep verblijfplaats en is niet geautoriseerd voor <ontbrekende autorisatie veld> (<missende autorisatie>)
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | <ad hoc rubrieken>              | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        | <ad hoc rubrieken>              | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                             |
-      | type                | RaadpleegMetBurgerservicenummer    |
-      | burgerservicenummer | 000000024                          |
-      | fields              | burgerservicenummer,verblijfplaats |
+        | naam                | waarde                             |
+        | type                | RaadpleegMetBurgerservicenummer    |
+        | burgerservicenummer |                          000000024 |
+        | fields              | burgerservicenummer,verblijfplaats |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                    |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                               |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                   |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats |
-      | status   | 403                                                                                       |
-      | code     | unauthorizedField                                                                         |
-      | instance | /haalcentraal/api/brp/personen                                                            |
+        | naam     | waarde                                                                                    |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                               |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                   |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats |
+        | status   |                                                                                       403 |
+        | code     | unauthorizedField                                                                         |
+        | instance | /haalcentraal/api/brp/personen                                                            |
 
       Voorbeelden:
       | ontbrekende autorisatie veld                    | ad hoc rubrieken                                                                                                        | missende autorisatie |
@@ -207,28 +206,27 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
     Abstract Scenario: Gemeente vraagt om velden in verblijfplaats en er zit geen enkel verblijfplaatsgegeven in de autorisatie
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120                           | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |                           10120 | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam         | waarde |
-      | afnemerID    | 000008 |
-      | gemeenteCode | 0800   |
+        | naam         | waarde |
+        | afnemerID    | 000008 |
+        | gemeenteCode |   0800 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | <fields>                        |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | <fields>                        |
       Dan heeft de response 0 personen
 
       Voorbeelden:
-      | fields                                       |
-      | verblijfplaats.type                          |
-      | verblijfplaats                               |
-      | verblijfplaats.datumVan                      |
-      | verblijfplaats.verblijfadres                 |
-      | verblijfplaats.verblijfadres.korteStraatnaam |
-      | verblijfplaats.verblijfadres.regel1          |
-      
+        | fields                                       |
+        | verblijfplaats.type                          |
+        | verblijfplaats                               |
+        | verblijfplaats.datumVan                      |
+        | verblijfplaats.verblijfadres                 |
+        | verblijfplaats.verblijfadres.korteStraatnaam |
+        | verblijfplaats.verblijfadres.regel1          |
 
   Regel: Wanneer met fields om type van verblijfplaats wordt gevraagd en de afnemer is niet geautoriseerd voor een van de velden waarmee type verblijfplaats wordt bepaald, wordt een foutmelding gegeven
     Om type van verblijfplaats te mogen vragen moet de afnemer geautoriseerd zijn voor alle LO BRP rubrieken waar het verblijfplaatstype mee bepaald wordt:
@@ -238,61 +236,60 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
     Scenario: Afnemer heeft de minimale autorisatie voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 81110 81210 81310         | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |         10120 81110 81210 81310 | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | verblijfplaats.type             |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | verblijfplaats.type             |
       Dan heeft de response 0 personen
 
     @fout-case
     Abstract Scenario: Afnemer is niet geautoriseerd voor <missende autorisatie> die nodig is voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |        10120 <ad hoc rubrieken> | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | verblijfplaats.type             |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | verblijfplaats.type             |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                         |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                    |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                        |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.type |
-      | status   | 403                                                                                            |
-      | code     | unauthorizedField                                                                              |
-      | instance | /haalcentraal/api/brp/personen                                                                 |
+        | naam     | waarde                                                                                         |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                    |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                        |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.type |
+        | status   |                                                                                            403 |
+        | code     | unauthorizedField                                                                              |
+        | instance | /haalcentraal/api/brp/personen                                                                 |
 
       Voorbeelden:
-      | ad hoc rubrieken | missende autorisatie        |
-      | 81210 81310      | straat (81110)              |
-      | 81110 81310      | locatiebeschrijving (81210) |
-      | 81110 81210      | land (81310)                |
-
+        | ad hoc rubrieken | missende autorisatie        |
+        |      81210 81310 | straat (81110)              |
+        |      81110 81310 | locatiebeschrijving (81210) |
+        |      81110 81210 | land (81310)                |
 
   Regel: de 'verblijfplaatsBinnenland' field alias moet worden gebruikt door een consumer die niet is geautoriseerd voor het bevragen van 'verblijfplaats buitenland' velden
 
     Abstract Scenario: Afnemer vraagt om alleen binnengemeentelijke verblijfplaatsgegevens, en heeft uitsluitend de autorisatie die nodig is om deze vraag te mogen stellen
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |        10120 <ad hoc rubrieken> | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | <fields>                        |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | <fields>                        |
       Dan heeft de response 0 personen
 
       Voorbeelden:
@@ -325,24 +322,24 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     @fout-case
     Abstract Scenario: Afnemer vraagt verblijfplaatsBinnenland.<gevraagd veld> (<missende autorisatie>), waarvoor deze niet geautoriseerd is
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | <ad hoc rubrieken>              | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        | <ad hoc rubrieken>              | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                                                       |
-      | type                | RaadpleegMetBurgerservicenummer                              |
-      | burgerservicenummer | 000000024                                                    |
-      | fields              | burgerservicenummer,verblijfplaatsBinnenland.<gevraagd veld> |
+        | naam                | waarde                                                       |
+        | type                | RaadpleegMetBurgerservicenummer                              |
+        | burgerservicenummer |                                                    000000024 |
+        | fields              | burgerservicenummer,verblijfplaatsBinnenland.<gevraagd veld> |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                                              |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                                         |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                             |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaatsBinnenland.<gevraagd veld> |
-      | status   | 403                                                                                                                 |
-      | code     | unauthorizedField                                                                                                   |
-      | instance | /haalcentraal/api/brp/personen                                                                                      |
+        | naam     | waarde                                                                                                              |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                                         |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                                             |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaatsBinnenland.<gevraagd veld> |
+        | status   |                                                                                                                 403 |
+        | code     | unauthorizedField                                                                                                   |
+        | instance | /haalcentraal/api/brp/personen                                                                                      |
 
       Voorbeelden:
       | gevraagd veld                                      | ad hoc rubrieken                                                                          | missende autorisatie |
@@ -371,24 +368,24 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
     @fout-case
     Abstract Scenario: Afnemer vraagt om groep <gevraagd veld>, waarvoor deze niet geautoriseerd is (niet geautoriseerd voor <missende autorisatie>)
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | <ad hoc rubrieken>              | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        | <ad hoc rubrieken>              | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | <gevraagd veld>                 |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | <gevraagd veld>                 |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                     |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                    |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <gevraagd veld> |
-      | status   | 403                                                                                        |
-      | code     | unauthorizedField                                                                          |
-      | instance | /haalcentraal/api/brp/personen                                                             |
+        | naam     | waarde                                                                                     |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                    |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: <gevraagd veld> |
+        | status   |                                                                                        403 |
+        | code     | unauthorizedField                                                                          |
+        | instance | /haalcentraal/api/brp/personen                                                             |
 
       Voorbeelden:
       | gevraagd veld                          | ad hoc rubrieken                                                                          | missende autorisatie |
@@ -423,41 +420,41 @@ Functionaliteit: autorisatie verblijfplaatsgegevens Persoon
 
     Scenario: Afnemer heeft de minimale autorisatie voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 81110 81210               | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |               10120 81110 81210 | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | verblijfplaatsBinnenland.type   |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | verblijfplaatsBinnenland.type   |
       Dan heeft de response 0 personen
 
     @fout-case
     Abstract Scenario: Afnemer is niet geautoriseerd voor <missende autorisatie> die nodig is voor verblijfplaats type
       Gegeven de afnemer met indicatie '000008' heeft de volgende 'autorisatie' gegevens
-      | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
-      | 10120 <ad hoc rubrieken>        | N                        | 20201128                |
+        | Rubrieknummer ad hoc (35.95.60) | Medium ad hoc (35.95.67) | Datum ingang (35.99.98) |
+        |        10120 <ad hoc rubrieken> | N                        |                20201128 |
       En de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | naam      | waarde |
-      | afnemerID | 000008 |
+        | naam      | waarde |
+        | afnemerID | 000008 |
       Als personen wordt gezocht met de volgende parameters
-      | naam                | waarde                          |
-      | type                | RaadpleegMetBurgerservicenummer |
-      | burgerservicenummer | 000000024                       |
-      | fields              | verblijfplaats.type             |
+        | naam                | waarde                          |
+        | type                | RaadpleegMetBurgerservicenummer |
+        | burgerservicenummer |                       000000024 |
+        | fields              | verblijfplaats.type             |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                                                         |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                    |
-      | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                        |
-      | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.type |
-      | status   | 403                                                                                            |
-      | code     | unauthorizedField                                                                              |
-      | instance | /haalcentraal/api/brp/personen                                                                 |
+        | naam     | waarde                                                                                         |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3                                    |
+        | title    | U bent niet geautoriseerd voor één of meerdere opgegeven field waarden.                        |
+        | detail   | U bent niet geautoriseerd om de volgende gegevens op te vragen met fields: verblijfplaats.type |
+        | status   |                                                                                            403 |
+        | code     | unauthorizedField                                                                              |
+        | instance | /haalcentraal/api/brp/personen                                                                 |
 
       Voorbeelden:
-      | ad hoc rubrieken | missende autorisatie        |
-      | 81210            | straat (81110)              |
-      | 81110            | locatiebeschrijving (81210) |
+        | ad hoc rubrieken | missende autorisatie        |
+        |            81210 | straat (81110)              |
+        |            81110 | locatiebeschrijving (81210) |

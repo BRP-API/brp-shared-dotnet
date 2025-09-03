@@ -16,6 +16,11 @@ public class PersoonController : ControllerBase
     Route("personen")]
     public async Task<IActionResult> Index([FromBody]object body)
     {
+        if(HttpContext.Request.Headers.ContainsKey("accept-gezag-version"))
+        {
+            HttpContext.Response.Headers.Add("accept-gezag-version", HttpContext.Request.Headers["accept-gezag-version"]);
+        }
+        
         int status = await HttpContext.Response.AddCustomResponseHeaders(_environment);
 
         if (await HttpContext.Response.AddCustomResponseBody(_environment))
