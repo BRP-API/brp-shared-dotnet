@@ -20,25 +20,9 @@ report.generate({
 // personen endpoint
 
 report.generate({
-    jsonDir: 'test-reports/cucumber-js/personen/input-validatie',
-    reportPath: 'test-reports/cucumber-js/reports/personen/input-validatie',
-    reportName: 'Personen input validatie features',
-    hideMetadata: true,
-    customData: customData
-});
-
-report.generate({
-    jsonDir: 'test-reports/cucumber-js/personen/autorisatie',
-    reportPath: 'test-reports/cucumber-js/reports/personen/autorisatie',
-    reportName: 'Personen autorisatie features',
-    hideMetadata: true,
-    customData: customData
-});
-
-report.generate({
-    jsonDir: 'test-reports/cucumber-js/personen/protocollering',
-    reportPath: 'test-reports/cucumber-js/reports/personen/protocollering',
-    reportName: 'Personen protocollering features',
+    jsonDir: 'test-reports/cucumber-js/personen',
+    reportPath: 'test-reports/cucumber-js/reports/personen',
+    reportName: 'Personen input validatie, autorisatie & protocollering features',
     hideMetadata: true,
     customData: customData
 });
@@ -46,25 +30,9 @@ report.generate({
 // reisdocumenten endpoint
 
 report.generate({
-    jsonDir: 'test-reports/cucumber-js/reisdocumenten/input-validatie',
-    reportPath: 'test-reports/cucumber-js/reports/reisdocumenten/input-validatie',
-    reportName: 'Reisdocumenten input validatie features',
-    hideMetadata: true,
-    customData: customData
-});
-
-report.generate({
-    jsonDir: 'test-reports/cucumber-js/reisdocumenten/autorisatie',
-    reportPath: 'test-reports/cucumber-js/reports/reisdocumenten/autorisatie',
-    reportName: 'Reisdocumenten autorisatie features',
-    hideMetadata: true,
-    customData: customData
-});
-
-report.generate({
-    jsonDir: 'test-reports/cucumber-js/reisdocumenten/protocollering',
-    reportPath: 'test-reports/cucumber-js/reports/reisdocumenten/protocollering',
-    reportName: 'Reisdocumenten protocollering features',
+    jsonDir: 'test-reports/cucumber-js/reisdocumenten',
+    reportPath: 'test-reports/cucumber-js/reports/reisdocumenten',
+    reportName: 'Reisdocumenten input validatie, autorisatie & protocollering features',
     hideMetadata: true,
     customData: customData
 });
@@ -72,25 +40,19 @@ report.generate({
 // verblijfplaatshistorie endpoint
 
 report.generate({
-    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/input-validatie',
-    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/input-validatie',
-    reportName: 'Verblijfplaatshistorie input validatie features',
+    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie',
+    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie',
+    reportName: 'Verblijfplaatshistorie input validatie, autorisatie & protocollering features',
     hideMetadata: true,
     customData: customData
 });
 
-report.generate({
-    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/autorisatie',
-    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/autorisatie',
-    reportName: 'Verblijfplaatshistorie autorisatie features',
-    hideMetadata: true,
-    customData: customData
-});
+// bewoningen endpoint
 
 report.generate({
-    jsonDir: 'test-reports/cucumber-js/verblijfplaatshistorie/protocollering',
-    reportPath: 'test-reports/cucumber-js/reports/verblijfplaatshistorie/protocollering',
-    reportName: 'Verblijfplaatshistorie protocollering features',
+    jsonDir: 'test-reports/cucumber-js/bewoningen',
+    reportPath: 'test-reports/cucumber-js/reports/bewoningen',
+    reportName: 'Bewoningen input validatie, autorisatie & protocollering features',
     hideMetadata: true,
     customData: customData
 });

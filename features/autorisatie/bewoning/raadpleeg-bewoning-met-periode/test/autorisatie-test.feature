@@ -1,6 +1,6 @@
 # language: nl
 
-@autorisatie @skip-verify
+@autorisatie
 Functionaliteit: test autorisatie bij combinatie infrastructurele wijziging en samenvoeging gemeente bij BewoningMetPeriode
 
 

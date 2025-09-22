@@ -1,14 +1,8 @@
 #!/bin/bash
 
-PARAMS="{ \
-    \"apiUrl\": \"http://localhost:8080/haalcentraal/api\", \
-    \"logFileToAssert\": \"./test-data/logs/brp-autorisatie-protocollering.json\", \
-    \"oAuth\": { \
-        \"enable\": true \
-    } \
-}"
-
 echo "### Cucumber Test Reports"
+
+EXIT_CODE=0
 
 echo "#### Step definitions validatie"
 
@@ -18,6 +12,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p UnitTest \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-integratie.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-integratie-summary.txt \
@@ -25,6 +20,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p Integratie \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-informatie-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-informatie-api-summary.txt \
@@ -32,6 +28,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p InfoApi \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-data-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-data-api-summary.txt \
@@ -39,6 +36,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p DataApi \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-gezag-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-summary.txt \
@@ -46,6 +44,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p GezagApi \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-deprecated.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-deprecated-summary.txt \
@@ -53,119 +52,64 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p GezagApiDeprecated \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 # personen endpoint
 
-echo "#### personen input validatie"
+echo "#### personen input validatie, autorisatie en protocollering"
 
-npx cucumber-js -f json:./test-reports/cucumber-js/personen/input-validatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/personen/input-validatie/test-result-summary.txt \
+npx cucumber-js -f json:./test-reports/cucumber-js/personen/test-result.json \
+                -f summary:./test-reports/cucumber-js/personen/test-result-summary.txt \
                 -f summary \
                 features/validatie/personen \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### personen autorisatie validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/personen/autorisatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/personen/autorisatie/test-result-summary.txt \
-                -f summary \
                 features/autorisatie/personen \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### personen protocollering validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/personen/protocollering/test-result.json \
-                -f summary:./test-reports/cucumber-js/personen/protocollering/test-result-summary.txt \
-                -f summary \
                 features/protocollering/personen \
-                --world-parameters "$PARAMS" \
+                features/accept-gezag-version-header.feature \
+                -p AenP \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 # reisdocumenten endpoint
 
-echo "#### reisdocumenten input validatie"
+echo "#### reisdocumenten input validatie, autorisatie en protocollering"
 
-npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/reisdocumenten/input-validatie/test-result-summary.txt \
+npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/test-result.json \
+                -f summary:./test-reports/cucumber-js/reisdocumenten/test-result-summary.txt \
                 -f summary \
                 features/validatie/reisdocumenten \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### reisdocumenten autorisatie validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/reisdocumenten/autorisatie/test-result-summary.txt \
-                -f summary \
                 features/autorisatie/reisdocumenten \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### reisdocumenten protocollering validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/protocollering/test-result.json \
-                -f summary:./test-reports/cucumber-js/reisdocumenten/protocollering/test-result-summary.txt \
-                -f summary \
                 features/protocollering/reisdocumenten \
-                --world-parameters "$PARAMS" \
+                -p AenP \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 # verblijfplaatshistorie endpoint
 
-echo "#### verblijfplaatshistorie input validatie"
+echo "#### verblijfplaatshistorie input validatie, autorisatie en protocollering"
 
-npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/input-validatie/test-result-summary.txt \
+npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/test-result.json \
+                -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/test-result-summary.txt \
                 -f summary \
                 features/validatie/verblijfplaatshistorie \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### verblijfplaatshistorie autorisatie validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/autorisatie/test-result-summary.txt \
-                -f summary \
                 features/autorisatie/verblijfplaatshistorie \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### verblijfplaatshistorie protocollering validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result.json \
-                -f summary:./test-reports/cucumber-js/verblijfplaatshistorie/protocollering/test-result-summary.txt \
-                -f summary \
                 features/protocollering/verblijfplaatshistorie \
-                --world-parameters "$PARAMS" \
+                -p AenP \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 
 # bewoningen endpoint
 
-echo "#### bewoningen input validatie"
+echo "#### bewoningen input validatie, autorisatie en protocollering"
 
-npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/input-validatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/bewoningen/input-validatie/test-result-summary.txt \
+npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/test-result.json \
+                -f summary:./test-reports/cucumber-js/bewoningen/test-result-summary.txt \
                 -f summary \
                 features/validatie/bewoningen \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### bewoningen autorisatie validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/autorisatie/test-result.json \
-                -f summary:./test-reports/cucumber-js/bewoningen/autorisatie/test-result-summary.txt \
-                -f summary \
                 features/autorisatie/bewoning \
-                --world-parameters "$PARAMS" \
-                > /dev/null
-
-echo "#### bewoningen protocollering validatie"
-
-npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/protocollering/test-result.json \
-                -f summary:./test-reports/cucumber-js/bewoningen/protocollering/test-result-summary.txt \
-                -f summary \
                 features/protocollering/bewoning \
-                --world-parameters "$PARAMS" \
+                -p AenP \
                 > /dev/null
+if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+
+# Exit with error code if any command failed
+exit $EXIT_CODE
