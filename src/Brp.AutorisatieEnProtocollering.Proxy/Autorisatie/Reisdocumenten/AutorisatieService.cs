@@ -1,12 +1,17 @@
-﻿using Brp.Shared.Infrastructure.Autorisatie;
+﻿using Microsoft.Extensions.Options;
+using Brp.AutorisatieEnProtocollering.Proxy.Settings;
+using Brp.Shared.Infrastructure.Autorisatie;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Reisdocumenten
 {
     public class AutorisatieService : AbstractAutorisatieService
     {
-        public AutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
+        private readonly int _kmarAfnemerCode = 0;
+
+        public AutorisatieService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor, IOptions<ReisdocumentenAutorisatieConfig> config)
             : base(serviceProvider, httpContextAccessor)
         {
+            _kmarAfnemerCode = int.TryParse(config.Value.KmarAfnemerCode, out var code) ? code : 0;
         }
 
         public override AuthorisationResult Authorize(int afnemerCode, int? gemeenteCode, string requestBody)
@@ -24,9 +29,7 @@ namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Reisdocumenten
 
         private bool AfnemerIsKmar(int afnemerCode)
         {
-            const int kmarAfnemerCode = 720402;
-
-            if (afnemerCode == kmarAfnemerCode)
+            if (afnemerCode == _kmarAfnemerCode)
             {
                 if (AutorisatieLog != null)
                 {
