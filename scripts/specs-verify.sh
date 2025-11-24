@@ -12,7 +12,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p UnitTest \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-integratie.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-integratie-summary.txt \
@@ -20,7 +20,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p Integratie \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-informatie-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-informatie-api-summary.txt \
@@ -28,7 +28,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p InfoApi \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-data-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-data-api-summary.txt \
@@ -36,7 +36,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p DataApi \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-gezag-api.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-summary.txt \
@@ -44,7 +44,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p GezagApi \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-deprecated.json \
                 -f summary:./test-reports/cucumber-js/step-definitions/test-result-gezag-api-deprecated-summary.txt \
@@ -52,7 +52,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/step-definitions/test-result-
                 features/docs \
                 -p GezagApiDeprecated \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 # personen endpoint
 
@@ -67,7 +67,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/personen/test-result.json \
                 features/accept-gezag-version-header.feature \
                 -p AenP \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 # reisdocumenten endpoint
 
@@ -81,7 +81,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/reisdocumenten/test-result.js
                 features/protocollering/reisdocumenten \
                 -p AenP \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 # verblijfplaatshistorie endpoint
 
@@ -95,7 +95,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/verblijfplaatshistorie/test-r
                 features/protocollering/verblijfplaatshistorie \
                 -p AenP \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 # bewoningen endpoint
 
@@ -109,7 +109,7 @@ npx cucumber-js -f json:./test-reports/cucumber-js/bewoningen/test-result.json \
                 features/protocollering/bewoning \
                 -p AenP \
                 > /dev/null
-if [ $? -ne 0 ]; then EXIT_CODE=1; fi
+if [[ $? -ne 0 ]]; then EXIT_CODE=1; fi
 
 # Exit with error code if any command failed
 exit $EXIT_CODE
