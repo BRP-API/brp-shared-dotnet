@@ -13,9 +13,9 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.OpenIdConnectServer" Version="9.0.0" />
-    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="4.3.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageReference Include="Ocelot" Version="24.0.0" />
+    <PackageReference Include="Ocelot" Version="24.0.1" />
      <!-- Include transitive dependencies explicitly to prevent high severity vulnerabilities -->
   </ItemGroup>
 
