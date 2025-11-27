@@ -13,34 +13,45 @@ Functionaliteit: autorisatie voor het bevragen van een reisdocument met reisdocu
   Autorisatie wordt verkregen met behulp van een OAuth 2 token.
   Wanneer de afnemer een gemeente is, is er ook een gemeentecode opgenomen in de OAuth token.
 
-  Regel: Een gemeente als afnemer is geautoriseerd voor het bevragen van reisdocumenten
+  Regel: Een gemeente en de KMAR zijn geautoriseerd voor het bevragen van reisdocumenten
 
     @fout-case
     Scenario: afnemer is geen gemeente
       Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | afnemerID |
-      | 000008    |
+        | afnemerID |
+        |    000008 |
       Als reisdocumenten wordt gezocht met de volgende parameters
-      | naam               | waarde                         |
-      | type               | RaadpleegMetReisdocumentnummer |
-      | reisdocumentnummer | NE3663258                      |
-      | fields             | reisdocumentnummer             |
+        | naam               | waarde                         |
+        | type               | RaadpleegMetReisdocumentnummer |
+        | reisdocumentnummer | NE3663258                      |
+        | fields             | reisdocumentnummer             |
       Dan heeft de response de volgende gegevens
-      | naam     | waarde                                                      |
-      | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3 |
-      | title    | U bent niet geautoriseerd voor deze vraag.                  |
-      | status   | 403                                                         |
-      | detail   | Alleen gemeenten mogen reisdocumenten raadplegen.           |
-      | code     | unauthorized                                                |
-      | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
+        | naam     | waarde                                                      |
+        | type     | https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.3 |
+        | title    | U bent niet geautoriseerd voor deze vraag.                  |
+        | status   |                                                         403 |
+        | detail   | Alleen gemeenten mogen reisdocumenten raadplegen.           |
+        | code     | unauthorized                                                |
+        | instance | /haalcentraal/api/reisdocumenten/reisdocumenten             |
 
     Scenario: afnemer is een gemeente
       Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
-      | afnemerID | gemeenteCode |
-      | 000008    | 0800         |
+        | afnemerID | gemeenteCode |
+        |    000008 |         0800 |
       Als reisdocumenten wordt gezocht met de volgende parameters
-      | naam               | waarde                         |
-      | type               | RaadpleegMetReisdocumentnummer |
-      | reisdocumentnummer | NE3663258                      |
-      | fields             | reisdocumentnummer             |
+        | naam               | waarde                         |
+        | type               | RaadpleegMetReisdocumentnummer |
+        | reisdocumentnummer | NE3663258                      |
+        | fields             | reisdocumentnummer             |
+      Dan heeft de response 0 reisdocumenten
+
+    Scenario: afnemer is de KMAR
+      Gegeven de geauthenticeerde consumer heeft de volgende 'claim' gegevens
+        | afnemerID |
+        |    720402 |
+      Als reisdocumenten wordt gezocht met de volgende parameters
+        | naam               | waarde                         |
+        | type               | RaadpleegMetReisdocumentnummer |
+        | reisdocumentnummer | NE3663258                      |
+        | fields             | houder.burgerservicenummer     |
       Dan heeft de response 0 reisdocumenten
