@@ -12,6 +12,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
 using Brp.AutorisatieEnProtocollering.Proxy.Middleware;
+using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 
 Log.Logger = SerilogHelpers.SetupSerilogBootstrapLogger();
 
@@ -48,6 +49,8 @@ try
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
                     .AddOpenIdConnectServer(new Uri(builder.Configuration["OAuth:Authority"]), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+
+    builder.Services.Configure<ReisdocumentenAutorisatieConfig>(builder.Configuration.GetSection(nameof(ReisdocumentenAutorisatieConfig)));
 
     var app = builder.Build();
 
