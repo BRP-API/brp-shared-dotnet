@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Brp.Shared.DtoMappers.Tests.Profiles;
 
@@ -9,7 +10,7 @@ public static class AutomapperUnderTestFactory
         MapperConfiguration config = new(cfg =>
         {
             cfg.AddProfile<T>();
-        });
+        }, NullLoggerFactory.Instance);
         return config.CreateMapper();
     }
 
@@ -21,7 +22,7 @@ public static class AutomapperUnderTestFactory
         {
             cfg.AddProfile<T1>();
             cfg.AddProfile<T2>();
-        });
+        }, NullLoggerFactory.Instance);
         return config.CreateMapper();
     }
 }
