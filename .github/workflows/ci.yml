@@ -160,7 +160,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           driver: docker-container
       - name: Build & push authz & protocollering container images naar registry
-        if: always() && (steps.changed-project.outputs.app == 'true' || inputs.publishType == 'authz-en-prot')
+        id: build-and-push-app-container
+        if: always() && (steps.changed-project.outputs.app == 'true' || inputs.publishType == 'authz-en-prot' || github.ref == 'refs/heads/main')
         uses: docker/build-push-action@v6
         with:
           file: ${{ env.APP_PROJECT_PATH }}/Dockerfile
@@ -172,8 +173,16 @@ jobs:
             ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-latest
             ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
             ${{ env.APP_CONTAINER_IMAGE }}:${{ github.sha }}
+
+      - name: Scan ${{ env.APP_CONTAINER_IMAGE }} container image for CVEs
+        if: steps.build-and-push-app-container.outcome == 'success'
+        uses: ./.github/actions/scan-container-image-for-cves
+        with:
+          image: ${{ env.APP_CONTAINER_IMAGE }}:${{ steps.app-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
+          artifact-name: authz-protocollering-service-${{ steps.app-version.outputs.version }}-cve-scan-report
+
       - name: Build & push IDP mock container images naar registry
-        if: always() && (steps.changed-project.outputs.mock == 'true' || inputs.publishType == 'authn-mock')
+        if: always() && (steps.changed-project.outputs.mock == 'true' || inputs.publishType == 'authn-mock' || github.ref == 'refs/heads/main')
         uses: docker/build-push-action@v6
         with:
           file: ${{ env.MOCK_PROJECT_PATH }}/Dockerfile
@@ -185,7 +194,7 @@ jobs:
             ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-latest
             ${{ env.MOCK_CONTAINER_IMAGE }}:${{ steps.mock-version.outputs.version }}-${{ steps.build-run-id.outputs.build-run }}
       - name: Build & push referentie api container image naar registry
-        if: always() && steps.changed-project.outputs.ref-app == 'true'
+        if: always() && (steps.changed-project.outputs.ref-app == 'true' || github.ref == 'refs/heads/main')
         uses: docker/build-push-action@v6
         with:
           file: ${{ env.REF_API_PROJECT_PATH }}/Dockerfile
