@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Genereer build run identifier
         id: build-run-id
@@ -84,7 +84,7 @@ jobs:
           path-solution-file: ${{ env.DOTNET_SOLUTION_FILE_PATH }} 
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5.0.0
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies
@@ -122,40 +122,25 @@ jobs:
         run: |
           ./scripts/containers-stop.sh ci
   
-      - name: Genereer test rapportage
-        if: always()
-        run: |
-          node ./scripts/generate-cucumber-reports.js ${{ steps.app-version.outputs.version }} ${{ steps.build-run-id.outputs.build-run }} ${{ github.ref_name }}
       - name: Upload test rapportage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Reports
           path: |
             test-reports
             test-data/logs
-      - name: Push test rapportage naar brp-api.github.io repo
-        if: false
-        uses: tech-thinker/push-to-repo@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GIT_PAT_TOKEN }}
-        with:
-          source-directory: test-reports/cucumber-js/reports
-          destination-repository-name: brp-api.github.io
-          destination-github-username: BRP-API
-          target-branch: test-reports/autorisatie-en-protocollering
-          commit-message: "test rapporten van build: ${{ steps.build-run-id.outputs.build-run }}"
 
       - name: Login to GitHub Container Registry
         if: always()
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v4.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Configureer container image builder voor multi-platform
         if: always()
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4.1.0
         with:
           platforms: linux/amd64,linux/arm64
           driver: docker-container
