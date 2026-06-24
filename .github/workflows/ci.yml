@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Genereer build run identifier
         id: build-run-id
@@ -65,8 +65,8 @@ jobs:
           path-csproj-file: ${{ env.MOCK_CSPROJ_FILE_PATH }}
           build-run: ${{ steps.build-run-id.outputs.build-run }}
 
-      - name: Bepaal de gewijzigde applicatie(s) met dorny/paths-filter@v3.0.2
-        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
+      - name: Bepaal de gewijzigde applicatie(s) met dorny/paths-filter@v4
+        uses: dorny/paths-filter@v4
         id: changed-project
         with:
           filters: |
@@ -84,7 +84,7 @@ jobs:
           path-solution-file: ${{ env.DOTNET_SOLUTION_FILE_PATH }} 
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5.0.0
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install dependencies
@@ -133,7 +133,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         if: always()
-        uses: docker/login-action@v4.1.0
+        uses: docker/login-action@v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -147,7 +147,7 @@ jobs:
       - name: Build & push authz & protocollering container images naar registry
         id: build-and-push-app-container
         if: always() && (steps.changed-project.outputs.app == 'true' || inputs.publishType == 'authz-en-prot' || github.ref == 'refs/heads/main')
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7.2.0
         with:
           file: ${{ env.APP_PROJECT_PATH }}/Dockerfile
           context: src
