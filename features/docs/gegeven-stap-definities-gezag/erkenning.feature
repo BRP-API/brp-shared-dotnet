@@ -139,3 +139,27 @@ Functionaliteit: Erkenning
     En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
       | pl_id | stapel_nr | volg_nr | persoon_type | akte_nr | geslachts_naam | geboorte_datum     | geslachts_aand | familie_betrek_start_datum |
       | P1    |         0 |       0 |            2 | 1_C____ | P3             | gisteren - 35 jaar | M              |                   20240513 |
+
+  Scenario: {relatieve datum} is '{naam}' ouder geworden van '{naam}' na een gerechtelijke vaststelling ouderschap
+    Gegeven de gisteren 35 jaar geleden geboren man 'P3'
+    En de minderjarige persoon 'P1' met één ouder 'P2'
+    En 8 jaar geleden is 'P3' ouder geworden van 'P1' na een gerechtelijke vaststelling ouderschap
+    Als de sql statements gegenereerd uit de gegeven stappen zijn uitgevoerd
+    Dan heeft persoon 'P1' de volgende rij in tabel 'lo3_pl'
+      | pl_id | geheim_ind |
+      | P1    |          0 |
+    En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
+      | pl_id | stapel_nr | volg_nr | persoon_type | geslachts_naam | akte_nr |
+      | P1    |         0 |       1 | P            | P1             | 1_A____ |
+    En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
+      | pl_id | stapel_nr | volg_nr | persoon_type | geslachts_naam | akte_nr |
+      | P1    |         0 |       0 | P            | P1             | 1_V____ |
+    En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
+      | pl_id | stapel_nr | volg_nr | persoon_type | geslachts_naam | geslachts_aand | familie_betrek_start_datum | akte_nr |
+      | P1    |         0 |       0 |            1 | P2             | V              | gisteren - 17 jaar         | 1_A____ |
+    En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
+      | pl_id | stapel_nr | volg_nr | persoon_type | akte_nr | geldigheid_start_datum | geslachts_naam | familie_betrek_start_datum | onjuist_ind |
+      | P1    |         0 |       1 |            2 | 1_A____ | gisteren - 17 jaar     |                |                            | O           |
+    En heeft persoon 'P1' de volgende rij in tabel 'lo3_pl_persoon'
+      | pl_id | stapel_nr | volg_nr | persoon_type | akte_nr | geldigheid_start_datum | geslachts_naam | geboorte_datum     | geslachts_aand | familie_betrek_start_datum |
+      | P1    |         0 |       0 |            2 | 1_V____ | gisteren - 17 jaar     | P3             | gisteren - 35 jaar | M              | gisteren - 17 jaar         |
