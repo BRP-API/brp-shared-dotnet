@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 
 namespace Brp.Shared.DtoMappers.Mappers;
 
@@ -14,12 +14,13 @@ public static class NaamGerelateerdeMapper
                 Voorletters = naam?.Voorletters(),
                 Voornamen = naam?.Voornamen,
                 Voorvoegsel = naam?.Voorvoegsel,
-                Geslachtsnaam = naam?.Geslachtsnaam == "."
-                ? null
-                : naam?.Geslachtsnaam,
+                Geslachtsnaam = naam.MapGeslachtsnaam(),
                 InOnderzoek = inOnderzoek.MapNaamGerelateerdeInOnderzoek()
             };
     }
+
+    public static string? MapGeslachtsnaam(this CommonDtos.NaamBasis? naam) =>
+        naam?.Geslachtsnaam == "." ? null : naam?.Geslachtsnaam;
 
     public static BrpApiDtos.NaamInOnderzoek? MapNaamGerelateerdeInOnderzoek(this BrpDtos.InOnderzoek? source)
     {

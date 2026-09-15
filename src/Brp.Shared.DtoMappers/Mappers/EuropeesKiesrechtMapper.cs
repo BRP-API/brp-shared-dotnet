@@ -1,4 +1,4 @@
-﻿namespace Brp.Shared.DtoMappers.Mappers;
+namespace Brp.Shared.DtoMappers.Mappers;
 
 public static class EuropeesKiesrechtMapper
 {
@@ -8,13 +8,7 @@ public static class EuropeesKiesrechtMapper
             ? null
             : new BrpApiDtos.EuropeesKiesrecht
             {
-                Aanduiding = europeesKiesrecht.Aanduiding == null
-                 ? null
-                 : new CommonDtos.Waardetabel
-                 {
-                     Code = europeesKiesrecht.Aanduiding.Code,
-                     Omschrijving = europeesKiesrecht.Aanduiding.Omschrijving
-                 },
+                Aanduiding = europeesKiesrecht.Aanduiding.Map(),
                 EinddatumUitsluiting = europeesKiesrecht.EinddatumUitsluiting?.Map()
             };
     }

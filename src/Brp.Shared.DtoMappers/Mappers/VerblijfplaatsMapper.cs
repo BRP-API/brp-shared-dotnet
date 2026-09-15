@@ -1,4 +1,4 @@
-﻿namespace Brp.Shared.DtoMappers.Mappers;
+namespace Brp.Shared.DtoMappers.Mappers;
 
 public static class VerblijfplaatsMapper
 {
@@ -49,7 +49,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
@@ -118,7 +118,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
@@ -160,7 +160,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" or
             "081300" => new BrpApiDtos.VerblijfadresBuitenlandInOnderzoek
@@ -225,7 +225,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" or
             "089999" => new BrpApiDtos.AdresInOnderzoek
@@ -316,7 +316,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" or
             "081100" or
@@ -406,7 +406,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" or
             "089999" => new BrpApiDtos.LocatieInOnderzoek
@@ -465,7 +465,7 @@ public static class VerblijfplaatsMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "080000" or
             "081200" or

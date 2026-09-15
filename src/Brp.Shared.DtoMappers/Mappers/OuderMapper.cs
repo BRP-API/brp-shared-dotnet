@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 using System.Collections.ObjectModel;
 
 namespace Brp.Shared.DtoMappers.Mappers;
@@ -41,7 +41,7 @@ public static class OuderMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "020000" or
             "030000" => new BrpApiDtos.OuderInOnderzoek

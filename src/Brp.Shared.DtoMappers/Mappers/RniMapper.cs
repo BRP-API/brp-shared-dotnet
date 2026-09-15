@@ -10,13 +10,7 @@ public static class RniMapper
             {
                 Categorie = rniDeelnemer.Categorie,
                 OmschrijvingVerdrag = rniDeelnemer.OmschrijvingVerdrag,
-                Deelnemer = rniDeelnemer.Deelnemer == null
-                    ? null
-                    : new CommonDtos.Waardetabel
-                    {
-                        Code = rniDeelnemer.Deelnemer.Code,
-                        Omschrijving = rniDeelnemer.Deelnemer.Omschrijving
-                    }
+                Deelnemer = rniDeelnemer.Deelnemer.Map(),
             };
     }
 

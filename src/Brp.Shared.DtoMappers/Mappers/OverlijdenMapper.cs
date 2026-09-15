@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 
 namespace Brp.Shared.DtoMappers.Mappers;
 
@@ -11,12 +11,8 @@ public static class OverlijdenMapper
             : new Overlijden
             {
                 Datum = overlijden.Datum?.Map(),
-                Plaats = overlijden.Plaats?.Code == "0000"
-                    ? null
-                    : overlijden.Plaats?.Map(),
-                Land = overlijden.Land?.Code == "0000"
-                    ? null
-                    : overlijden.Land?.Map(),
+                Plaats = overlijden.Plaats.MapPlaats(),
+                Land = overlijden.Land.MapLand(),
                 InOnderzoek = overlijden.InOnderzoek.OverlijdenInOnderzoek()
             };
     }
@@ -28,7 +24,7 @@ public static class OverlijdenMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "060000" or
             "060800" => new BrpApiDtos.OverlijdenInOnderzoek

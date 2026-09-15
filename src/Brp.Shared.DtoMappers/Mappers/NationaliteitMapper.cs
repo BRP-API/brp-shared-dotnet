@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 using System.Collections.ObjectModel;
 
 namespace Brp.Shared.DtoMappers.Mappers;
@@ -53,7 +53,7 @@ public static class NationaliteitMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "040000" => new BrpApiDtos.BijzonderNederlanderschapInOnderzoek
             {
@@ -107,7 +107,7 @@ public static class NationaliteitMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "040000" => new StaatloosInOnderzoek
             {
@@ -152,7 +152,7 @@ public static class NationaliteitMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "040000" => new NationaliteitBekendInOnderzoek
             {
@@ -195,7 +195,7 @@ public static class NationaliteitMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "040000" => new NationaliteitOnbekendInOnderzoek
             {

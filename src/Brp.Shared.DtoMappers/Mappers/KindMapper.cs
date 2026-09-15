@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 using System.Collections.ObjectModel;
 
 namespace Brp.Shared.DtoMappers.Mappers;
@@ -37,7 +37,7 @@ public static class KindMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "090000" or
             "090100" or

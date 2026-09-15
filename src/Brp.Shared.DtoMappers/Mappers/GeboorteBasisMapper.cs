@@ -10,7 +10,7 @@ public static class GeboorteBasisMapper
             ? null
             : new GeboorteBeperkt
             {
-                Datum = geboorteBasis?.Datum?.Map(),
+                Datum = geboorteBasis.Datum?.Map(),
                 InOnderzoek = inOnderzoek.MapGeboorteBeperktInOnderzoek()
             };
     }

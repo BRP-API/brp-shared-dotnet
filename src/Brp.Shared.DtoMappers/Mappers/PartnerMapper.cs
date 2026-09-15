@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 using System.Collections.ObjectModel;
 
 namespace Brp.Shared.DtoMappers.Mappers;
@@ -25,9 +25,7 @@ public static class PartnerMapper
             : new BrpApiDtos.Partner
             {
                 Naam = partner.Naam.MapNaamGerelateerde(partner.InOnderzoek),
-                SoortVerbintenis = partner.SoortVerbintenis?.Code == "."
-                    ? null
-                    : partner.SoortVerbintenis?.Map(),
+                SoortVerbintenis = partner.SoortVerbintenis.MapSoortVerbintenis(),
                 Geboorte = partner.Geboorte.Map(partner.InOnderzoek),
                 Burgerservicenummer = partner.Burgerservicenummer,
                 Geslacht = partner.Geslacht?.Map(),
@@ -37,7 +35,12 @@ public static class PartnerMapper
             };
     }
 
-    public static BrpApiDtos.AangaanHuwelijkPartnerschap? Map(this BrpDtos.GbaAangaanHuwelijkPartnerschap? aangaanHuwelijkPartnerschap, BrpDtos.InOnderzoek inOnderzoek)
+    private static CommonDtos.Waardetabel? MapSoortVerbintenis(this CommonDtos.Waardetabel? soortVerbintenis) =>
+      soortVerbintenis?.Code == "."
+        ? null
+        : soortVerbintenis?.Map();
+
+  public static BrpApiDtos.AangaanHuwelijkPartnerschap? Map(this BrpDtos.GbaAangaanHuwelijkPartnerschap? aangaanHuwelijkPartnerschap, BrpDtos.InOnderzoek inOnderzoek)
     {
         if (aangaanHuwelijkPartnerschap == null && inOnderzoek != null)
         {
@@ -48,12 +51,8 @@ public static class PartnerMapper
             : new BrpApiDtos.AangaanHuwelijkPartnerschap
             {
                 Datum = aangaanHuwelijkPartnerschap.Datum?.Map(),
-                Land = aangaanHuwelijkPartnerschap.Land?.Code == "0000"
-                    ? null
-                    : aangaanHuwelijkPartnerschap.Land?.Map(),
-                Plaats = aangaanHuwelijkPartnerschap.Plaats?.Code == "0000"
-                    ? null
-                    : aangaanHuwelijkPartnerschap.Plaats?.Map(),
+                Land = aangaanHuwelijkPartnerschap.Land.MapLand(),
+                Plaats = aangaanHuwelijkPartnerschap.Plaats.MapPlaats(),
                 InOnderzoek = aangaanHuwelijkPartnerschap.InOnderzoek.AangaanHuwelijkPartnerschapInOnderzoek()
             };
     }
@@ -65,7 +64,7 @@ public static class PartnerMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "050000" or
             "050600" => new BrpApiDtos.AangaanHuwelijkPartnerschapInOnderzoek
@@ -116,7 +115,7 @@ public static class PartnerMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "050000" => new BrpApiDtos.PartnerInOnderzoek
             {
@@ -151,7 +150,7 @@ public static class PartnerMapper
             return null;
         }
 
-        return source?.AanduidingGegevensInOnderzoek switch
+        return source.AanduidingGegevensInOnderzoek switch
         {
             "050000" or
             "050700" or

@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpApiDtos;
+using Brp.Shared.DtoMappers.BrpApiDtos;
 using Brp.Shared.DtoMappers.Interfaces;
 
 namespace Brp.Shared.DtoMappers.Mappers;
@@ -25,9 +25,7 @@ public static class NaamMapper
                 Voornamen = naam.Voornamen,
                 VolledigeNaam = naam.VolledigeNaam(geslacht),
                 Voorvoegsel = naam.Voorvoegsel,
-                Geslachtsnaam = naam.Geslachtsnaam == "."
-                ? null
-                : naam.Geslachtsnaam,
+                Geslachtsnaam = naam.MapGeslachtsnaam(),
                 InOnderzoek = inOnderzoek?.MapNaamPersoonBeperktInOnderzoek()
             };
     }
@@ -103,9 +101,7 @@ public static class NaamMapper
                 Voornamen = naam?.Voornamen,
                 VolledigeNaam = naam?.VolledigeNaam(geslacht),
                 Voorvoegsel = naam?.Voorvoegsel,
-                Geslachtsnaam = naam?.Geslachtsnaam == "."
-                ? null
-                : naam?.Geslachtsnaam,
+                Geslachtsnaam = naam.MapGeslachtsnaam(),
                 Partners = naam?.Partners?.Map(),
                 InOnderzoek = inOnderzoek?.MapNaamPersoonInOnderzoek()
             }
