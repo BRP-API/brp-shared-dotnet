@@ -8,13 +8,13 @@ public static class OuderMapper
     public static Collection<Ouder>? Map(this ICollection<BrpDtos.GbaOuder> ouders)
     {
         var retval = new Collection<Ouder>();
-        foreach (var ouder in ouders)
+        foreach (var ouder in from ouder in ouders
+                              where ouder != null
+                              select ouder)
         {
-            if (ouder != null)
-            {
-                retval.Add(ouder.Map()!);
-            }
+          retval.Add(ouder.Map()!);
         }
+
         return retval;
     }
 

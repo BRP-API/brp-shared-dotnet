@@ -2,7 +2,14 @@ namespace Brp.Shared.DtoMappers.Mappers;
 
 public static class VerblijfplaatsMapper
 {
-    public static BrpApiDtos.AbstractVerblijfplaats? Map(this BrpDtos.GbaVerblijfplaats? source)
+  private const string CategorieVerblijfplaats = "080000";
+  private const string GroepAdresBuitenland = "081300";
+  private const string LandAdresBuitenland = "081310";
+  private const string DatumAanvangAdresBuitenland = "081320";
+  private const string GroepGeldigheid = "088500";
+  private const string DatumIngangGeldigheid = "088510";
+
+  public static BrpApiDtos.AbstractVerblijfplaats? Map(this BrpDtos.GbaVerblijfplaats? source)
     {
         if (source == null)
         {
@@ -51,31 +58,31 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
+            CategorieVerblijfplaats => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumVan = true,
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081300" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
+            GroepAdresBuitenland => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
                 DatumVan = true,
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081310" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
+            LandAdresBuitenland => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081320" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
+            DatumAanvangAdresBuitenland => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
                 DatumVan = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "088500" or
-            "088510" => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
+            GroepGeldigheid or
+            DatumIngangGeldigheid => new BrpApiDtos.VerblijfplaatsOnbekendInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -120,31 +127,31 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
+            CategorieVerblijfplaats => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumVan = true,
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081300" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
+            GroepAdresBuitenland => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
                 DatumVan = true,
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081310" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
+            LandAdresBuitenland => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081320" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
+            DatumAanvangAdresBuitenland => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
                 DatumVan = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "088500" or
-            "088510" => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
+            GroepGeldigheid or
+            DatumIngangGeldigheid => new BrpApiDtos.VerblijfplaatsBuitenlandInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -162,8 +169,8 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" or
-            "081300" => new BrpApiDtos.VerblijfadresBuitenlandInOnderzoek
+            CategorieVerblijfplaats or
+            GroepAdresBuitenland => new BrpApiDtos.VerblijfadresBuitenlandInOnderzoek
             {
                 Regel1 = true,
                 Regel2 = true,
@@ -171,7 +178,7 @@ public static class VerblijfplaatsMapper
                 Land = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "081310" => new BrpApiDtos.VerblijfadresBuitenlandInOnderzoek
+            LandAdresBuitenland => new BrpApiDtos.VerblijfadresBuitenlandInOnderzoek
             {
                 Land = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -227,7 +234,7 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" or
+            CategorieVerblijfplaats or
             "089999" => new BrpApiDtos.AdresInOnderzoek
             {
                 AdresseerbaarObjectIdentificatie = true,
@@ -250,7 +257,7 @@ public static class VerblijfplaatsMapper
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
             "081030" or
-            "081320" => new BrpApiDtos.AdresInOnderzoek
+            DatumAanvangAdresBuitenland => new BrpApiDtos.AdresInOnderzoek
             {
                 DatumVan = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -283,8 +290,8 @@ public static class VerblijfplaatsMapper
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "088500" or
-            "088510" => new BrpApiDtos.AdresInOnderzoek
+            GroepGeldigheid or
+            DatumIngangGeldigheid => new BrpApiDtos.AdresInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -318,7 +325,7 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" or
+            CategorieVerblijfplaats or
             "081100" or
             "089999" => new BrpApiDtos.VerblijfadresBinnenlandInOnderzoek
             {
@@ -408,7 +415,7 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" or
+            CategorieVerblijfplaats or
             "089999" => new BrpApiDtos.LocatieInOnderzoek
             {
                 DatumIngangGeldigheid = true,
@@ -439,8 +446,8 @@ public static class VerblijfplaatsMapper
                 Type = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
             },
-            "088500" or
-            "088510" => new BrpApiDtos.LocatieInOnderzoek
+            GroepGeldigheid or
+            DatumIngangGeldigheid => new BrpApiDtos.LocatieInOnderzoek
             {
                 DatumIngangGeldigheid = true,
                 DatumIngangOnderzoek = source.DatumIngangOnderzoek.Map()
@@ -467,7 +474,7 @@ public static class VerblijfplaatsMapper
 
         return source.AanduidingGegevensInOnderzoek switch
         {
-            "080000" or
+            CategorieVerblijfplaats or
             "081200" or
             "081210" or
             "089999" => new BrpApiDtos.VerblijfadresLocatieInOnderzoek

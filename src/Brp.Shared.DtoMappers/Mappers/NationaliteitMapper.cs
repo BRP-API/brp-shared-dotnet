@@ -8,13 +8,13 @@ public static class NationaliteitMapper
     public static Collection<AbstractNationaliteit>? Map(this ICollection<BrpDtos.GbaNationaliteit> nationaliteiten)
     {
         var retval = new Collection<AbstractNationaliteit>();
-        foreach (var nationaliteit in nationaliteiten)
+        foreach (var nationaliteit in from nationaliteit in nationaliteiten
+                                      where nationaliteit != null
+                                      select nationaliteit)
         {
-            if (nationaliteit != null)
-            {
-                retval.Add(nationaliteit.Map()!);
-            }
+          retval.Add(nationaliteit.Map()!);
         }
+
         return retval;
     }
 

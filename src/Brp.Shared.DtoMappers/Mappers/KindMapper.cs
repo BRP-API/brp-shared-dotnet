@@ -8,13 +8,13 @@ public static class KindMapper
     public static Collection<Kind>? Map(this ICollection<BrpDtos.GbaKind> kinderen)
     {
         var retval = new Collection<Kind>();
-        foreach (var kind in kinderen)
+        foreach (var kind in from kind in kinderen
+                             where kind != null
+                             select kind)
         {
-            if (kind != null)
-            {
-                retval.Add(kind.Map()!);
-            }
+          retval.Add(kind.Map()!);
         }
+
         return retval;
     }
 

@@ -1,4 +1,4 @@
-﻿namespace Brp.Shared.DtoMappers.Mappers;
+namespace Brp.Shared.DtoMappers.Mappers;
 
 public static class VerblijfstitelMapper
 {
@@ -8,21 +8,19 @@ public static class VerblijfstitelMapper
             ? null
             : new BrpApiDtos.Verblijfstitel
             {
-                Aanduiding = verblijfstitel.Aanduiding == null
-                 || verblijfstitel.Aanduiding.Code == "98"
-                 ? null
-                 : verblijfstitel.Aanduiding = new CommonDtos.Waardetabel
-                 {
-                     Code = verblijfstitel.Aanduiding.Code,
-                     Omschrijving = verblijfstitel.Aanduiding.Omschrijving
-                 },
+                Aanduiding = verblijfstitel.Aanduiding.MapAanduiding(),
                 DatumEinde = verblijfstitel.DatumEinde?.Map(),
                 DatumIngang = verblijfstitel.DatumIngang?.Map(),
                 InOnderzoek = verblijfstitel.InOnderzoek.VerblijfstitelInOnderzoek()
             };
     }
 
-    private static BrpApiDtos.VerblijfstitelInOnderzoek? VerblijfstitelInOnderzoek(this BrpDtos.InOnderzoek? source)
+    private static CommonDtos.Waardetabel? MapAanduiding(this CommonDtos.Waardetabel? aanduiding) =>
+      aanduiding == null || aanduiding.Code == "98"
+        ? null
+        : aanduiding.Map();
+
+  private static BrpApiDtos.VerblijfstitelInOnderzoek? VerblijfstitelInOnderzoek(this BrpDtos.InOnderzoek? source)
     {
         if (source == null)
         {
