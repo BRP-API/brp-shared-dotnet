@@ -1,5 +1,4 @@
-﻿using Brp.Shared.DtoMappers.BrpDtos;
-using Brp.Shared.DtoMappers.CommonDtos;
+﻿using Brp.Shared.DtoMappers.CommonDtos;
 using Brp.Shared.DtoMappers.Mappers;
 using FluentAssertions;
 
