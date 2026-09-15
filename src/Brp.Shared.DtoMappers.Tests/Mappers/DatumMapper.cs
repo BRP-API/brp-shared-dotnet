@@ -15,7 +15,7 @@ public class DatumMapper
             Datum = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Local),
             LangFormaat = "2 januari 2024"
         };
-        
+
         input.Map().Should().BeEquivalentTo(expected);
     }
 
