@@ -44,11 +44,12 @@ try
     builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
     builder.Services.AddOcelot();
-
+    var oauthAuthority = builder.Configuration["OAuth:Authority"]
+    ?? throw new InvalidOperationException("OAuth:Authority Heeft geen waarde");
     builder.Services.AddHealthChecks()
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
-                    .AddOpenIdConnectServer(new Uri(builder.Configuration["OAuth:Authority"]), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
 
     builder.Services.Configure<ReisdocumentenAutorisatieConfig>(builder.Configuration.GetSection(nameof(ReisdocumentenAutorisatieConfig)));
 
@@ -64,7 +65,7 @@ try
 
     app.SetupHealthCheckEndpoints(builder.Configuration, Log.Logger);
 
-    app.UseEndpoints(e => e.MapControllers());
+    app.MapControllers();
 
     app.UseMiddleware<AutorisatieEnProtocolleringMiddleware>();
 
