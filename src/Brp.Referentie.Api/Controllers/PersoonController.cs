@@ -18,7 +18,7 @@ public class PersoonController : ControllerBase
     {
         if(HttpContext.Request.Headers.ContainsKey("accept-gezag-version"))
         {
-            HttpContext.Response.Headers.Add("accept-gezag-version", HttpContext.Request.Headers["accept-gezag-version"]);
+            HttpContext.Response.Headers.Append("accept-gezag-version", HttpContext.Request.Headers["accept-gezag-version"]);
         }
         
         int status = await HttpContext.Response.AddCustomResponseHeaders(_environment);

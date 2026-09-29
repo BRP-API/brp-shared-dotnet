@@ -20,7 +20,7 @@ public static class Helpers
                 {
                     retval = int.Parse(header.Value!.ToString());
                 }
-                response.Headers.Add(header.Key, header.Value!.ToString());
+                response.Headers.Append(header.Key, header.Value!.ToString());
             }
 
         }
