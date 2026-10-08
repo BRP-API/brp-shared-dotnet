@@ -7,7 +7,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # See https://github.com/Contrast-Security-OSS/agent-operator/blob/master/docs/public/08-tips.md
     DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
 # Add ICU libraries for better globalization support
-RUN apk update && apk upgrade --no-cache
+RUN apk add --no-cache icu-libs
 WORKDIR /app
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
