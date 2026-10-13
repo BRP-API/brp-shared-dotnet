@@ -6,7 +6,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Disable config change monitoring for better container performance
     # See https://github.com/Contrast-Security-OSS/agent-operator/blob/master/docs/public/08-tips.md
     DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
-# Add ICU libraries for better globalization support
+# Add ICU libraries for better globalization support, update and upgrade Alpine packages for better security and performance
 RUN apk add --no-cache icu-libs && apk update && apk upgrade
 WORKDIR /app
 

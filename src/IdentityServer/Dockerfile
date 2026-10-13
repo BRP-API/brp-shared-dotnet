@@ -4,6 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS base
 # Disable config change monitoring for better container performance
 # See https://github.com/Contrast-Security-OSS/agent-operator/blob/master/docs/public/08-tips.md
 ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+# Update and upgrade Alpine packages for better security and performance
+RUN apk update && apk upgrade
 WORKDIR /app
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
