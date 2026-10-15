@@ -10,6 +10,7 @@ services:
       dockerfile: IdentityServer/Dockerfile
       platforms:
         - linux/amd64
+        - linux/arm64
 
   brp.autorisatie.proxy:
     container_name: brp-autorisatie
@@ -19,6 +20,7 @@ services:
       dockerfile: Brp.AutorisatieEnProtocollering.Proxy/Dockerfile
       platforms:
         - linux/amd64
+        - linux/arm64
 
   brp.referentie.api:
     container_name: brp-referentie-api
@@ -28,3 +30,4 @@ services:
       dockerfile: Brp.Referentie.Api/Dockerfile
       platforms:
         - linux/amd64
+        - linux/arm64
