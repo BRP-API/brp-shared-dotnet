@@ -86,9 +86,9 @@ Functionaliteit: Stap definities ten behoeve van specificeren gezagsrelaties
         | P3    |       0 | <indicatie gezag nieuwe uitspraak> | <relatieve datum>      |
 
       Voorbeelden:
-        | relatieve datum   | gezaghebbende eerste uitspraak | gezaghebbende nieuwe uitspraak | indicatie gezag eerste uitspraak | indicatie gezag nieuwe uitspraak | gezaghebbende in stapdefinitie |
-        |    2 jaar geleden | een derde                      | beide ouders                   | D                                |                               12 | beide ouders                   |
-        
+        | relatieve datum | gezaghebbende eerste uitspraak | gezaghebbende nieuwe uitspraak | indicatie gezag eerste uitspraak | indicatie gezag nieuwe uitspraak | gezaghebbende in stapdefinitie |
+        |  2 jaar geleden | een derde                      | beide ouders                   | D                                |                               12 | beide ouders                   |
+
     @integratie
     Scenario: {relatievedatum} is in een gerechtelijke uitspraak (de toewijzing van gezag|de voogdij) beëindigd
       Gegeven de gisteren 45 jaar geleden in 'Nederland' geboren 'P1' met burgerservicenummer '000000012'
@@ -158,3 +158,53 @@ Functionaliteit: Stap definities ten behoeve van specificeren gezagsrelaties
       En heeft persoon 'P2' de volgende rijen in tabel 'lo3_pl_persoon'
         | pl_id | persoon_type | stapel_nr | volg_nr | burger_service_nr | geslachts_naam | geboorte_land_code | akte_nr |
         | P2    | P            |         0 |       0 |         000000024 | P2             |               6030 | 1_A____ |
+
+    @integratie
+    Scenario: {relatieve datum} is '{naam}' onder curatele gesteld
+      Gegeven de persoon 'P1' met burgerservicenummer '000000012'
+      En de persoon 'P2' met burgerservicenummer '000000024'
+      En 2 jaar geleden is 'P1' onder curatele gesteld
+      Als de sql statements gegenereerd uit de gegeven stappen zijn uitgevoerd
+      Dan heeft persoon 'P1' de volgende rij in tabel 'lo3_pl'
+        | pl_id | geheim_ind |
+        | P1    |          0 |
+      En heeft persoon 'P1' de volgende rijen in tabel 'lo3_pl_persoon'
+        | pl_id | persoon_type | stapel_nr | volg_nr | burger_service_nr | geslachts_naam | geboorte_land_code | akte_nr |
+        | P1    | P            |         0 |       0 |         000000012 | P1             |               6030 | 1_A____ |
+      En heeft persoon 'P1' de volgende rijen in tabel 'lo3_pl_gezagsverhouding'
+        | pl_id | volg_nr | curatele_register_ind | geldigheid_start_datum |
+        | P1    |       0 |                     1 |         2 jaar geleden |
+      En heeft persoon 'P2' de volgende rij in tabel 'lo3_pl'
+        | pl_id | geheim_ind |
+        | P2    |          0 |
+      En heeft persoon 'P2' de volgende rijen in tabel 'lo3_pl_persoon'
+        | pl_id | persoon_type | stapel_nr | volg_nr | burger_service_nr | geslachts_naam | geboorte_land_code | akte_nr |
+        | P2    | P            |         0 |       0 |         000000024 | P2             |               6030 | 1_A____ |
+
+    Scenario: {relatieve datum} is de curatele voor '{naam}' beëindigd
+      Gegeven de persoon 'P1' met burgerservicenummer '000000012'
+      En de persoon 'P2' met burgerservicenummer '000000024'
+      En 2 jaar geleden is 'P1' onder curatele gesteld
+      En <relatieve datum> is de curatele voor 'P1' beëindigd
+      Als de sql statements gegenereerd uit de gegeven stappen zijn uitgevoerd
+      Dan heeft persoon 'P1' de volgende rij in tabel 'lo3_pl'
+        | pl_id | geheim_ind |
+        | P1    |          0 |
+      En heeft persoon 'P1' de volgende rijen in tabel 'lo3_pl_persoon'
+        | pl_id | persoon_type | stapel_nr | volg_nr | burger_service_nr | geslachts_naam | geboorte_land_code | akte_nr |
+        | P1    | P            |         0 |       0 |         000000012 | P1             |               6030 | 1_A____ |
+      En heeft persoon 'P1' de volgende rijen in tabel 'lo3_pl_gezagsverhouding'
+        | pl_id | volg_nr | curatele_register_ind | geldigheid_start_datum |
+        | P1    |       0 |                       | <relatieve datum>      |
+        | P1    |       1 |                     1 |         2 jaar geleden |
+      En heeft persoon 'P2' de volgende rij in tabel 'lo3_pl'
+        | pl_id | geheim_ind |
+        | P2    |          0 |
+      En heeft persoon 'P2' de volgende rijen in tabel 'lo3_pl_persoon'
+        | pl_id | persoon_type | stapel_nr | volg_nr | burger_service_nr | geslachts_naam | geboorte_land_code | akte_nr |
+        | P2    | P            |         0 |       0 |         000000024 | P2             |               6030 | 1_A____ |
+
+      Voorbeelden:
+        | relatieve datum   |
+        |    1 jaar geleden |
+        | 2 maanden geleden |
