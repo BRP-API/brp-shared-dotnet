@@ -12,11 +12,9 @@ When('een GET request wordt gedaan naar het health check endpoint van de Autoris
     }
   });
 
-  const json = await response.json();
-  console.log(json);
   this.context.response = {
     status: response.status,
-    body: json
+    body: await response.json()
   };
 });
 
