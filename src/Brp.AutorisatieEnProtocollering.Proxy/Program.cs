@@ -40,8 +40,9 @@ try
 
     var dbSection = builder.Configuration.GetSection("Db");
     var connectionString = $"Host={dbSection["Host"]};Username={dbSection["Username"]};Password={dbSection["Password"]};Database={dbSection["Database"]}";
+    var wellKnownEndpoint = builder.Configuration["OAuth:Authority:WellKnown"] ?? "nam/.well-known/openid-configuration";
 
-    builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+  builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
     builder.Services.AddOcelot();
     var oauthAuthority = builder.Configuration["OAuth:Authority"]
@@ -49,7 +50,7 @@ try
     builder.Services.AddHealthChecks()
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
-                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: wellKnownEndpoint, name: "IDP");
 
     builder.Services.Configure<ReisdocumentenAutorisatieConfig>(builder.Configuration.GetSection(nameof(ReisdocumentenAutorisatieConfig)));
 
@@ -65,7 +66,8 @@ try
 
     app.SetupHealthCheckEndpoints(builder.Configuration, Log.Logger);
 
-    app.MapControllers();
+    // short-circuit gemapte endpoints zoals de healthcheck endpoints, zodat deze niet door de AutorisatieEnProtocolleringMiddleware en Ocelot worden afgehandeld
+    app.UseEndpoints(e => { });
 
     app.UseMiddleware<AutorisatieEnProtocolleringMiddleware>();
 
