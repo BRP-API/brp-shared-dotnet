@@ -1,6 +1,5 @@
 #language: nl
 
-@integratie
 Functionaliteit: Health check endpoint van de Autorisatie en Protocollering Proxy
   Als provider
   wil ik dat de Autorisatie en Protocollering Proxy een health check endpoint heeft
