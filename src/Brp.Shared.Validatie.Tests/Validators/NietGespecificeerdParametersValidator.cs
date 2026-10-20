@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 
 namespace Brp.Shared.Validatie.Tests.Validators;
@@ -25,7 +25,7 @@ public class NietGespecificeerdParametersValidator
     public void ShouldPassWhenPropertyIsASpecifiedParameter()
     {
         var input = JObject.Parse("{\"periode\": \"\"}");
-     
+
         var result = CreateSut(new string[] { "periode" }).Validate(input);
 
         result.IsValid.Should().BeTrue();

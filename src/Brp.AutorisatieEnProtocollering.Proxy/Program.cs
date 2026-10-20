@@ -1,18 +1,18 @@
 using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 using Brp.AutorisatieEnProtocollering.Proxy.Data;
+using Brp.AutorisatieEnProtocollering.Proxy.Middleware;
 using Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
-using Brp.Shared.Validatie;
+using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.HealthCheck;
 using Brp.Shared.Infrastructure.Logging;
 using Brp.Shared.Infrastructure.Utils;
+using Brp.Shared.Validatie;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
-using Brp.AutorisatieEnProtocollering.Proxy.Middleware;
-using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 
 Log.Logger = SerilogHelpers.SetupSerilogBootstrapLogger();
 
@@ -40,6 +40,7 @@ try
 
     var dbSection = builder.Configuration.GetSection("Db");
     var connectionString = $"Host={dbSection["Host"]};Username={dbSection["Username"]};Password={dbSection["Password"]};Database={dbSection["Database"]}";
+    var wellKnownEndpoint = builder.Configuration["OAuth:Authority:WellKnown"] ?? "nam/.well-known/openid-configuration";
 
     builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
@@ -49,7 +50,7 @@ try
     builder.Services.AddHealthChecks()
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
-                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: wellKnownEndpoint, name: "IDP");
 
     builder.Services.Configure<ReisdocumentenAutorisatieConfig>(builder.Configuration.GetSection(nameof(ReisdocumentenAutorisatieConfig)));
 
@@ -65,7 +66,8 @@ try
 
     app.SetupHealthCheckEndpoints(builder.Configuration, Log.Logger);
 
-    app.MapControllers();
+    // short-circuit gemapte endpoints zoals de healthcheck endpoints, zodat deze niet door de AutorisatieEnProtocolleringMiddleware en Ocelot worden afgehandeld
+    app.UseEndpoints(e => { });
 
     app.UseMiddleware<AutorisatieEnProtocolleringMiddleware>();
 
@@ -73,7 +75,7 @@ try
 
     await app.RunAsync();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Log.Fatal(ex, "{AppName} terminated unexpectedly", AssemblyHelpers.Name);
 }

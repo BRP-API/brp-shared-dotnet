@@ -1,4 +1,4 @@
-﻿
+
 using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;

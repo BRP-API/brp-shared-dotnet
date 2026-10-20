@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Brp.Referentie.Api;
 
@@ -16,7 +16,7 @@ public static class Helpers
             var responseHeaders = JObject.Parse(data);
             foreach (var header in responseHeaders)
             {
-                if(header.Key.Equals("status", StringComparison.OrdinalIgnoreCase))
+                if (header.Key.Equals("status", StringComparison.OrdinalIgnoreCase))
                 {
                     retval = int.Parse(header.Value!.ToString());
                 }
