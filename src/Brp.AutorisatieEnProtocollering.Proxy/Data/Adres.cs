@@ -1,4 +1,4 @@
-﻿namespace Brp.AutorisatieEnProtocollering.Proxy.Data;
+namespace Brp.AutorisatieEnProtocollering.Proxy.Data;
 
 public class Adres
 {

@@ -1,18 +1,18 @@
 using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie;
 using Brp.AutorisatieEnProtocollering.Proxy.Data;
+using Brp.AutorisatieEnProtocollering.Proxy.Middleware;
 using Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
-using Brp.Shared.Validatie;
+using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.HealthCheck;
 using Brp.Shared.Infrastructure.Logging;
 using Brp.Shared.Infrastructure.Utils;
+using Brp.Shared.Validatie;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FeatureManagement;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
-using Brp.AutorisatieEnProtocollering.Proxy.Middleware;
-using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 
 Log.Logger = SerilogHelpers.SetupSerilogBootstrapLogger();
 
@@ -42,7 +42,7 @@ try
     var connectionString = $"Host={dbSection["Host"]};Username={dbSection["Username"]};Password={dbSection["Password"]};Database={dbSection["Database"]}";
     var wellKnownEndpoint = builder.Configuration["OAuth:Authority:WellKnown"] ?? "nam/.well-known/openid-configuration";
 
-  builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
     builder.Services.AddOcelot();
     var oauthAuthority = builder.Configuration["OAuth:Authority"]
@@ -75,7 +75,7 @@ try
 
     await app.RunAsync();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Log.Fatal(ex, "{AppName} terminated unexpectedly", AssemblyHelpers.Name);
 }

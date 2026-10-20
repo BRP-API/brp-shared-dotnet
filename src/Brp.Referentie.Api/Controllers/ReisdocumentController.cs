@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Brp.Referentie.Api.Controllers;
 
@@ -15,11 +15,11 @@ public class ReisdocumentController : ControllerBase
 
     [HttpPost,
     Route("reisdocumenten")]
-    public async Task<IActionResult> Index([FromBody]object body)
+    public async Task<IActionResult> Index([FromBody] object body)
     {
         await HttpContext.Response.AddCustomResponseHeaders(_environment);
 
-        if(await HttpContext.Response.AddCustomResponseBody(_environment))
+        if (await HttpContext.Response.AddCustomResponseBody(_environment))
         {
             return Ok();
         }

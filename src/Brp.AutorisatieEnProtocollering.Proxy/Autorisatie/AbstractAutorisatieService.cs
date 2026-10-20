@@ -1,4 +1,4 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Data;
+using Brp.AutorisatieEnProtocollering.Proxy.Data;
 using Brp.Shared.Infrastructure.Autorisatie;
 using Brp.Shared.Infrastructure.Logging;
 using Microsoft.FeatureManagement;
@@ -27,7 +27,7 @@ public abstract class AbstractAutorisatieService : IAuthorisation
             return false;
         }
 
-        if(AutorisatieLog != null)
+        if (AutorisatieLog != null)
         {
             AutorisatieLog.Gemeente = $"afnemer: {afnemerCode} is gemeente '{gemeenteCode}'";
         }
@@ -55,7 +55,7 @@ public abstract class AbstractAutorisatieService : IAuthorisation
                                                a.TabelRegelStartDatum <= Vandaag() &&
                                                (a.TabelRegelEindDatum == null || a.TabelRegelEindDatum > Vandaag()));
 
-        if(AutorisatieLog != null && retval != null)
+        if (AutorisatieLog != null && retval != null)
         {
             AutorisatieLog.Regel = retval;
         }
