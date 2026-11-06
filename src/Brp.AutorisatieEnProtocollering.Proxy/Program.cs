@@ -49,7 +49,7 @@ try
     builder.Services.AddHealthChecks()
                     .AddNpgSql(connectionString, name: "Database")
                     .AddOcelotDownstreamEndpointCheck(builder.Configuration)
-                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: "nam/.well-known/openid-configuration", name: "IDP");
+                    .AddOpenIdConnectServer(new Uri(oauthAuthority), discoverConfigurationSegment: ".well-known/openid-configuration", name: "IDP");
 
     builder.Services.Configure<ReisdocumentenAutorisatieConfig>(builder.Configuration.GetSection(nameof(ReisdocumentenAutorisatieConfig)));
 
