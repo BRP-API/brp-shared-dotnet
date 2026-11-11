@@ -1,6 +1,5 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
-using Xunit;
 
 namespace Brp.Shared.Validatie.Tests.Validators;
 

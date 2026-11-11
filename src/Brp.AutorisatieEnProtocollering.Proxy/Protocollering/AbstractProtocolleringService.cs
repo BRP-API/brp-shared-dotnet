@@ -1,4 +1,4 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
+using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Protocollering;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;

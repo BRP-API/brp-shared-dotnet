@@ -1,4 +1,4 @@
-﻿using Brp.Shared.Infrastructure.Protocollering;
+using Brp.Shared.Infrastructure.Protocollering;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Protocollering;
 

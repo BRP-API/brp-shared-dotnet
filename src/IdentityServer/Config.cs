@@ -1,11 +1,11 @@
-﻿using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Models;
 
 namespace IdentityServer;
 
 public static class Config
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
-        [ 
+        [
             new IdentityResources.OpenId()
         ];
 

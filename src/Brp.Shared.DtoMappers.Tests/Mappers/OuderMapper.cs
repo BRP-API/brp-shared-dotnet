@@ -1,4 +1,4 @@
-﻿using Brp.Shared.DtoMappers.Mappers;
+using Brp.Shared.DtoMappers.Mappers;
 using FluentAssertions;
 
 namespace Brp.Shared.DtoMappers.Tests.Mappers;

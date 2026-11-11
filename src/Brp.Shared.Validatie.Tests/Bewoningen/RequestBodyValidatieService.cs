@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Newtonsoft.Json.Linq;
+using FluentAssertions;
 
 namespace Brp.Shared.Validatie.Tests.Bewoningen;
 

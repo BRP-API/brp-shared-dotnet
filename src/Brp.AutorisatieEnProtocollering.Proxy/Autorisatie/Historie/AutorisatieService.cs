@@ -1,4 +1,4 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
+using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Brp.Shared.Infrastructure.Autorisatie;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Historie;

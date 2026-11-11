@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 
 namespace Brp.Shared.Validatie.Tests.Historie;
 

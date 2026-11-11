@@ -1,4 +1,4 @@
-﻿using IdentityServer;
+using IdentityServer;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -21,7 +21,7 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
-    
+
     app.Run();
 }
 catch (Exception ex)
