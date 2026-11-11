@@ -2,6 +2,11 @@ services:
   autorisatie-protocollering-proxy:
     container_name: autorisatie-protocollering
     image: ghcr.io/brp-api/brp-autorisatie-protocollering:latest
+    depends_on:
+      keycloak:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Release
       - ASPNETCORE_URLS=http://+:8080

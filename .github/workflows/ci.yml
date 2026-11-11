@@ -110,9 +110,6 @@ jobs:
       - name: Start containers
         run: |
           ./scripts/containers-start.sh ci
-      - name: Wait for DB restart
-        run: sleep 5s
-        shell: bash
 
       - name: Valideer functionele specs
         uses: ./.github/actions/valideer-functionele-specs

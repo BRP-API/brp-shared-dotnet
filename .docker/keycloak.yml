@@ -3,6 +3,17 @@ services:
     container_name: keycloak
     image: quay.io/keycloak/keycloak
     environment:
+      # KC_HOSTNAME legt de issuer ('iss' claim) vast op http://keycloak:8080/realms/brp-api,
+      # ongeacht via welke URL een token wordt opgevraagd. Daardoor kunnen de tests op de host
+      # tokens ophalen via http://localhost:8081 (zie features/step_definitions/world.js),
+      # terwijl de issuer toch overeenkomt met OAuth__Authority van de
+      # autorisatie-protocollering-proxy, die Keycloak via het Docker netwerk (brp-api-network)
+      # als 'keycloak' bereikt.
+      # Hierdoor hoeft 'keycloak' NIET aan het hosts bestand te worden toegevoegd (in tegenstelling
+      # tot de vorige IdentityServer mock, die de issuer afleidde van de request URL en daarom via
+      # http://identityserver:6000 moest worden aangeroepen).
+      # Let op: flows waarbij de host zelf de issuer URL moet benaderen (bijv. een browser login)
+      # vereisen wel dat 'keycloak' op de host resolvebaar is.
       KC_HOSTNAME: "http://keycloak:8080"
       KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
       KC_BOOTSTRAP_ADMIN_USERNAME: admin

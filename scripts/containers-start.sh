@@ -2,14 +2,13 @@
 
 MODE=$1
 
-if [[ "$MODE" = "ci" ]]; then
-    docker compose -f .docker/db-ci.yml up -d
-else
-    docker compose -f .docker/db.yml up -d
-fi
+# pgadmin (profile 'tools') alleen lokaal starten, niet in de CI
+if [[ "$MODE" = "ci" ]]; then PROFILE_ARGS=(); else PROFILE_ARGS=(--profile tools); fi
 
 docker compose \
+    -f .docker/db.yml \
     -f .docker/keycloak.yml \
     -f .docker/referentie-api.yml \
     -f .docker/autorisatie-protocollering-proxy.yml \
+    "${PROFILE_ARGS[@]}" \
     up -d
