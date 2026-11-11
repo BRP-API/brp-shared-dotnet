@@ -9,7 +9,7 @@ else
 fi
 
 docker compose \
-    -f .docker/identityserver.yml \
+    -f .docker/keycloak.yml \
     -f .docker/referentie-api.yml \
     -f .docker/autorisatie-protocollering-proxy.yml \
     down
