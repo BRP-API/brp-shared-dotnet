@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 namespace Brp.Referentie.Api.Controllers;
 
 [ApiController,
@@ -14,13 +14,13 @@ public class PersoonController : ControllerBase
 
     [HttpPost,
     Route("personen")]
-    public async Task<IActionResult> Index([FromBody]object body)
+    public async Task<IActionResult> Index([FromBody] object body)
     {
-        if(HttpContext.Request.Headers.ContainsKey("accept-gezag-version"))
+        if (HttpContext.Request.Headers.ContainsKey("accept-gezag-version"))
         {
             HttpContext.Response.Headers.Append("accept-gezag-version", HttpContext.Request.Headers["accept-gezag-version"]);
         }
-        
+
         int status = await HttpContext.Response.AddCustomResponseHeaders(_environment);
 
         if (await HttpContext.Response.AddCustomResponseBody(_environment))

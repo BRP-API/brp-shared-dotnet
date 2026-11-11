@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Data;
 
@@ -6,7 +6,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
-    {}
+    { }
 
     public DbSet<Autorisatie> Autorisaties => Set<Autorisatie>();
     public DbSet<Protocollering> Protocolleringen => Set<Protocollering>();

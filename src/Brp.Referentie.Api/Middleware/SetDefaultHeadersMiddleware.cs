@@ -1,4 +1,4 @@
-﻿namespace Brp.Referentie.Api.Middleware;
+namespace Brp.Referentie.Api.Middleware;
 
 public class SetDefaultHeadersMiddleware
 {

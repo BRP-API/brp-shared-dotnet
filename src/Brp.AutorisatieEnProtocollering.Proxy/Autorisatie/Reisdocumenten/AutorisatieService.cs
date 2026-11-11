@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Options;
 using Brp.AutorisatieEnProtocollering.Proxy.Settings;
 using Brp.Shared.Infrastructure.Autorisatie;
+using Microsoft.Extensions.Options;
 
 namespace Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Reisdocumenten
 {

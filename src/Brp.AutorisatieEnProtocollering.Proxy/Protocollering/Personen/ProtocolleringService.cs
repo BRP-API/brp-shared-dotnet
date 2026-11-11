@@ -1,4 +1,4 @@
-﻿using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
+using Brp.AutorisatieEnProtocollering.Proxy.Autorisatie.Personen;
 using Brp.AutorisatieEnProtocollering.Proxy.Helpers;
 using Newtonsoft.Json.Linq;
 
