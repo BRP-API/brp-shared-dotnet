@@ -1,6 +1,7 @@
 const { createGegevensgroepAutorisatie } = require('./autorisatie');
 const { toDateOrString } = require('./brpDatum');
 const axios = require('axios');
+const { randomUUID } = require('node:crypto');
 
 function createHeaders(dataTable, extraHeaders) {
     let headers = {};
@@ -223,6 +224,14 @@ async function handleRequest(context, endpoint, dataTable, httpMethod='post') {
             waarde: '2'
         });
     }
+
+    const requestId = randomUUID();
+    context.requestIds.push(requestId);
+
+    extraHeaders.push({
+        naam: 'Request-ID',
+        waarde: requestId
+    });
 
     context.response = await sendBevragenRequest(context, url, endpoint, extraHeaders, dataTable, httpMethod);
 }

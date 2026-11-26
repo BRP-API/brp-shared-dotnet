@@ -21,6 +21,7 @@ module.exports = {
     worldParameters: {
       apiUrl: 'http://localhost:5002/haalcentraal/api',
       api: 'info-api',
+      dockerContainer: 'referentie-api',
       logger: {
         level: 'warn'
       },
@@ -44,6 +45,7 @@ module.exports = {
     worldParameters: {
       apiUrl: 'http://localhost:8000/haalcentraal/api',
       api: 'data-api',
+      dockerContainer: 'referentie-api',
       logger: {
         level: 'warn'
       },
@@ -67,6 +69,7 @@ module.exports = {
     worldParameters: {
       apiUrl: 'http://localhost:8080/api/v1/opvragenBevoegdheidTotGezag',
       api: 'gezag-api',
+      dockerContainer: 'referentie-api',
       logger: {
         level: 'warn'
       },
@@ -90,6 +93,7 @@ module.exports = {
     worldParameters: {
       apiUrl: 'http://localhost:8080/haalcentraal/api',
       api: 'autorisatie-en-protocollering',
+      dockerContainer: 'autorisatie-protocollering',
       logger: {
         level: 'warn'
       },

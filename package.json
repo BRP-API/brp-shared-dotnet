@@ -27,5 +27,8 @@
     "nswag": "^14.8.0",
     "pg": "^8.23.1",
     "winston": "^3.19.0"
+  },
+  "dependencies": {
+    "dockerode": "^5.0.1"
   }
 }
