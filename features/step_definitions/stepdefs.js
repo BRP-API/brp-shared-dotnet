@@ -5,6 +5,11 @@ const { valideer200Response, valideerProblemDetailsResponse } = require('./respo
 const { rollbackSqlStatements } = require('./postgresqlHelpers');
 const { rollback } = require('./postgresqlHelpers-2');
 const fs = require('node:fs');
+const Docker = require("dockerode");
+const socketPath = process.platform === "win32"
+    ? "//./pipe/docker_engine"
+    : "/var/run/docker.sock";
+const docker = new Docker({ socketPath });
 
 setWorldConstructor(World);
 
@@ -40,7 +45,8 @@ AfterAll(async function() {
     globalThis.logger.debug(`pool ended. Counts => total: ${globalThis.pool.totalCount}, idle: ${globalThis.pool.idleCount}, waiting: ${globalThis.pool.waitingCount}`);
 });
 
-Before(function({ pickle }) {
+Before(async function({ pickle }) {
+    this.context.requestIds = [];
     globalThis.scenario = {
         name: pickle.name,
         tags: pickle.tags.map((t) => t.name)
@@ -56,9 +62,11 @@ Before(function({ pickle }) {
         globalThis.pool = new Pool(this.context.sql.poolConfig);
     }
 
-    if(this.context.logFileToAssert !== undefined && fs.existsSync(this.context.logFileToAssert)) {
-        const array = fs.readFileSync(this.context.logFileToAssert).toString().split("\n");
-        this.context.nrOfLogLines = array.length;
+     if (this.context.dockerContainer !== undefined) {
+        const linesBefore = await getContainerLogs(
+            this.context.dockerContainer
+        );
+        this.context.dockerLogLinesBefore = linesBefore.length;
     }
 
     this.context.baseUrl = this.context.apiUrl;
@@ -134,20 +142,102 @@ function rollbackTempfiles(context) {
     }
 }
 
-async function assertExpectedLogLines(context, logger, scenario) {
-    if(context.logFileToAssert !== undefined && fs.existsSync(context.logFileToAssert)) {
-        let array = fs.readFileSync(context.logFileToAssert).toString().split("\n");
-        if(context.nrOfLogLines + 1 != array.length) {
-            // wacht 50 ms en check vervolgens nog een keer of er een log regel is toegevoegd
-            await sleep(50);
-            array = fs.readFileSync(context.logFileToAssert).toString().split("\n");
-            if(context.nrOfLogLines + 1 !== array.length) {
-                logger.warn(`${scenario.name}. nr of loglines ${array.length} should be ${context.nrOfLogLines + 1}`);
+async function getContainerLogs(containerName) {
+    const container = docker.getContainer(containerName);
+
+    const options = {
+        follow: false,
+        stdout: true,
+        stderr: true
+    };
+
+    const logs = await container.logs(options);
+
+    return logs.toString("utf8")
+        .split("\n")
+        .filter((line) => line.trim() !== "")
+        .map((line) => {
+            if (line.includes('{"@timestamp":')) {
+                line = line.slice(line.indexOf('{"@timestamp":'));
+
+                try {
+                    return JSON.parse(line);
+                }
+                catch (error) {
+                    console.log("JSON parse error:", error);
+                    console.log(line);
+                }
             }
-        }
-    }
+
+            return line;
+        });
 }
 
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+async function waitForRequestLogs(containerName, requestIds) {
+    const expectedRequestIds = new Set(requestIds);
+    let linesAfter = [];
+    let matchingLogLines = [];
+
+    for (let attempt = 0; attempt < 10; attempt++) {
+        linesAfter = await getContainerLogs(containerName);
+
+        matchingLogLines = linesAfter.filter(
+            (line) =>
+                typeof line === 'object' &&
+                expectedRequestIds.has(line['trace.id'])
+        );
+
+        const foundRequestIds = new Set(
+            matchingLogLines.map((line) => line['trace.id'])
+        );
+
+        const allRequestIdsFound = [...expectedRequestIds].every(
+            (requestId) => foundRequestIds.has(requestId)
+        );
+
+        if (allRequestIdsFound) {
+            break;
+        }
+
+        if (attempt < 9) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+    }
+
+    return { linesAfter, matchingLogLines };
+}
+
+async function assertExpectedLogLines(context, logger, scenario) {
+    if (context.dockerContainer === undefined || 
+        context.requestIds === undefined || 
+        context.requestIds.length === 0 ||
+        context.dockerLogLinesBefore === undefined) return;
+
+    const requestLogResult = await waitForRequestLogs(
+        context.dockerContainer,
+        context.requestIds
+    );
+
+    const dockerLogLinesAfter = requestLogResult.linesAfter;
+    const matchingLogLines = requestLogResult.matchingLogLines;
+    const dockerLogDelta = dockerLogLinesAfter.length - context.dockerLogLinesBefore;
+   
+    for (const requestId of context.requestIds) {
+        const requestMatchingLogLines = matchingLogLines.filter(
+            (line) => line['trace.id'] === requestId
+        );
+
+    if (requestMatchingLogLines.length === 0) {
+        logger.warn(
+         `${scenario.name}. geen Dockerlog gevonden voor Request-ID ${requestId}`
+        );
+    }
+  }
+    if (dockerLogDelta !== matchingLogLines.length + 1) {
+        logger.warn(
+            `${scenario.name}. Dockerlogtoename ${dockerLogDelta}, ` +
+            `regels met test Request-ID ${matchingLogLines.length}`
+        );
+    }
+
 }
